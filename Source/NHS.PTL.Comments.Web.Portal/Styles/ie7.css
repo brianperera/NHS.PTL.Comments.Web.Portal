@@ -1,0 +1,57 @@
+﻿.dashBoard tr th
+{
+    /*width: 200px !important;*/
+    
+}
+
+.regularTable tr th, .regularTable tr td
+{
+    width: auto;
+}
+
+.regularTable table
+{
+    table-layout: fixed;
+}
+
+.menu .dynamic
+{
+    border-bottom: 1px solid white !important;
+    cursor: pointer;  
+}
+
+.menu .static
+{
+    cursor: pointer; 
+}
+
+.menu .level2 li
+{
+    width:220px;
+    height:100%;
+    margin-bottom:-4px;
+}
+
+.menu .level3 li
+{
+    width:100px;
+    border-bottom: 1px solid white !important;
+}
+
+.gridPagerStyle td table tbody tr td, .gridPagerStyle tr td span
+{
+    width: 50px;
+    padding-right: 0px;
+    overflow: hidden;        
+    height: 15px;
+}
+
+.error_msg .alert-danger 
+{
+    padding: 30px 0 10px 20px !important;    
+}
+
+.grid .altrow td
+{
+    background-color: #eff9fd;
+}

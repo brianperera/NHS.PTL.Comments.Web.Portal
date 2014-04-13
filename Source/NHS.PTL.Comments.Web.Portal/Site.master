@@ -1,0 +1,65 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="Nhs.PTL.Comments.Web.Portal.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/html-reset.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Plugins/font-awesome/css/font-awesome.min.css"/>    
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="~/Plugins/font-awesome/css/font-awesome-ie7.min.css"/>
+      <link rel="stylesheet" href="~/Styles/ie7.css" />
+    <![endif]-->   
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        } 
+   </script>
+</head>
+<body>
+    <form runat="server" class="mainForm">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    <span>PTL Comments Web Portal</span>
+                </h1>
+            </div>
+            <div class="logos">
+                <asp:Image runat="server" ImageUrl="~/images/NHSlogo.gif" class="nhsLogo" />
+                <div runat="server" class="hosName" id="HosName">Buckinghamshire Healthcare</div>
+                <div runat="server" class="NHS_name" id="NhsName">NHS Trust</div>
+            </div>
+        </div>
+        <div class="navigationBar" id="NavigationBar" runat="server" visible="true">
+            <span class="navigationBarItems">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="False"
+                    IncludeStyleBlock="False" Orientation="Horizontal" 
+                DataSourceID="SiteMapDataSource">
+                </asp:Menu>
+            <asp:SiteMapDataSource ID="SiteMapDataSource" runat="server" 
+                ShowStartingNode="False" />
+            </span>
+            <span class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <LoggedInTemplate>
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out"
+                            LogoutPageUrl="~/Login.aspx" /> ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </span>
+            <div class="clear"></div>
+        </div>
+        </div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </form>
+</body>
+</html>

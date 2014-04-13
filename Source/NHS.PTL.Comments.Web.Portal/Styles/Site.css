@@ -1,0 +1,1129 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+html, body, .mainForm
+{
+    height: 100%;
+}
+
+
+body   
+{
+    background: #fff; /* Old browsers */ /*border-top: solid 10px #000;*/
+    color: #000;
+    font-size: 11px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+a:link, a:visited
+{
+    color: #034af3;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #034af3;
+}
+
+p
+{
+    margin-bottom: 10px;
+    line-height: 1.6em;
+}
+
+li
+{
+    list-style-type:none;  
+    padding: 0;  
+}
+
+ul
+{
+    padding: 0;     
+}
+
+.defaultDropDown
+{
+        
+}
+
+.defaultListBox
+{
+    width:300px;    
+}
+
+.formSection
+{
+    padding-bottom:10px;
+    font-size:11px;
+    border-bottom: 1px dotted #E2E2E2;
+}
+
+.noPadding
+{
+    padding:0px !important;    
+}
+
+.noBottonBorders
+{
+    border:0px !important;
+}
+
+.formSection li
+{
+    margin-bottom:10px;    
+}
+
+.pagedata ul
+{
+    margin-top:0px;    
+}
+
+.dashBoard
+{
+   border: 1px solid #dddddd;
+   border-collapse:collapse;
+   font-size:11px;   
+   width:100%;  
+   table-layout:fixed;
+   text-align:center;
+}
+
+.dashBoard tr
+{
+  
+}
+
+.dashBoard tr th
+{
+    border: solid 1px #dddddd;
+    color: #000;
+    font-weight: normal;
+    vertical-align: middle;
+    padding: 4px 6px;
+    width:50px;
+    text-align:center;
+}
+
+.dashBoard tr td
+{
+    border: solid 1px #dddddd;
+    color: #000;
+    vertical-align: middle;
+    padding: 4px 6px;
+    width:50px;
+	text-align:left;
+}
+
+/* regular table*/
+.regularTable
+{
+   border-collapse:collapse;
+   font-size:13px;   
+}
+
+.regularTable tr th
+{
+    border: solid 1px #dddddd;
+    color: #000;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 4px 6px;
+    width:50px;   
+}
+
+.regularTable tr td
+{
+    border: solid 1px #dddddd;
+    color: #000;
+    vertical-align: middle;
+    padding: 4px 6px;
+    width:50px;
+}
+
+.tableColumnLargeWidth
+{
+    width:150px !important;
+}.aquaBackground
+{
+    background-color:#0083f0;
+    font-weight:bold;
+} 
+
+.redBackground
+{
+    background-color:Red;    
+    font-weight:bold !important;
+    color:White !important;
+}
+
+.grayBackground td
+{
+    background-color:#EEEEEE;    
+    font-weight:bold; 
+    color: #000 !important;   
+}
+
+.grayBackground th
+{
+    background-color:#EEEEEE;    
+    font-weight:bold !important;           
+}
+
+.darkGrayBackground td
+{
+    background-color:#B3B4B5;    
+    font-weight:bold !important; 
+    color: #000 !important;   
+}
+
+.boldText th
+{  
+    font-weight:bold !important;    
+}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6
+{
+    color: #000;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+h1
+{
+    font-size: 2em;
+}
+h2
+{
+    font-size: 1.75em;
+}
+h3
+{
+    font-size: 1.2em;
+}
+h4
+{
+    font-size: 1.1em;
+}
+h5, h6
+{
+    font-size: 1em;
+}
+h5 a:link, h5 a:visited, h5 a:active
+{
+    padding: 0;
+    text-decoration: none;
+}
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2
+{
+    margin-top: 0px;
+}
+
+.pageHeader h2
+{
+    border-bottom: 1px dotted #E2E2E2;
+    margin: 0 0 12px;
+    color: #2679B5;
+    font-size: 24px;
+    font-weight: lighter;
+    padding: 0;
+    line-height: 40px;
+}
+
+.sections
+{
+    margin:0px 0px 30px 0px;    
+}
+
+.subSections
+{
+    margin:0px 0px 20px 0px;    
+}
+
+.subSections span
+{
+    margin-right:20px;    
+}
+
+.subSections h3
+{
+    font-size: 11px;   
+}
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+.page
+{
+    background-color: #fff;
+}
+
+.header {
+    height: 50px;
+    background: #3a9cee; /* Old browsers */
+    background: -moz-linear-gradient(top, #3a9cee 0%, #005fa6 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3a9cee), color-stop(100%, #005fa6)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #3a9cee 0%, #005fa6 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #3a9cee 0%, #005fa6 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #3a9cee 0%, #005fa6 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #3a9cee 0%, #005fa6 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a9cee', endColorstr='#005fa6', GradientType=0 ); /* IE6-9 */
+    padding: 0 20px;
+    vertical-align: middle;
+    font-size: 24px;
+    text-transform: uppercase;    
+}
+
+.smallTableHeader {
+    background: linear-gradient(to bottom, #3A9CEE 0%, #005FA6 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    vertical-align: middle;
+    padding:2px 5px 2px 5px;
+    margin:2px 5px 2px 5px;
+    color:White;
+}
+
+.header h1
+{
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0px;
+    padding: 10px 0px 0px 20px;
+    color: #f9f9f9;
+    border: none;
+    vertical-align: top;
+}
+
+.logos
+{
+    font-size: 14px;
+    padding:10px 20px 0px 0px;
+    text-align: right;
+    text-transform: none;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.nhsLogo
+{
+    float: right;
+    margin-left: 15px;
+    margin-top: 5px;
+    width: 41px;    
+}
+
+div.hosName 
+{
+    vertical-align: baseline;
+}
+
+div.NHS_name {
+    font-size: 10px;
+    right: 75px;
+    top: 27px;
+}
+
+.main
+{
+    padding: 0px 12px;
+    margin: 12px 40px 8px 40px;
+}
+
+.blueBackGround
+{
+    height:100%;
+    overflow: hidden;
+    background: #0f55b7; /* Old browsers */
+    background: #1b88e5; /* Old browsers */
+    background: -moz-linear-gradient(top, #1b88e5 0%, #0f55b7 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1b88e5), color-stop(100%, #0f55b7)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #1b88e5 0%, #0f55b7 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #1b88e5 0%, #0f55b7 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #1b88e5 0%, #0f55b7 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #1b88e5 0%, #0f55b7 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b88e5', endColorstr='#0f55b7', GradientType=0 ); /* IE6-9 */
+}
+
+.leftCol
+{
+    padding: 6px 0px;
+    margin: 12px 8px 8px 8px;
+    width: 200px;
+    min-height: 200px;
+}
+
+.footer
+{
+    color: #4e5766;
+    padding: 8px 0px 0px 0px;
+    margin: 0px auto;
+    text-align: center;
+    line-height: normal;
+}
+
+
+/* TAB MENU   
+----------------------------------------------------------*/
+
+.navigationBar
+{
+    background-color:#EEEEEE;
+    padding-left:10px;
+}
+
+.navigationBarItems
+{
+    float:left;    
+}
+
+.navigationBar a
+{
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+div.menu
+{
+    padding: 2px 0px 4px 8px;
+}
+
+div.menu ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: auto;
+}
+
+div.menu ul li
+{
+    border: 1px #EEEEEE solid;    
+}
+
+div.menu ul li a, div.menu ul li a:visited
+{
+    background-color: #EEEEEE;
+    border: 1px #EEEEEE solid;
+    color: #707070;
+    display: block;
+    line-height: 1.35em;
+    padding: 4px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+div.menu ul li a:hover
+{
+    background-color: #4ad;
+    color: White;
+    text-decoration: none;
+}
+
+div.menu ul li a:active
+{
+    background-color: #465c71;
+    color: #cfdbe6;
+    text-decoration: none;
+}
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset
+{
+    margin: 1em 0px;
+    padding: 1em;
+    border: 1px solid #ccc;
+}
+
+fieldset p 
+{
+    margin: 2px 5px 5px 0px;
+}
+
+fieldset.login label, fieldset.register label, fieldset.changePassword label
+{
+    display: block;
+}
+
+fieldset label.inline 
+{
+    display: inline;
+}
+
+legend 
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+input.textEntry 
+{
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+input.passwordEntry 
+{
+/*    width: 320px;*/
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.floatLeft
+{
+    float:left;    
+}
+
+div.accountInfo
+{
+    background-color: #FFFFFF;
+    padding-top: 20px;
+    width: 25%;
+}
+
+.formTitleFields
+{
+    width:200px;    
+    float:left;
+    vertical-align:text-bottom;
+}
+
+.formTitleFieldsCenterText
+{
+    width:200px;    
+    float:left;
+    text-align:center;
+}
+
+.shortSpan
+{
+    width:70px !important;    
+}
+
+.formTitleFieldsWithoutFloat
+{
+    width:200px;    
+    text-align:center;
+    vertical-align:middle;
+    display:inline-block;
+}
+
+.shortFormTitleFieldsWithoutFloat
+{
+    width:50px;    
+    text-align:center;
+    vertical-align:middle; 
+}
+
+.formFieldControl
+{
+    width:200px;
+    padding-right:10px;
+}
+
+.formFieldControlHelpText
+{
+    font-style:italic; 
+    color: #707070;
+    font-size:10px;
+}
+
+.longFormTitleFields
+{
+    width:500px;
+    padding-right:10px;
+    float:left;
+}
+
+div.accountInfo .register p span
+{
+    width:300px;
+}
+
+div.accountInfoCentered
+{
+    background-color: #FFFFFF;
+    margin-left: 35%;
+    margin-top: 10%;
+    padding: 20px;
+    width: 30%;
+}
+
+/* MISC  
+----------------------------------------------------------*/
+
+.clear
+{
+    clear: both;
+}
+
+.clear-fix:after
+{
+    content: ".";
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.title
+{
+    display: block;
+    float: left;
+    text-align: left;
+    width: auto;
+}
+
+.loginDisplay
+{
+    display: block;
+    text-align: right;
+    padding: 8px;
+    margin-right:30px;
+    color: #666666;
+    float:right;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.menu .dynamic
+{
+    border-bottom: 1px solid white;
+    cursor: pointer;  
+}
+
+.menu .static
+{
+    cursor: pointer; 
+}
+
+
+.adminNavigation
+{
+    float:right;
+    margin-right:20px
+}
+
+.loginDisplay a:visited
+{
+    color: #666666;
+}
+
+.loginDisplay a:hover
+{
+    color: #666666;
+}
+
+.failureNotification
+{
+    font-size: 1.2em;
+    color: Red;
+}
+
+.loginFields
+{
+    float:left;    
+}
+
+.login legend
+{
+    text-align: left;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+.bold
+{
+    font-weight: bold;
+}
+
+.submitButton
+{    
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #1371dc;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: hand;
+    padding: 3px 8px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background: #4a9bea;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#4a9bea), to(#1F7BE5));
+    background: -webkit-linear-gradient(#4a9bea, #1F7BE5);
+    background: -moz-linear-gradient(#4a9bea, #1F7BE5);
+    background: -ms-linear-gradient(#4a9bea, #1F7BE5);
+    background: -o-linear-gradient(#4a9bea, #1F7BE5);
+    background: linear-gradient(#4a9bea, #1F7BE5);
+}
+
+.deleteButton
+{    
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #CC0000;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: hand;
+    padding: 3px 8px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background: #CC0000;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#CC0000), to(#FF0000));
+    background: -webkit-linear-gradient(#CC0000, #FF0000);
+    background: -moz-linear-gradient(#CC0000, #FF0000);
+    background: -ms-linear-gradient(#CC0000, #FF0000);
+    background: -o-linear-gradient(#CC0000, #FF0000);
+    background: linear-gradient(#CC0000, #FF0000);
+}
+
+.aspNetDisabled
+{
+    border: 1px solid #B7B7B7;
+    background: #B7B7B7;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#B7B7B7), to(#E6E3E3));
+    background: -webkit-linear-gradient(#B7B7B7, #E6E3E3);
+    background: -moz-linear-gradient(#B7B7B7, #E6E3E3);
+    background: -ms-linear-gradient(#B7B7B7, #E6E3E3);
+    background: -o-linear-gradient(#B7B7B7, #E6E3E3);
+    background: linear-gradient(#B7B7B7, #E6E3E3);
+}
+
+.login_container
+{
+    position: absolute;
+    bottom: 80px;
+    width: 500px;
+    right: 0px;
+    overflow: hidden;
+}
+.login_container .lock
+{
+    margin-bottom: -95px;
+    z-index: 10;
+}
+.login_content
+{
+    background: #FFFFFF;
+    border: 1px solid #696;
+    padding: 30px 30px 20px 30px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-box-shadow: #666 0px 2px 3px;
+    -moz-box-shadow: #666 0px 2px 3px;
+    box-shadow: #666 0px 2px 3px;
+    margin-right: -15px;
+}
+.login_content h1
+{
+    padding-left: 120px;
+    text-align: left;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+.login_content span
+{
+    font-size: 14px;
+    
+    text-transform: uppercase;
+    display:inline-block;
+}
+.login_content input[type=text], .login_content input[type=password]
+{
+    padding-left: 10px;
+    width: 260px;
+}
+.login_content input[type=button]
+{
+    margin: 10px 0 0 125px;
+}
+.login_content a
+{
+    margin-left: 190px;
+    text-decoration: none;
+}
+.login_content i
+{
+    padding-right: 10px;
+}
+.ie7 .login_content
+{
+    
+}
+.login_footer
+{
+    text-align: center;
+    margin-top: 20px;
+    vertical-align: middle;
+    display:none
+}
+.login_footer span
+{
+    color: #fff;
+}
+.login_footer img
+{
+    height: 25px;
+    margin-right: 12px;
+}
+
+.login_panel input[type=submit]
+{
+    padding:0px 8px;
+    margin-top: 1px; 
+    vertical-align:top
+     
+}
+
+.ie7 .login_panel input[type=submit]
+{    
+    margin: 0; 
+     
+}
+
+.login_panel span
+{
+   padding:0;
+    margin: 0px;  
+    color:#707070    
+}
+
+.fieldSeperator
+{
+    margin:10px 0px 5px 0px;    
+}
+
+.fieldName
+{
+    width:120px;    
+}
+
+/* Page Layout */
+
+input[type=text], input[type=password], textarea, select
+{
+    color: #000;
+    display: inline-block;    
+    padding: 2px 5px;
+    border:1px solid #dddddd;
+    font-size:11px;
+    width:200px;
+}
+
+.shortTextBox input[type=text]
+{
+    width:50px !important;
+}
+
+select
+{
+    width:212px;
+}
+
+input[type=text]:hover, input[type=password]:hover, textarea:hover
+{
+     border:1px solid #26a0da
+}
+
+
+input[type=text], input[type=password]
+{
+    height: 17px;
+}
+
+label, span
+{
+    vertical-align: top;
+    text-align: left;
+    font-weight: 700;
+    height: 17px;
+    margin: 2px 0;
+    padding: 2px 1px;    
+}
+
+.grid {
+    border: solid 1px #dddddd;
+    text-align: left;
+    width: 100%;
+    font-size: 11px;
+}
+
+.grid .altrow {
+    background-color: #eff9fd;
+}
+
+.gridtitle {
+    font-weight: bold;
+}
+
+.gridtitle h3 {
+    color: #535353 !important;
+    margin-bottom: 5px;
+    font-size:13px;
+}
+
+.grid tr th {
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: 0px;
+    background-color: #417696;
+    border: none;
+    padding: 3px 3px;
+}
+
+.grid tr td {
+    border: solid 1px #dddddd;
+    color: #000;
+    font-weight: normal;
+    vertical-align: middle;
+    padding: 2px 3px;
+}
+
+.grid tr td span, .grid a {
+    color: #000 !important;
+    vertical-align: middle;
+    font-weight: normal;
+}
+
+/* Alerts */
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert h4 {
+  margin-top: 0;
+  color: inherit;
+}
+
+.alert .alert-link {
+  font-weight: bold;
+}
+
+.alert > p,
+.alert > ul {
+  margin-bottom: 0;
+}
+
+.alert > p + p {
+  margin-top: 5px;
+}
+
+.alert-dismissable {
+  padding-right: 35px;
+}
+
+.alert-dismissable .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+}
+
+.alert-success {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.error_msg
+{
+    margin-bottom:20px;
+}
+
+.error_msg .alert-success  
+{
+    padding:10px 0 10px 60px ;
+    color: #468847;
+    width:97%;
+    font-size:16px;
+    display:inline-block;
+    background:#dff0d8 url(../images/tick.png) no-repeat left;
+}
+
+
+
+.error_msg .alert-danger 
+{
+    padding:10px 0 10px 60px ;
+    color: #b94a48;
+    margin-bottom:20px;
+    width:97%;
+    font-size:16px;
+    background:#f2dede url(../images/close.png) no-repeat left;
+    border-color: #eed3d7;
+    display:inline-block;
+}
+
+.error_msg .alert-danger 
+{
+    padding:10px 0 10px 60px ;
+    color: #b94a48;
+    margin-bottom:20px;
+    width:97%;
+    font-size:16px;
+    background:#f2dede url(../images/close.png) no-repeat left;
+    border-color: #eed3d7;
+}
+
+.alert-success hr {
+  border-top-color: #c9e2b3;
+}
+
+.alert-success .alert-link {
+  color: #356635;
+}
+
+.alert-info {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.error_msg .alert-info 
+{
+    padding:10px 0 10px 60px ;
+    color: #3a87ad;
+    margin-bottom:20px;
+    width:97%;
+    font-size:16px;
+    background:#d9edf7 url(../images/info.png) no-repeat left;
+    border-color: #bce8f1;
+}
+
+.alert-info hr {
+  border-top-color: #a6e1ec;
+}
+
+.alert-info .alert-link {
+  color: #2d6987;
+}
+
+.alert-warning {
+  color: #c09853;
+  background-color: #fcf8e3;
+  border-color: #fbeed5;
+}
+
+.alert-warning hr {
+  border-top-color: #f8e5be;
+}
+
+.alert-warning .alert-link {
+  color: #a47e3c;
+}
+
+.alert-danger {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+.alert-danger hr {
+  border-top-color: #e6c1c7;
+}
+
+.alert-danger .alert-link {
+  color: #953b39;
+}
+
+.well {
+    background-color: #F5F5F5;
+    border: 0px solid #E3E3E3;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;    
+}
+
+
+.lgn_messages 
+{
+     position: absolute;
+    top: 150px;
+}
+
+
+.lgn_messages h2 
+{
+    color:#fff;
+    font-size:15px;
+    margin-bottom:10px
+}
+
+.lgn_messages p 
+{
+    color:#d4e9ff;    
+    margin:10px 0;
+    font-size:12px
+}
+
+.hideRow
+{
+    display:none;    
+}
+
+.hideSkiplink > a
+{
+    display: none;
+}
+
+.staffingPeriodDelete
+{
+    display: none;
+}
+
+.greenBackgroundDashboard
+{
+    background-color: Green;
+    font-weight:bold !important;    
+}
+
+.redBackgroundDashboard
+{
+    background-color:Red;    
+    font-weight:bold !important;
+}
+
+.horizontalWidth
+{
+    width: 225px;
+}    
+
+.gridPagerStyle tr td
+{
+    width: 50px;
+    padding-right: 0px;
+    overflow: hidden;        
+    height: 15px;
+}
