@@ -48,34 +48,33 @@
                             CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
                             ShowHeaderWhenEmpty="true" ShowHeader="true">
                             <Columns>
-                                <asp:BoundField HeaderText="UniqueCDSRowIdentifier" />
-                                <asp:BoundField HeaderText="Patient Pathway Identifier" />
-                                <asp:BoundField HeaderText="MRN" />
-                                <asp:BoundField HeaderText="NHS Number" />
-                                <asp:BoundField HeaderText="MRN" />
-                                <asp:BoundField HeaderText="Date Of Birth" />
-                                <asp:BoundField HeaderText="Patient Forename" />
-                                <asp:BoundField HeaderText="Patient Surname" />
-                                <asp:BoundField HeaderText="Spec Code" />
-                                <asp:BoundField HeaderText="Spec Name" />
-                                <asp:BoundField HeaderText="Division" />
-                                <asp:BoundField HeaderText="Consultant" />
-                                <asp:BoundField HeaderText="Referral Date" />
-                                <asp:BoundField HeaderText="Source Of Referral" />
-                                <asp:BoundField HeaderText="Priority Type" />
-                                <asp:BoundField HeaderText="RTT Clock Start" />
-                                <asp:BoundField HeaderText="RTT Breach Date" />
-                                <asp:BoundField HeaderText="Attendance Date" />
-                                <asp:BoundField HeaderText="Attendance Status" />
-                                <asp:BoundField HeaderText="RTT Status Code" />
-                                <asp:BoundField HeaderText="RTT Status" />
-                                <asp:BoundField HeaderText="Waiting List Status" />
-                                <asp:BoundField HeaderText="Future Clinic Date" />
-                                <asp:BoundField HeaderText="Wait At Future Clinic Date" />
-                                <asp:BoundField HeaderText="Status" />
-                                <asp:BoundField HeaderText="Appointment Date" />
-                                <asp:BoundField HeaderText="Updated Date" />
-                                <asp:BoundField HeaderText="Comment" />
+                                <asp:BoundField HeaderText="UniqueCDSRowIdentifier" DataField="UniqueCdsRowIdentifier" />
+                                <asp:BoundField HeaderText="Patient Pathway Identifier" DataField="PatientPathwayIdentifier" />
+                                <asp:BoundField HeaderText="MRN" DataField="LocalPatientID" />
+                                <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
+                                <asp:BoundField HeaderText="Date Of Birth" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Patient Forename" DataField="PatientForename" />
+                                <asp:BoundField HeaderText="Patient Surname" DataField="PatientSurname" />
+                                <asp:BoundField HeaderText="Spec Code" DataField="Spec" />
+                                <asp:BoundField HeaderText="Spec Name" DataField="SpecName" />
+                                <asp:BoundField HeaderText="Division" DataField="NewDivision" />
+                                <asp:BoundField HeaderText="Consultant" DataField="Consultant" />
+                                <asp:BoundField HeaderText="Referral Date" DataField="ReferralRequestReceivedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Source Of Referral" DataField="SourceOfReferralText" />
+                                <asp:BoundField HeaderText="Priority Type" DataField="PriorityType" />
+                                <asp:BoundField HeaderText="RTT Clock Start" DataField="RttClockStart" />
+                                <asp:BoundField HeaderText="RTT Breach Date" DataField="RttBreachDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Attendance Date" DataField="AttendanceDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Attendance Status" DataField="AttStatus" />
+                                <asp:BoundField HeaderText="RTT Status Code" DataField="RttStatus" />
+                                <asp:BoundField HeaderText="RTT Status" DataField="RttText" />
+                                <asp:BoundField HeaderText="Waiting List Status" DataField="WaitingListStatus" />
+                                <asp:BoundField HeaderText="Future Clinic Date" DataField="FutureClinicDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Wait At Future Clinic Date" DataField="WaitAtFutureClinicDate" />
+                                <asp:BoundField HeaderText="Status" DataField="Status" />
+                                <asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Updated Date" DataField="UpdatedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Comment" DataField="Comment" />
                             </Columns>
                             <FooterStyle BackColor="White" ForeColor="#000066" />
                             <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />

@@ -111,9 +111,49 @@ namespace Nhs.Ptl.Comments.DataAccess
             return ptlComments;
         }
 
-        public bool AddPtlComment(Contracts.Dto.PtlComment ptlComment)
+        public bool AddPtlComment(PtlComment ptlComment)
         {
-            throw new NotImplementedException();
+            bool isAdded = false;
+
+            if (null == ptlComment)
+            {
+                throw new ArgumentNullException("ptlComment", "PTL Comment cannot be null");
+            }            
+
+            try
+            {
+                using (SqlConnection connection = GetConnection())
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.CommandText = "InsertPtlComment";
+
+                        SqlParameter rowIdentifier = GetParameter("@UniqueCDSRowIdentifier", SqlDbType.BigInt, ptlComment.UniqueCdsRowIdentifier);
+                        SqlParameter status = GetParameter("@Status", SqlDbType.VarChar, ptlComment.Status);
+                        SqlParameter appointmentDate = GetParameter("@AppointmentDate", SqlDbType.Date, ptlComment.AppointmentDate);
+                        SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.Date, ptlComment.UpdatedDate);
+                        SqlParameter comment = GetParameter("@Comment", SqlDbType.VarChar, ptlComment.Comment);
+
+                        if (command.ExecuteNonQuery() > -1)
+                        {
+                            isAdded = true;
+                        }
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            catch (Exception)
+            { }
+            return isAdded;
         }
 
         public IList<string> GetAllUniqueRowIdentifiers()

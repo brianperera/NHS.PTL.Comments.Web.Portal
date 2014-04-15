@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Nhs.Ptl.Comments.Utility;
+using Nhs.Ptl.Comments.Contracts.Dto;
 
 namespace Nhs.Ptl.Comments.Web
 {
@@ -14,11 +15,20 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!this.IsPostBack)
             {
-                PopulateStatusDropdown();
-                PopulateSpecialityDropdown();
-                PopulateConsultantDropdown();
-                commentsGrid.DataSource = new List<string>();
-                commentsGrid.DataBind();
+                IList<PtlComment> ptlComments = CommentsManager.GetAllPtlComments();
+
+                if (null != ptlComments)
+                {
+                    PopulateStatusDropdown();
+                    PopulateSpecialityDropdown(ptlComments);
+                    PopulateConsultantDropdown(ptlComments);
+                    commentsGrid.DataSource = new List<string>();
+                    commentsGrid.DataBind();
+
+                    commentsGrid.DataSource = ptlComments;
+                    commentsGrid.DataBind();
+                }
+
             }
         }
 
@@ -32,12 +42,15 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
-        private void PopulateSpecialityDropdown()
+        private void PopulateSpecialityDropdown(IList<PtlComment> ptlComments)
         {
         }
 
-        private void PopulateConsultantDropdown()
+        private void PopulateConsultantDropdown(IList<PtlComment> ptlComments)
         {
+            string[] consultantsList = ptlComments.Select(e => e.Consultant).Distinct().ToArray();
+            consultantDropdown.DataSource = consultantsList;
+            consultantDropdown.DataBind();
         }
     }
 }
