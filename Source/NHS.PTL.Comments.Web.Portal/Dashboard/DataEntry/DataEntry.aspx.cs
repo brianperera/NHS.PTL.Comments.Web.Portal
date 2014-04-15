@@ -14,6 +14,7 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!this.IsPostBack)
             {
+                PopulateUniqueIdentifiers();
                 PopulateStatusDropdown();
             }
         }
@@ -26,7 +27,16 @@ namespace Nhs.Ptl.Comments.Web
                 statusDropdown.DataSource = statusList;
                 statusDropdown.DataBind();
             }
+        }
 
+        private void PopulateUniqueIdentifiers()
+        {
+            List<string> uniqueRowIdentifiers = CommentsManager.GetAllUniqueRowIdentifiers().ToList();
+            if (null != uniqueIdentifireDrowpdown)
+            {
+                uniqueIdentifireDrowpdown.DataSource = uniqueRowIdentifiers;
+                uniqueIdentifireDrowpdown.DataBind();
+            }
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)

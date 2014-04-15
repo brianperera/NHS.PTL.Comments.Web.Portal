@@ -34,5 +34,9 @@ namespace Nhs.Ptl.Comments.Contracts.Dto
         public string WaitingListStatus { get; set; }
         public DateTime FutureClinicDate { get; set; }
         public string WaitAtFutureClinicDate { get; set; }
+        public string Status { get; set; }
+        public DateTime AppointmentDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
+        public string Comment { get; set; }
     }
 }
