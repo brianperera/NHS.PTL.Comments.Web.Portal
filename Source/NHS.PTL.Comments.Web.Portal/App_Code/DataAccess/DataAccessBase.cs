@@ -9,7 +9,7 @@ using System.Data;
 /// <summary>
 /// Summary description for DataAccessBase
 /// </summary>
-namespace Nhs.Staffing.DataEntry
+namespace Nhs.Ptl.Comments.DataAccess
 {
     public class DataAccessBase
     {

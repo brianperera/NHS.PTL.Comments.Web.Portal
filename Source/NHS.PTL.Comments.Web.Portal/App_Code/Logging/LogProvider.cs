@@ -5,7 +5,7 @@ using System.IO;
 /// Summary description for LogProvider
 /// </summary>
 
-namespace Nhs.PTL.Comments.Web.Portal
+namespace Nhs.Ptl.Comments.Logging
 {
     public class LogProvider
     {

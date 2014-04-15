@@ -8,7 +8,7 @@ using System.Web.Security;
 /// Summary description for MembershipHelper
 /// </summary>
 
-namespace Nhs.PTL.Comments.Web.Portal.Utility
+namespace Nhs.Ptl.Comments.Utility
 {
     public static class MembershipHelper
     {

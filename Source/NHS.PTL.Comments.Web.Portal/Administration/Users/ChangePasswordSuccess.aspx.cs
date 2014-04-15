@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Nhs.PTL.Comments.Web.Portal
+namespace Nhs.Ptl.Comments.Web
 {
     public partial class Account_ChangePasswordSuccess : System.Web.UI.Page
     {

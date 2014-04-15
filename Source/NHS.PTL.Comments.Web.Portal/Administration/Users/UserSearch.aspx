@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="UserSearch.aspx.cs" Inherits="Nhs.PTL.Comments.Web.Portal.UserSearch" %>
+    CodeFile="UserSearch.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.UserSearch" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>

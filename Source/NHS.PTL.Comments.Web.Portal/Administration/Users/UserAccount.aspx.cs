@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Nhs.PTL.Comments.Web.Portal.Utility;
+using Nhs.Ptl.Comments;
+using Nhs.Ptl.Comments.Utility;
 
-namespace Nhs.PTL.Comments.Web.Portal
+namespace Nhs.Ptl.Comments.Web
 {
     public partial class UserAccount : System.Web.UI.Page
     {

@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Nhs.PTL.Comments.Web.Portal
+namespace Nhs.Ptl.Comments.Web
 {
-    public partial class SiteMaster : System.Web.UI.MasterPage
+    public partial class SiteMaster : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

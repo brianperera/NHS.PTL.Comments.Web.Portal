@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="UserAccount.aspx.cs" Inherits="Nhs.PTL.Comments.Web.Portal.UserAccount" %>
+    CodeFile="UserAccount.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.UserAccount" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
@@ -27,7 +27,7 @@
                             <asp:RequiredFieldValidator ID="UsernameRequiredValidator" runat="server" ControlToValidate="UserNameTextbox"
                                 ForeColor="red" Display="Static" ErrorMessage="Required" />
                         </span></li>
-                        <% if (ActionType == Nhs.PTL.Comments.Web.Portal.Constants.Create) %>
+                        <% if (ActionType == Nhs.Ptl.Comments.Constants.Create) %>
                         <% { %>
                         <li><span class="formTitleFields">Password</span> <span class="formFieldControl">
                             <asp:TextBox ID="PasswordTextbox" runat="server" TextMode="Password" />

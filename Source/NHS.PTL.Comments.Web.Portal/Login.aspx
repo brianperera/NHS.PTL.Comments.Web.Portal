@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Log In" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="Login.aspx.cs" Inherits="Nhs.PTL.Comments.Web.Portal.Login" %>
+    CodeFile="Login.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.Login" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>

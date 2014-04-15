@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Change Password" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="ChangePassword.aspx.cs" Inherits="Nhs.PTL.Comments.Web.Portal.Account_ChangePassword" %>
+    CodeFile="ChangePassword.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.Account_ChangePassword" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>

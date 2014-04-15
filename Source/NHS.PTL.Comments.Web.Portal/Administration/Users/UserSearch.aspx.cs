@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Nhs.PTL.Comments.Web.Portal.Utility;
 using System.Data;
+using System.Web.Security;
 
-namespace Nhs.PTL.Comments.Web.Portal
+namespace Nhs.Ptl.Comments.Web
 {
     public partial class UserSearch : System.Web.UI.Page
     {

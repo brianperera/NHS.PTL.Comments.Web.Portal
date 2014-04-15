@@ -7,7 +7,7 @@ using System.Globalization;
 /// <summary>
 /// Summary description for Utility
 /// </summary>
-namespace Nhs.PTL.Comments.Web.Portal.Utility
+namespace Nhs.Ptl.Comments.Utility
 {
     public static class DateTimeHelper
     {
