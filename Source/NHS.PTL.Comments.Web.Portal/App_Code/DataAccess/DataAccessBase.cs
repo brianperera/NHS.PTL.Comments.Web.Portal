@@ -35,6 +35,6 @@ namespace Nhs.Ptl.Comments.DataAccess
             parameter.Value = value;
 
             return parameter;
-        }
+        }        
     }
 }
