@@ -22,7 +22,8 @@
                         </div>
                         <ul class="formSection">
                             <li><span class="formTitleFields">UniqueCDSRowIdentifier</span> <span class="formFieldControl">
-                                <asp:DropDownList ID="uniqueIdentifireDrowpdown" runat="server" CssClass="defaultDropDown">
+                                <asp:DropDownList ID="uniqueIdentifierDrowpdown" runat="server" CssClass="defaultDropDown"
+                                    AutoPostBack="true" OnSelectedIndexChanged="uniqueIdentifierDrowpdown_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </span></li>
                             <li><span class="formTitleFields">Status</span> <span class="formFieldControl">
@@ -38,8 +39,9 @@
                                 <asp:TextBox ID="commentTextbox" runat="server" TextMode="MultiLine"></asp:TextBox>
                             </span></li>
                             <li><span>
-                                <asp:Button CssClass="submitButton" Text="Submit" runat="server" ID="SubmitButton"
-                                    OnClick="SubmitButton_Click" />
+                                <asp:Button CssClass="submitButton" Text="Submit" runat="server" ID="submitButton"
+                                    OnClick="submitButton_Click" />
+                                <asp:HiddenField runat="server" ID="actionHiddenField" />
                             </span></li>
                         </ul>
                     </div>

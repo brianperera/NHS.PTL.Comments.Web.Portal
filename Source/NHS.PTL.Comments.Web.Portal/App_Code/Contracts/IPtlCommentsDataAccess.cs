@@ -14,5 +14,7 @@ namespace Nhs.Ptl.Comments.DataAccess
     {
         IList<PtlComment> GetAllPtlComments();
         bool AddPtlComment(PtlComment ptlComment);
+        bool UpdatePtlComment(PtlComment ptlComment);
+        PtlComment GetPtlComment(double uniqueRowIdentifier);
     }
 }

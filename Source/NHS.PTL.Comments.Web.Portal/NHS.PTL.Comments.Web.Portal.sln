@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "NHS.PTL.Comments.Web.Portal", ".", "{432DE949-B0F3-4495-97DD-2BE03516037E}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "NHS.PTL.Comments.Web.Portal", ".", "{4FC94788-A960-4C02-9913-170D7B88D18C}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/NHS.PTL.Comments.Web.Portal"
-		Debug.AspNetCompiler.PhysicalPath = "..\NHS.PTL.Comments.Web.Portal\"
+		Debug.AspNetCompiler.PhysicalPath = "G:\Freelance stuff\PTL\trunk\Source\NHS.PTL.Comments.Web.Portal\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\NHS.PTL.Comments.Web.Portal\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/NHS.PTL.Comments.Web.Portal"
-		Release.AspNetCompiler.PhysicalPath = "..\NHS.PTL.Comments.Web.Portal\"
+		Release.AspNetCompiler.PhysicalPath = "G:\Freelance stuff\PTL\trunk\Source\NHS.PTL.Comments.Web.Portal\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\NHS.PTL.Comments.Web.Portal\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
@@ -26,8 +26,8 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{432DE949-B0F3-4495-97DD-2BE03516037E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{432DE949-B0F3-4495-97DD-2BE03516037E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC94788-A960-4C02-9913-170D7B88D18C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC94788-A960-4C02-9913-170D7B88D18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

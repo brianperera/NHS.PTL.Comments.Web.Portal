@@ -32,5 +32,33 @@ namespace Nhs.Ptl.Comments.Utility
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
             return ptlCommentsData.GetAllPtlComments();
         }
+
+        public static PtlComment GetPtlComment(string uniqueRowIdentifier)
+        {
+            PtlComment ptlComment = null;
+            
+            double uniqueRowIdentifierValue;
+            if (double.TryParse(uniqueRowIdentifier, out uniqueRowIdentifierValue))
+            {
+                PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+                ptlComment =  ptlCommentsData.GetPtlComment(uniqueRowIdentifierValue);
+            }
+
+            return ptlComment;
+        }
+
+        public static bool AddUpdatePtlComment(PtlComment ptlComment, bool isUpdate)
+        {
+            bool isAddedUpdated = false;
+
+            if (null != ptlComment)
+            {
+                PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+
+                isAddedUpdated = (isUpdate) ? ptlCommentsData.UpdatePtlComment(ptlComment) : ptlCommentsData.AddPtlComment(ptlComment);
+            }
+
+            return isAddedUpdated;
+        }
     }
 }

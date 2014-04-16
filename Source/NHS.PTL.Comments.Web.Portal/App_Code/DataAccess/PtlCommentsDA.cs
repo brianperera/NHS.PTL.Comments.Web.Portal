@@ -15,6 +15,10 @@ namespace Nhs.Ptl.Comments.DataAccess
     public class PtlCommentsDA : DataAccessBase, IPtlCommentsDA
     {
 
+        /// <summary>
+        /// Gets all PTL comments
+        /// </summary>
+        /// <returns></returns>
         public IList<PtlComment> GetAllPtlComments()
         {
             IList<PtlComment> ptlComments = null;
@@ -111,6 +115,11 @@ namespace Nhs.Ptl.Comments.DataAccess
             return ptlComments;
         }
 
+        /// <summary>
+        /// Adds new PTL comment
+        /// </summary>
+        /// <param name="ptlComment"></param>
+        /// <returns></returns>
         public bool AddPtlComment(PtlComment ptlComment)
         {
             bool isAdded = false;
@@ -118,7 +127,7 @@ namespace Nhs.Ptl.Comments.DataAccess
             if (null == ptlComment)
             {
                 throw new ArgumentNullException("ptlComment", "PTL Comment cannot be null");
-            }            
+            }
 
             try
             {
@@ -140,6 +149,12 @@ namespace Nhs.Ptl.Comments.DataAccess
                         SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.Date, ptlComment.UpdatedDate);
                         SqlParameter comment = GetParameter("@Comment", SqlDbType.VarChar, ptlComment.Comment);
 
+                        command.Parameters.Add(rowIdentifier);
+                        command.Parameters.Add(status);
+                        command.Parameters.Add(appointmentDate);
+                        command.Parameters.Add(updatedDate);
+                        command.Parameters.Add(comment);
+
                         if (command.ExecuteNonQuery() > -1)
                         {
                             isAdded = true;
@@ -156,6 +171,10 @@ namespace Nhs.Ptl.Comments.DataAccess
             return isAdded;
         }
 
+        /// <summary>
+        /// Gets all unique row identifiers
+        /// </summary>
+        /// <returns></returns>
         public IList<string> GetAllUniqueRowIdentifiers()
         {
             IList<string> uniqueRowIdentifiers = null;
@@ -172,7 +191,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                     using (SqlCommand command = connection.CreateCommand())
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.CommandText = "GetAllUniqueRowIdentifiers";
+                        command.CommandText = "SelectAllUniqueRowIdentifiers";
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -193,10 +212,122 @@ namespace Nhs.Ptl.Comments.DataAccess
             {
             }
             catch (Exception ex)
-            { 
+            {
             }
 
             return uniqueRowIdentifiers;
+        }
+
+        public PtlComment GetPtlComment(double uniqueRowIdentifier)
+        {
+            PtlComment ptlComment = null;
+
+            try
+            {
+                using (SqlConnection connection = GetConnection())
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SelectCommentByUniqueRowId";
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        SqlParameter rowIdentifier = GetParameter("@UniqueCDSRowIdentifier", SqlDbType.BigInt, uniqueRowIdentifier);
+                        command.Parameters.Add(rowIdentifier);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                ptlComment = new PtlComment();
+
+                                if (reader.Read())
+                                {
+                                    ptlComment.UniqueCdsRowIdentifier = uniqueRowIdentifier;
+                                    ptlComment.Comment = !Convert.IsDBNull(reader["Comment"]) ? reader["Comment"].ToString() : string.Empty;
+                                    ptlComment.Status = !Convert.IsDBNull(reader["Status"]) ? reader["Status"].ToString() : string.Empty;
+
+                                    DateTime tempDateTime = DateTime.MinValue;
+
+                                    DateTime.TryParse(reader["AppointmentDate"].ToString(), out tempDateTime);
+                                    ptlComment.AppointmentDate = tempDateTime;
+
+                                    DateTime.TryParse(reader["UpdatedDate"].ToString(), out tempDateTime);
+                                    ptlComment.UpdatedDate = tempDateTime;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ptlComment;
+        }
+
+
+        public bool UpdatePtlComment(PtlComment ptlComment)
+        {
+
+            if (null == ptlComment)
+            {
+                throw new ArgumentNullException("ptlComment", "PTL Comment cannot be null");
+            }
+
+            bool isUpdated = false;
+
+            try
+            {
+                using (SqlConnection connection = GetConnection())
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.CommandText = "UpdatePtlComments";
+
+                        SqlParameter rowIdentifier = GetParameter("@UniqueCDSRowIdentifier", SqlDbType.BigInt, ptlComment.UniqueCdsRowIdentifier);
+                        SqlParameter status = GetParameter("@Status", SqlDbType.VarChar, ptlComment.Status);
+                        SqlParameter appointmentDate = GetParameter("@AppointmentDate", SqlDbType.Date, ptlComment.AppointmentDate);
+                        SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.Date, ptlComment.UpdatedDate);
+                        SqlParameter comment = GetParameter("@Comment", SqlDbType.VarChar, ptlComment.Comment);
+
+                        command.Parameters.Add(rowIdentifier);
+                        command.Parameters.Add(status);
+                        command.Parameters.Add(appointmentDate);
+                        command.Parameters.Add(updatedDate);
+                        command.Parameters.Add(comment);
+
+                        if (command.ExecuteNonQuery() > -1)
+                        {
+                            isUpdated = true;
+                        }
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return isUpdated;
         }
     }
 }

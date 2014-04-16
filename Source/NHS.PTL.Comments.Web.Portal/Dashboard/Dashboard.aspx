@@ -13,36 +13,37 @@
                 PTL Comments Dashboard
             </h2>
         </div>
-        <div>
-            <div class="filterContainer">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
                 <div>
-                    <ul class="formSection">
-                        <li><span class="formTitleFields">Patient</span> <span class="formFieldControl">
-                            <asp:TextBox ID="patientTextbox" runat="server" ViewStateMode="Enabled"></asp:TextBox>
-                        </span></li>
-                        <li><span class="formTitleFields">Speciality</span> <span class="formFieldControl">
-                            <asp:DropDownList ID="specialityDropdown" runat="server" CssClass="defaultDropDown">
-                            </asp:DropDownList>
-                        </span></li>
-                        <li><span class="formTitleFields">Consultant</span> <span class="formFieldControl">
-                            <asp:DropDownList ID="consultantDropdown" runat="server" CssClass="defaultDropDown">
-                            </asp:DropDownList>
-                        </span></li>
-                        <li><span class="formTitleFields">Status</span> <span class="formFieldControl">
-                            <asp:DropDownList ID="statusDropdown" runat="server" CssClass="defaultDropDown">
-                            </asp:DropDownList>
-                        </span></li>
-                        <li><span>
-                            <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton" />
-                        </span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="clear">
-            </div>
-            <div class="subSections regularTable">
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                    <ContentTemplate>
+                    <div class="filterContainer">
+                        <div>
+                            <ul class="formSection">
+                                <li><span class="formTitleFields">Patient</span> <span class="formFieldControl">
+                                    <asp:TextBox ID="patientTextbox" runat="server" ViewStateMode="Enabled"></asp:TextBox>
+                                </span></li>
+                                <li><span class="formTitleFields">Speciality</span> <span class="formFieldControl">
+                                    <asp:DropDownList ID="specialityDropdown" runat="server" CssClass="defaultDropDown">
+                                    </asp:DropDownList>
+                                </span></li>
+                                <li><span class="formTitleFields">Consultant</span> <span class="formFieldControl">
+                                    <asp:DropDownList ID="consultantDropdown" runat="server" CssClass="defaultDropDown">
+                                    </asp:DropDownList>
+                                </span></li>
+                                <li><span class="formTitleFields">Status</span> <span class="formFieldControl">
+                                    <asp:DropDownList ID="statusDropdown" runat="server" CssClass="defaultDropDown">
+                                    </asp:DropDownList>
+                                </span></li>
+                                <li><span>
+                                    <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton"
+                                        OnClick="searchButton_Click" />
+                                </span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="subSections regularTable">
                         <div class="gridOuter">
                             <asp:GridView ID="commentsGrid" AutoGenerateColumns="False" runat="server" CellPadding="3"
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
@@ -90,9 +91,9 @@
                                 <SortedDescendingHeaderStyle BackColor="#00547E" />
                             </asp:GridView>
                         </div>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
 </asp:Content>
