@@ -7,7 +7,7 @@ html, body, .mainForm
 }
 
 
-body   
+body
 {
     background: #fff; /* Old browsers */ /*border-top: solid 10px #000;*/
     color: #000;
@@ -42,65 +42,63 @@ p
 
 li
 {
-    list-style-type:none;  
-    padding: 0;  
+    list-style-type: none;
+    padding: 0;
 }
 
 ul
 {
-    padding: 0;     
+    padding: 0;
 }
 
 .defaultDropDown
 {
-        
 }
 
 .defaultListBox
 {
-    width:300px;    
+    width: 300px;
 }
 
 .formSection
 {
-    padding-bottom:10px;
-    font-size:11px;
+    padding-bottom: 10px;
+    font-size: 11px;
     border-bottom: 1px dotted #E2E2E2;
 }
 
 .noPadding
 {
-    padding:0px !important;    
+    padding: 0px !important;
 }
 
 .noBottonBorders
 {
-    border:0px !important;
+    border: 0px !important;
 }
 
 .formSection li
 {
-    margin-bottom:10px;    
+    margin-bottom: 10px;
 }
 
 .pagedata ul
 {
-    margin-top:0px;    
+    margin-top: 0px;
 }
 
 .dashBoard
 {
-   border: 1px solid #dddddd;
-   border-collapse:collapse;
-   font-size:11px;   
-   width:100%;  
-   table-layout:fixed;
-   text-align:center;
+    border: 1px solid #dddddd;
+    border-collapse: collapse;
+    font-size: 11px;
+    width: 100%;
+    table-layout: fixed;
+    text-align: center;
 }
 
 .dashBoard tr
 {
-  
 }
 
 .dashBoard tr th
@@ -110,8 +108,8 @@ ul
     font-weight: normal;
     vertical-align: middle;
     padding: 4px 6px;
-    width:50px;
-    text-align:center;
+    width: 50px;
+    text-align: center;
 }
 
 .dashBoard tr td
@@ -120,15 +118,15 @@ ul
     color: #000;
     vertical-align: middle;
     padding: 4px 6px;
-    width:50px;
-	text-align:left;
+    width: 50px;
+    text-align: left;
 }
 
 /* regular table*/
 .regularTable
 {
-   border-collapse:collapse;
-   font-size:13px;   
+    border-collapse: collapse;
+    font-size: 13px;
 }
 
 .regularTable tr th
@@ -138,7 +136,7 @@ ul
     font-weight: bold;
     vertical-align: middle;
     padding: 4px 6px;
-    width:50px;   
+    width: 50px;
 }
 
 .regularTable tr td
@@ -147,48 +145,49 @@ ul
     color: #000;
     vertical-align: middle;
     padding: 4px 6px;
-    width:50px;
+    width: 50px;
 }
 
 .tableColumnLargeWidth
 {
-    width:150px !important;
-}.aquaBackground
+    width: 150px !important;
+}
+.aquaBackground
 {
-    background-color:#0083f0;
-    font-weight:bold;
-} 
+    background-color: #0083f0;
+    font-weight: bold;
+}
 
 .redBackground
 {
-    background-color:Red;    
-    font-weight:bold !important;
-    color:White !important;
+    background-color: Red;
+    font-weight: bold !important;
+    color: White !important;
 }
 
 .grayBackground td
 {
-    background-color:#EEEEEE;    
-    font-weight:bold; 
-    color: #000 !important;   
+    background-color: #EEEEEE;
+    font-weight: bold;
+    color: #000 !important;
 }
 
 .grayBackground th
 {
-    background-color:#EEEEEE;    
-    font-weight:bold !important;           
+    background-color: #EEEEEE;
+    font-weight: bold !important;
 }
 
 .darkGrayBackground td
 {
-    background-color:#B3B4B5;    
-    font-weight:bold !important; 
-    color: #000 !important;   
+    background-color: #B3B4B5;
+    font-weight: bold !important;
+    color: #000 !important;
 }
 
 .boldText th
-{  
-    font-weight:bold !important;    
+{
+    font-weight: bold !important;
 }
 
 /* HEADINGS   
@@ -247,22 +246,22 @@ first child of the left and right table columns */
 
 .sections
 {
-    margin:0px 0px 30px 0px;    
+    margin: 0px 0px 30px 0px;
 }
 
 .subSections
 {
-    margin:0px 0px 20px 0px;    
+    margin: 0px 0px 20px 0px;
 }
 
 .subSections span
 {
-    margin-right:20px;    
+    margin-right: 20px;
 }
 
 .subSections h3
 {
-    font-size: 11px;   
+    font-size: 11px;
 }
 
 /* PRIMARY LAYOUT ELEMENTS   
@@ -273,7 +272,8 @@ first child of the left and right table columns */
     background-color: #fff;
 }
 
-.header {
+.header
+{
     height: 50px;
     background: #3a9cee; /* Old browsers */
     background: -moz-linear-gradient(top, #3a9cee 0%, #005fa6 100%); /* FF3.6+ */
@@ -286,15 +286,16 @@ first child of the left and right table columns */
     padding: 0 20px;
     vertical-align: middle;
     font-size: 24px;
-    text-transform: uppercase;    
+    text-transform: uppercase;
 }
 
-.smallTableHeader {
+.smallTableHeader
+{
     background: linear-gradient(to bottom, #3A9CEE 0%, #005FA6 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     vertical-align: middle;
-    padding:2px 5px 2px 5px;
-    margin:2px 5px 2px 5px;
-    color:White;
+    padding: 2px 5px 2px 5px;
+    margin: 2px 5px 2px 5px;
+    color: White;
 }
 
 .header h1
@@ -311,7 +312,7 @@ first child of the left and right table columns */
 .logos
 {
     font-size: 14px;
-    padding:10px 20px 0px 0px;
+    padding: 10px 20px 0px 0px;
     text-align: right;
     text-transform: none;
     color: #FFFFFF;
@@ -323,15 +324,16 @@ first child of the left and right table columns */
     float: right;
     margin-left: 15px;
     margin-top: 5px;
-    width: 41px;    
+    width: 41px;
 }
 
-div.hosName 
+div.hosName
 {
     vertical-align: baseline;
 }
 
-div.NHS_name {
+div.NHS_name
+{
     font-size: 10px;
     right: 75px;
     top: 27px;
@@ -345,7 +347,7 @@ div.NHS_name {
 
 .blueBackGround
 {
-    height:100%;
+    height: 100%;
     overflow: hidden;
     background: #0f55b7; /* Old browsers */
     background: #1b88e5; /* Old browsers */
@@ -381,13 +383,13 @@ div.NHS_name {
 
 .navigationBar
 {
-    background-color:#EEEEEE;
-    padding-left:10px;
+    background-color: #EEEEEE;
+    padding-left: 10px;
 }
 
 .navigationBarItems
 {
-    float:left;    
+    float: left;
 }
 
 .navigationBar a
@@ -411,7 +413,7 @@ div.menu ul
 
 div.menu ul li
 {
-    border: 1px #EEEEEE solid;    
+    border: 1px #EEEEEE solid;
 }
 
 div.menu ul li a, div.menu ul li a:visited
@@ -450,7 +452,7 @@ fieldset
     border: 1px solid #ccc;
 }
 
-fieldset p 
+fieldset p
 {
     margin: 2px 5px 5px 0px;
 }
@@ -460,34 +462,34 @@ fieldset.login label, fieldset.register label, fieldset.changePassword label
     display: block;
 }
 
-fieldset label.inline 
+fieldset label.inline
 {
     display: inline;
 }
 
-legend 
+legend
 {
     font-size: 1.1em;
     font-weight: 600;
     padding: 2px 4px 8px 4px;
 }
 
-input.textEntry 
+input.textEntry
 {
     border: 1px solid #ccc;
     width: 100%;
 }
 
-input.passwordEntry 
+input.passwordEntry
 {
-/*    width: 320px;*/
+    /*    width: 320px;*/
     width: 100%;
     border: 1px solid #ccc;
 }
 
 .floatLeft
 {
-    float:left;    
+    float: left;
 }
 
 div.accountInfo
@@ -499,61 +501,61 @@ div.accountInfo
 
 .formTitleFields
 {
-    width:200px;    
-    float:left;
-    vertical-align:text-bottom;
+    width: 200px;
+    float: left;
+    vertical-align: text-bottom;
 }
 
 .formTitleFieldsCenterText
 {
-    width:200px;    
-    float:left;
-    text-align:center;
+    width: 200px;
+    float: left;
+    text-align: center;
 }
 
 .shortSpan
 {
-    width:70px !important;    
+    width: 70px !important;
 }
 
 .formTitleFieldsWithoutFloat
 {
-    width:200px;    
-    text-align:center;
-    vertical-align:middle;
-    display:inline-block;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
 }
 
 .shortFormTitleFieldsWithoutFloat
 {
-    width:50px;    
-    text-align:center;
-    vertical-align:middle; 
+    width: 50px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .formFieldControl
 {
-    width:200px;
-    padding-right:10px;
+    width: 200px;
+    padding-right: 10px;
 }
 
 .formFieldControlHelpText
 {
-    font-style:italic; 
+    font-style: italic;
     color: #707070;
-    font-size:10px;
+    font-size: 10px;
 }
 
 .longFormTitleFields
 {
-    width:500px;
-    padding-right:10px;
-    float:left;
+    width: 500px;
+    padding-right: 10px;
+    float: left;
 }
 
 div.accountInfo .register p span
 {
-    width:300px;
+    width: 300px;
 }
 
 div.accountInfoCentered
@@ -595,9 +597,9 @@ div.accountInfoCentered
     display: block;
     text-align: right;
     padding: 8px;
-    margin-right:30px;
+    margin-right: 30px;
     color: #666666;
-    float:right;
+    float: right;
     font-size: 12px;
     text-transform: uppercase;
 }
@@ -605,19 +607,19 @@ div.accountInfoCentered
 .menu .dynamic
 {
     border-bottom: 1px solid white;
-    cursor: pointer;  
+    cursor: pointer;
 }
 
 .menu .static
 {
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 
 .adminNavigation
 {
-    float:right;
-    margin-right:20px
+    float: right;
+    margin-right: 20px;
 }
 
 .loginDisplay a:visited
@@ -638,7 +640,7 @@ div.accountInfoCentered
 
 .loginFields
 {
-    float:left;    
+    float: left;
 }
 
 .login legend
@@ -655,7 +657,7 @@ div.accountInfoCentered
 }
 
 .submitButton
-{    
+{
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -681,7 +683,7 @@ div.accountInfoCentered
 }
 
 .deleteButton
-{    
+{
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -754,9 +756,8 @@ div.accountInfoCentered
 .login_content span
 {
     font-size: 14px;
-    
     text-transform: uppercase;
-    display:inline-block;
+    display: inline-block;
 }
 .login_content input[type=text], .login_content input[type=password]
 {
@@ -778,14 +779,13 @@ div.accountInfoCentered
 }
 .ie7 .login_content
 {
-    
 }
 .login_footer
 {
     text-align: center;
     margin-top: 20px;
     vertical-align: middle;
-    display:none
+    display: none;
 }
 .login_footer span
 {
@@ -799,33 +799,31 @@ div.accountInfoCentered
 
 .login_panel input[type=submit]
 {
-    padding:0px 8px;
-    margin-top: 1px; 
-    vertical-align:top
-     
+    padding: 0px 8px;
+    margin-top: 1px;
+    vertical-align: top;
 }
 
 .ie7 .login_panel input[type=submit]
-{    
-    margin: 0; 
-     
+{
+    margin: 0;
 }
 
 .login_panel span
 {
-   padding:0;
-    margin: 0px;  
-    color:#707070    
+    padding: 0;
+    margin: 0px;
+    color: #707070;
 }
 
 .fieldSeperator
 {
-    margin:10px 0px 5px 0px;    
+    margin: 10px 0px 5px 0px;
 }
 
 .fieldName
 {
-    width:120px;    
+    width: 120px;
 }
 
 /* Page Layout */
@@ -833,26 +831,26 @@ div.accountInfoCentered
 input[type=text], input[type=password], textarea, select
 {
     color: #000;
-    display: inline-block;    
+    display: inline-block;
     padding: 2px 5px;
-    border:1px solid #dddddd;
-    font-size:11px;
-    width:200px;
+    border: 1px solid #dddddd;
+    font-size: 11px;
+    width: 200px;
 }
 
 .shortTextBox input[type=text]
 {
-    width:50px !important;
+    width: 50px !important;
 }
 
 select
 {
-    width:212px;
+    width: 212px;
 }
 
 input[type=text]:hover, input[type=password]:hover, textarea:hover
 {
-     border:1px solid #26a0da
+    border: 1px solid #26a0da;
 }
 
 
@@ -868,31 +866,36 @@ label, span
     font-weight: 700;
     height: 17px;
     margin: 2px 0;
-    padding: 2px 1px;    
+    padding: 2px 1px;
 }
 
-.grid {
+.grid
+{
     border: solid 1px #dddddd;
     text-align: left;
     width: 100%;
-    font-size: 11px;
+    font-size: 11px;    
 }
 
-.grid .altrow {
+.grid .altrow
+{
     background-color: #eff9fd;
 }
 
-.gridtitle {
+.gridtitle
+{
     font-weight: bold;
 }
 
-.gridtitle h3 {
+.gridtitle h3
+{
     color: #535353 !important;
     margin-bottom: 5px;
-    font-size:13px;
+    font-size: 13px;
 }
 
-.grid tr th {
+.grid tr th
+{
     font-weight: 700;
     color: #FFF;
     letter-spacing: 0px;
@@ -901,7 +904,8 @@ label, span
     padding: 3px 3px;
 }
 
-.grid tr td {
+.grid tr td
+{
     border: solid 1px #dddddd;
     color: #000;
     font-weight: normal;
@@ -909,188 +913,212 @@ label, span
     padding: 2px 3px;
 }
 
-.grid tr td span, .grid a {
+.grid tr td span, .grid a
+{
     color: #000 !important;
     vertical-align: middle;
     font-weight: normal;
 }
 
+.gridOuter
+{
+    overflow-x: scroll;    
+}
 /* Alerts */
 
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
+.alert
+{
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-.alert h4 {
-  margin-top: 0;
-  color: inherit;
+.alert h4
+{
+    margin-top: 0;
+    color: inherit;
 }
 
-.alert .alert-link {
-  font-weight: bold;
+.alert .alert-link
+{
+    font-weight: bold;
 }
 
-.alert > p,
-.alert > ul {
-  margin-bottom: 0;
+.alert > p, .alert > ul
+{
+    margin-bottom: 0;
 }
 
-.alert > p + p {
-  margin-top: 5px;
+.alert > p + p
+{
+    margin-top: 5px;
 }
 
-.alert-dismissable {
-  padding-right: 35px;
+.alert-dismissable
+{
+    padding-right: 35px;
 }
 
-.alert-dismissable .close {
-  position: relative;
-  top: -2px;
-  right: -21px;
+.alert-dismissable .close
+{
+    position: relative;
+    top: -2px;
+    right: -21px;
 }
 
-.alert-success {
-  color: #468847;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
+.alert-success
+{
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
 }
 
 .error_msg
 {
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
-.error_msg .alert-success  
+.error_msg .alert-success
 {
-    padding:10px 0 10px 60px ;
+    padding: 10px 0 10px 60px;
     color: #468847;
-    width:97%;
-    font-size:16px;
-    display:inline-block;
-    background:#dff0d8 url(../images/tick.png) no-repeat left;
+    width: 97%;
+    font-size: 16px;
+    display: inline-block;
+    background: #dff0d8 url(../images/tick.png) no-repeat left;
 }
 
 
 
-.error_msg .alert-danger 
+.error_msg .alert-danger
 {
-    padding:10px 0 10px 60px ;
+    padding: 10px 0 10px 60px;
     color: #b94a48;
-    margin-bottom:20px;
-    width:97%;
-    font-size:16px;
-    background:#f2dede url(../images/close.png) no-repeat left;
+    margin-bottom: 20px;
+    width: 97%;
+    font-size: 16px;
+    background: #f2dede url(../images/close.png) no-repeat left;
     border-color: #eed3d7;
-    display:inline-block;
+    display: inline-block;
 }
 
-.error_msg .alert-danger 
+.error_msg .alert-danger
 {
-    padding:10px 0 10px 60px ;
+    padding: 10px 0 10px 60px;
     color: #b94a48;
-    margin-bottom:20px;
-    width:97%;
-    font-size:16px;
-    background:#f2dede url(../images/close.png) no-repeat left;
+    margin-bottom: 20px;
+    width: 97%;
+    font-size: 16px;
+    background: #f2dede url(../images/close.png) no-repeat left;
     border-color: #eed3d7;
 }
 
-.alert-success hr {
-  border-top-color: #c9e2b3;
-}
-
-.alert-success .alert-link {
-  color: #356635;
-}
-
-.alert-info {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-}
-
-.error_msg .alert-info 
+.alert-success hr
 {
-    padding:10px 0 10px 60px ;
+    border-top-color: #c9e2b3;
+}
+
+.alert-success .alert-link
+{
+    color: #356635;
+}
+
+.alert-info
+{
     color: #3a87ad;
-    margin-bottom:20px;
-    width:97%;
-    font-size:16px;
-    background:#d9edf7 url(../images/info.png) no-repeat left;
+    background-color: #d9edf7;
     border-color: #bce8f1;
 }
 
-.alert-info hr {
-  border-top-color: #a6e1ec;
+.error_msg .alert-info
+{
+    padding: 10px 0 10px 60px;
+    color: #3a87ad;
+    margin-bottom: 20px;
+    width: 97%;
+    font-size: 16px;
+    background: #d9edf7 url(../images/info.png) no-repeat left;
+    border-color: #bce8f1;
 }
 
-.alert-info .alert-link {
-  color: #2d6987;
+.alert-info hr
+{
+    border-top-color: #a6e1ec;
 }
 
-.alert-warning {
-  color: #c09853;
-  background-color: #fcf8e3;
-  border-color: #fbeed5;
+.alert-info .alert-link
+{
+    color: #2d6987;
 }
 
-.alert-warning hr {
-  border-top-color: #f8e5be;
+.alert-warning
+{
+    color: #c09853;
+    background-color: #fcf8e3;
+    border-color: #fbeed5;
 }
 
-.alert-warning .alert-link {
-  color: #a47e3c;
+.alert-warning hr
+{
+    border-top-color: #f8e5be;
 }
 
-.alert-danger {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
+.alert-warning .alert-link
+{
+    color: #a47e3c;
 }
 
-.alert-danger hr {
-  border-top-color: #e6c1c7;
+.alert-danger
+{
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
 }
 
-.alert-danger .alert-link {
-  color: #953b39;
+.alert-danger hr
+{
+    border-top-color: #e6c1c7;
 }
 
-.well {
+.alert-danger .alert-link
+{
+    color: #953b39;
+}
+
+.well
+{
     background-color: #F5F5F5;
     border: 0px solid #E3E3E3;
     border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;    
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
 }
 
 
-.lgn_messages 
+.lgn_messages
 {
-     position: absolute;
+    position: absolute;
     top: 150px;
 }
 
 
-.lgn_messages h2 
+.lgn_messages h2
 {
-    color:#fff;
-    font-size:15px;
-    margin-bottom:10px
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 
-.lgn_messages p 
+.lgn_messages p
 {
-    color:#d4e9ff;    
-    margin:10px 0;
-    font-size:12px
+    color: #d4e9ff;
+    margin: 10px 0;
+    font-size: 12px;
 }
 
 .hideRow
 {
-    display:none;    
+    display: none;
 }
 
 .hideSkiplink > a
@@ -1106,24 +1134,24 @@ label, span
 .greenBackgroundDashboard
 {
     background-color: Green;
-    font-weight:bold !important;    
+    font-weight: bold !important;
 }
 
 .redBackgroundDashboard
 {
-    background-color:Red;    
-    font-weight:bold !important;
+    background-color: Red;
+    font-weight: bold !important;
 }
 
 .horizontalWidth
 {
     width: 225px;
-}    
+}
 
 .gridPagerStyle tr td
 {
     width: 50px;
     padding-right: 0px;
-    overflow: hidden;        
+    overflow: hidden;
     height: 15px;
 }
