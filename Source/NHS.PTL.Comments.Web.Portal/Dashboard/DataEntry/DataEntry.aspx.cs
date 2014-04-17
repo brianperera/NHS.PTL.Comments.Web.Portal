@@ -12,8 +12,10 @@ namespace Nhs.Ptl.Comments.Web
 {
     public partial class DataEntry : Page
     {
-        public bool IsUpdate 
-        { 
+        #region Private Properties
+
+        private bool IsUpdate
+        {
             get
             {
                 return bool.Parse(actionHiddenField.Value);
@@ -23,6 +25,10 @@ namespace Nhs.Ptl.Comments.Web
                 actionHiddenField.Value = value.ToString();
             }
         }
+
+        #endregion
+
+        #region Page Events
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,6 +40,41 @@ namespace Nhs.Ptl.Comments.Web
                 IsUpdate = false;
             }
         }
+
+        protected void submitButton_Click(object sender, EventArgs e)
+        {
+            PtlComment ptlComment = new PtlComment();
+            ptlComment.UniqueCdsRowIdentifier = double.Parse(uniqueIdentifierDrowpdown.SelectedValue);
+            ptlComment.Status = statusDropdown.SelectedValue;
+            ptlComment.AppointmentDate = DateTime.Parse(appointmentDateTextbox.Text);
+            ptlComment.UpdatedDate = DateTime.Now.Date;
+            ptlComment.Comment = commentTextbox.Text;
+
+            DisplayMessage(CommentsManager.AddUpdatePtlComment(ptlComment, IsUpdate));
+        }
+
+        protected void uniqueIdentifierDrowpdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearInputFields();
+
+            PtlComment ptlComment = CommentsManager.GetPtlComment(uniqueIdentifierDrowpdown.SelectedValue);
+
+            if (null != ptlComment)
+            {
+                // Record already exists for selected row identifier
+                BindCommentData(ptlComment);
+                IsUpdate = true;
+            }
+            else
+            {
+                // New record
+                IsUpdate = false;
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private void PopulateStatusDropdown()
         {
@@ -52,29 +93,6 @@ namespace Nhs.Ptl.Comments.Web
             {
                 uniqueIdentifierDrowpdown.DataSource = uniqueRowIdentifiers;
                 uniqueIdentifierDrowpdown.DataBind();
-            }
-        }
-
-        protected void submitButton_Click(object sender, EventArgs e)
-        {
-            PtlComment ptlComment = new PtlComment();
-            ptlComment.UniqueCdsRowIdentifier = double.Parse(uniqueIdentifierDrowpdown.SelectedValue);
-            ptlComment.Status = statusDropdown.SelectedValue;
-            ptlComment.AppointmentDate = DateTime.Parse(appointmentDateTextbox.Text);
-            ptlComment.UpdatedDate = DateTime.Now.Date;
-            ptlComment.Comment = commentTextbox.Text;
-
-            CommentsManager.AddUpdatePtlComment(ptlComment, IsUpdate);
-        }
-
-        protected void uniqueIdentifierDrowpdown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PtlComment ptlComment = CommentsManager.GetPtlComment(uniqueIdentifierDrowpdown.SelectedValue);
-
-            if (null != ptlComment)
-            {
-                BindCommentData(ptlComment);
-                IsUpdate = true;
             }
         }
 
@@ -97,8 +115,28 @@ namespace Nhs.Ptl.Comments.Web
                 ListItem defaultItem = new ListItem(ConfigurationManager.AppSettings["DropDownDefaultText"]);
 
                 uniqueIdentifierDrowpdown.Items.Insert(0, defaultItem);
-                statusDropdown.Items.Insert(0, defaultItem);
+                //statusDropdown.Items.Insert(0, defaultItem);
             }
         }
+
+        /// <summary>
+        /// Clears all input fields except unique identifier dropdown
+        /// </summary>
+        private void ClearInputFields()
+        {
+            statusDropdown.SelectedIndex = 0;
+            appointmentDateTextbox.Text = string.Empty;
+            commentTextbox.Text = string.Empty;
+            MessageLabel.Visible = false;
+        }
+
+        private void DisplayMessage(bool executionStatus)
+        {
+            MessageLabel.Visible = true;
+            MessageLabel.Text = executionStatus == true ? "Record Updated Successfully" : "Record Not Updated";
+            MessageLabel.CssClass = executionStatus == true ? "alert-success" : "alert-danger";
+        }
+
+        #endregion
     }
 }
