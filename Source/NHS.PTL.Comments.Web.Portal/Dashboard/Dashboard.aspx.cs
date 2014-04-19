@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Nhs.Ptl.Comments.Utility;
-using Nhs.Ptl.Comments.Contracts.Dto;
 using System.Configuration;
+using System.Linq;
+using System.Web.UI.WebControls;
+using Nhs.Ptl.Comments.Contracts.Dto;
+using Nhs.Ptl.Comments.Utility;
 
 namespace Nhs.Ptl.Comments.Web
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        #region Page Events
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
@@ -33,6 +33,15 @@ namespace Nhs.Ptl.Comments.Web
 
             }
         }
+
+        protected void searchButton_Click(object sender, EventArgs e)
+        {
+            FilterGrid();
+        }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Populate Status dropdown
@@ -86,11 +95,6 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
-        protected void searchButton_Click(object sender, EventArgs e)
-        {
-            FilterGrid();
-        }
-
         /// <summary>
         /// Filter PTL comment data upon click on 'Search'
         /// </summary>
@@ -129,5 +133,7 @@ namespace Nhs.Ptl.Comments.Web
                 commentsGrid.DataBind();
             }
         }
+
+        #endregion
     }
 }

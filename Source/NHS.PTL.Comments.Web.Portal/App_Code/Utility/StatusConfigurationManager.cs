@@ -19,13 +19,7 @@ namespace Nhs.Ptl.Comments.Utility
         /// <returns></returns>
         public static IList<string> GetAllStatuses()
         {
-            NameValueCollection statuses = new NameValueCollection();
-
-            // Read the 'statusConfiguration' section in web.config and retrieve values
-            if (null != ConfigurationManager.GetSection("statusConfiguration"))
-            {
-                statuses = (NameValueCollection)ConfigurationManager.GetSection("statusConfiguration");
-            }
+            NameValueCollection statuses = ReadStatusData();
 
             IList<string> statusList = null;
 
@@ -42,6 +36,64 @@ namespace Nhs.Ptl.Comments.Utility
             }
 
             return statusList;
+        }
+
+        /// <summary>
+        /// Gets specific status value from web.config
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string GetStatusValue(string key)
+        {
+            string value = null;
+
+            try
+            {
+                NameValueCollection statuses = ReadStatusData();
+
+                if (null != statuses)
+                {
+                    value = statuses.GetValues(key).FirstOrDefault();
+                }
+            }
+            catch (ConfigurationErrorsException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Reads status data from web.config
+        /// </summary>
+        /// <returns></returns>
+        private static NameValueCollection ReadStatusData()
+        {
+            NameValueCollection statuses = null;
+
+            try
+            {
+                // Read the 'statusConfiguration' section in web.config and retrieve values
+                if (null != ConfigurationManager.GetSection("statusConfiguration"))
+                {
+                    statuses = (NameValueCollection)ConfigurationManager.GetSection("statusConfiguration");
+                }
+            }
+            catch (ConfigurationErrorsException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return statuses;
         }
     }
 }

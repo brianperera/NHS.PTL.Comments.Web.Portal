@@ -218,6 +218,11 @@ namespace Nhs.Ptl.Comments.DataAccess
             return uniqueRowIdentifiers;
         }
 
+        /// <summary>
+        /// Gets a PTL comment when unique row identifiers is given
+        /// </summary>
+        /// <param name="uniqueRowIdentifier"></param>
+        /// <returns></returns>
         public PtlComment GetPtlComment(double uniqueRowIdentifier)
         {
             PtlComment ptlComment = null;
@@ -258,6 +263,14 @@ namespace Nhs.Ptl.Comments.DataAccess
 
                                     DateTime.TryParse(reader["UpdatedDate"].ToString(), out tempDateTime);
                                     ptlComment.UpdatedDate = tempDateTime;
+
+                                    DateTime.TryParse(reader["RTTBreachDate"].ToString(), out tempDateTime);
+                                    ptlComment.RttBreachDate = tempDateTime;
+
+                                    DateTime.TryParse(reader["FutureClinicDate"].ToString(), out tempDateTime);
+                                    ptlComment.FutureClinicDate = tempDateTime;
+
+
                                 }
                             }
                         }
@@ -274,8 +287,12 @@ namespace Nhs.Ptl.Comments.DataAccess
             }
             return ptlComment;
         }
-
-
+        
+        /// <summary>
+        /// Method to update a PTL comment
+        /// </summary>
+        /// <param name="ptlComment"></param>
+        /// <returns></returns>
         public bool UpdatePtlComment(PtlComment ptlComment)
         {
 

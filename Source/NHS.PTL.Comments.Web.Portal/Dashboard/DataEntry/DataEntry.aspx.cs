@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Nhs.Ptl.Comments.Utility;
 using Nhs.Ptl.Comments.Contracts.Dto;
-using System.Configuration;
+using Nhs.Ptl.Comments.Utility;
 
 namespace Nhs.Ptl.Comments.Web
 {
@@ -61,14 +60,18 @@ namespace Nhs.Ptl.Comments.Web
 
             if (null != ptlComment)
             {
-                // Record already exists for selected row identifier
-                BindCommentData(ptlComment);
-                IsUpdate = true;
-            }
-            else
-            {
-                // New record
-                IsUpdate = false;
+                if (ptlComment.UpdatedDate != DateTime.MinValue)
+                {
+                    // Record already exists for selected row identifier
+                    BindCommentData(ptlComment);
+                    IsUpdate = true;
+                }
+                else
+                {
+                    // New record
+                    IsUpdate = false;
+                    SetBreachDatePassedStatus(ptlComment.RttBreachDate, ptlComment.FutureClinicDate);
+                }
             }
         }
 
@@ -135,6 +138,22 @@ namespace Nhs.Ptl.Comments.Web
             MessageLabel.Visible = true;
             MessageLabel.Text = executionStatus == true ? "Record Updated Successfully" : "Record Not Updated";
             MessageLabel.CssClass = executionStatus == true ? "alert-success" : "alert-danger";
+        }
+
+        private void SetBreachDatePassedStatus(DateTime breachDate, DateTime futureClinicDate)
+        {
+            if (futureClinicDate >= breachDate)
+            {
+                string bringFowardStatus = StatusConfigurationManager.GetStatusValue("BringForward");
+
+                if (!string.IsNullOrEmpty(bringFowardStatus))
+                {
+                    if (null != statusDropdown.Items.FindByText(bringFowardStatus))
+                    {
+                        statusDropdown.SelectedValue = bringFowardStatus;
+                    }
+                }
+            }
         }
 
         #endregion
