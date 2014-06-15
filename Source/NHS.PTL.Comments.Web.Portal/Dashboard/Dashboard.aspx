@@ -3,10 +3,74 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+    <script src="../Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+    <script src="../Scripts/ui.core.js" type="text/javascript"></script>
+    <script src="../Scripts/effects.core.js" type="text/javascript"></script>
+    <script src="../Scripts/ui.dialog.js" type="text/javascript"></script>
+    <script src="../Scripts/CommentsScript.js" type="text/javascript"></script>
+    <link href="../Styles/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
+    <div id="entryForm">
+        <div>
+            <iframe src="DataEntry/DataEntry.aspx" width="550" height="300"></iframe>
+            <%--<div class="pageHeader">
+                <h2>
+                    Data Entry
+                </h2>
+            </div>
+            <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <ContentTemplate>
+                    <div class="pagedata">
+                        <div>
+                            <div class="grid_24 error_msg">
+                                <asp:Label ID="MessageLabel" runat="server" />
+                            </div>
+                            <ul class="formSection">
+                                <li><span class="formTitleFields">UniqueCDSRowIdentifier</span> <span class="formFieldControl uniqueIdentifier">
+                                    <asp:Literal runat="server" ID="uniqueIdentifier"></asp:Literal>                                    
+                                </span></li>
+                                <li><span class="formTitleFields">Status</span> <span class="formFieldControl">
+                                    <asp:DropDownList ID="DropDownList1" runat="server" CssClass="defaultDropDown">
+                                    </asp:DropDownList>
+                                </span></li>
+                                <li><span class="formTitleFields">Appointment Date</span> <span class="formFieldControl">
+                                    <asp:TextBox ID="appointmentDateTextbox" runat="server" ViewStateMode="Enabled"></asp:TextBox>
+                                    <asp:CalendarExtender Animated="true" Format="dd/MM/yyyy" ID="CalendarExtender1"
+                                        TargetControlID="appointmentDateTextbox" runat="server" ViewStateMode="Enabled" />
+                                </span></li>
+                                <li><span class="formTitleFields">Comment</span> <span class="formFieldControl">
+                                    <asp:TextBox ID="commentTextbox" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                </span></li>
+                                <li><span>
+                                    <asp:Button CssClass="submitButton" Text="Submit" runat="server" 
+                                        ID="submitButton" onclick="submitButton_Click" />
+                                    <asp:HiddenField runat="server" ID="actionHiddenField" />
+                                </span></li>
+                            </ul>
+                            <div class="subSections regularTable">
+                                <div class="gridOuter">
+                                    <asp:GridView ID="commentsGrid" AutoGenerateColumns="False" runat="server" CellPadding="3"
+                                        BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
+                                        CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
+                                        ShowHeaderWhenEmpty="true" ShowHeader="true">
+                                        <Columns>
+                                            <asp:BoundField HeaderText="UniqueCDSRowIdentifier" />
+                                            <asp:BoundField HeaderText="Status" />
+                                            <asp:BoundField HeaderText="Appointment Date" />
+                                            <asp:BoundField HeaderText="Comment" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>--%>
+        </div>
+    </div>
     <div class="main">
         <div class="pageHeader">
             <h2>
@@ -45,12 +109,18 @@
                     </div>
                     <div class="subSections regularTable">
                         <div class="gridOuter">
-                            <asp:GridView ID="commentsGrid" AutoGenerateColumns="False" runat="server" CellPadding="3"
+                            <asp:GridView ID="referrelGrid" AutoGenerateColumns="False" runat="server" CellPadding="3"
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
                                 CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
                                 ShowHeaderWhenEmpty="true" ShowHeader="true">
                                 <Columns>
-                                    <asp:BoundField HeaderText="UniqueCDSRowIdentifier" DataField="UniqueCdsRowIdentifier" />
+                                    <%--<asp:BoundField HeaderText="UniqueCDSRowIdentifier" DataField="UniqueCdsRowIdentifier" />--%>
+                                    <asp:TemplateField HeaderText="UniqueCDSRowIdentifier">
+                                        <ItemTemplate>
+                                            <asp:HyperLink ID="rowLink" CssClass="rowLink" Text='<%# Eval("UniqueCDSRowIdentifier")%>'
+                                                runat="server" NavigateUrl="#"></asp:HyperLink>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField HeaderText="Patient Pathway Identifier" DataField="PatientPathwayIdentifier" />
                                     <asp:BoundField HeaderText="MRN" DataField="LocalPatientID" />
                                     <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />

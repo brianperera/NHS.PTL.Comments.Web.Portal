@@ -24,11 +24,11 @@ namespace Nhs.Ptl.Comments.Web
                     PopulateSpecialityDropdown(ptlComments);
                     PopulateConsultantDropdown(ptlComments);
                     InsertDropdownDefaultValue();
-                    commentsGrid.DataSource = new List<string>();
-                    commentsGrid.DataBind();
+                    referrelGrid.DataSource = new List<string>();
+                    referrelGrid.DataBind();
 
-                    commentsGrid.DataSource = ptlComments;
-                    commentsGrid.DataBind();
+                    referrelGrid.DataSource = ptlComments;
+                    referrelGrid.DataBind();
                 }
 
             }
@@ -129,11 +129,11 @@ namespace Nhs.Ptl.Comments.Web
                 }
 
                 // Bind to grid
-                commentsGrid.DataSource = ptlComments;
-                commentsGrid.DataBind();
+                referrelGrid.DataSource = ptlComments;
+                referrelGrid.DataBind();
             }
         }
 
-        #endregion
+        #endregion        
     }
 }

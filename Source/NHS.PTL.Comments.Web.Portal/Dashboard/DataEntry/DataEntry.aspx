@@ -1,10 +1,20 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="DataEntry.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.DataEntry" %>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="DataEntry.aspx.cs"
+    Inherits="Nhs.Ptl.Comments.Web.DataEntry" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+<html>
+<head runat="server">
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/html-reset.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Plugins/font-awesome/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="~/Plugins/font-awesome/css/font-awesome-ie7.min.css"/>
+      <link rel="stylesheet" href="~/Styles/ie7.css" />
+    <![endif]-->
+</head>
+<body>
+    <form runat="server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
     <div class="main">
@@ -49,4 +59,6 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
-</asp:Content>
+    </form>
+</body>
+</html>

@@ -42,6 +42,7 @@ namespace Nhs.Ptl.Comments.Web
 
         protected void submitButton_Click(object sender, EventArgs e)
         {
+            //TODO: check inputs
             PtlComment ptlComment = new PtlComment();
             ptlComment.UniqueCdsRowIdentifier = double.Parse(uniqueIdentifierDrowpdown.SelectedValue);
             ptlComment.Status = statusDropdown.SelectedValue;
