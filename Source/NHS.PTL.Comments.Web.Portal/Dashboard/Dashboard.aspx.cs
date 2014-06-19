@@ -39,6 +39,16 @@ namespace Nhs.Ptl.Comments.Web
             FilterGrid();
         }
 
+        protected void rowLink_Click(object sender, EventArgs e)
+        {
+            GridViewRow grdrow = (GridViewRow)((LinkButton)sender).NamingContainer;
+            uniqueIdHiddenField.Value = ((LinkButton)sender).Text;
+
+            entryForm.Visible = true;
+            entryForm.Attributes.Add("style", "display: block;");
+            fade.Attributes.Add("style", "display: block;");
+        }
+
         #endregion
 
         #region Private Methods
@@ -134,6 +144,6 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
-        #endregion        
+        #endregion
     }
 }

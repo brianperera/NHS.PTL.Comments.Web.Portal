@@ -1,7 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="Dashboard.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.Dashboard" %>
+    CodeFile="Dashboard.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.Dashboard" ViewStateMode="Enabled"
+    EnableViewState="true" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%@ Register Src="../UserControls/DataEntryControl.ascx" TagName="DataEntryControl"
+    TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
     <script src="../Scripts/jquery-1.4.1.js" type="text/javascript"></script>
     <script src="../Scripts/ui.core.js" type="text/javascript"></script>
@@ -13,10 +16,19 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
-    <div id="entryForm">
-        <div>
-            <iframe src="DataEntry/DataEntry.aspx" width="550" height="300"></iframe>
-            <%--<div class="pageHeader">
+    <div class="main">
+        <div class="pageHeader">
+            <h2>
+                PTL Comments Dashboard
+            </h2>
+        </div>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <div id="entryForm" class="overlay" runat="server" visible="false">
+                    <uc1:DataEntryControl ID="DataEntryControl1" runat="server" />
+                    <asp:HiddenField ID="uniqueIdHiddenField" runat="server" />
+                    <%--<iframe src="DataEntry/DataEntry.aspx" width="550" height="300"></iframe>--%>
+                    <%--<div class="pageHeader">
                 <h2>
                     Data Entry
                 </h2>
@@ -69,16 +81,7 @@
                     </div>
                 </ContentTemplate>
             </asp:UpdatePanel>--%>
-        </div>
-    </div>
-    <div class="main">
-        <div class="pageHeader">
-            <h2>
-                PTL Comments Dashboard
-            </h2>
-        </div>
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-            <ContentTemplate>
+                </div>
                 <div>
                     <div class="filterContainer">
                         <div>
@@ -117,8 +120,8 @@
                                     <%--<asp:BoundField HeaderText="UniqueCDSRowIdentifier" DataField="UniqueCdsRowIdentifier" />--%>
                                     <asp:TemplateField HeaderText="UniqueCDSRowIdentifier">
                                         <ItemTemplate>
-                                            <asp:HyperLink ID="rowLink" CssClass="rowLink" Text='<%# Eval("UniqueCDSRowIdentifier")%>'
-                                                runat="server" NavigateUrl="#"></asp:HyperLink>
+                                            <asp:LinkButton ID="rowLink" CssClass="rowLink" Text='<%# Eval("UniqueCDSRowIdentifier")%>'
+                                                runat="server" OnClick="rowLink_Click"></asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:BoundField HeaderText="Patient Pathway Identifier" DataField="PatientPathwayIdentifier" />
@@ -162,6 +165,8 @@
                             </asp:GridView>
                         </div>
                     </div>
+                </div>
+                <div class="fade" runat="server" id="fade">
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
