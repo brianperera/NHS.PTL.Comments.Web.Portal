@@ -1165,14 +1165,15 @@ label, span
 {
     display: none; /* ensures it’s invisible until it’s called */
     position: fixed; /* makes the div go into a position that’s absolute to the browser viewing area */
-    left: 25%; /* positions the div half way horizontally */
-    top: 25%; /* positions the div half way vertically */
+    left: 15%; /* positions the div half way horizontally */
+    top: 15%; /* positions the div half way vertically */
+    bottom: 15%;
     padding: 25px;
     border: 2px solid black;
     background-color: #ffffff;
     width: 60%;
-    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
-    overflow: auto;
+    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */    
+    overflow: scroll;
 }
 
 .fade

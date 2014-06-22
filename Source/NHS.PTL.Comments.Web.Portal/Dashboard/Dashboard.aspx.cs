@@ -43,7 +43,7 @@ namespace Nhs.Ptl.Comments.Web
         {
             LinkButton link = sender as LinkButton;
             GridViewRow row = (GridViewRow)link.NamingContainer;
-            
+
             uniqueIdHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["UniqueCDSRowIdentifier"].ToString();
             patientPathwayIdHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["PatientPathwayIdentifier"].ToString();
             specHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["Spec"].ToString();
@@ -54,6 +54,12 @@ namespace Nhs.Ptl.Comments.Web
             entryForm.Visible = true;
             entryForm.Attributes.Add("style", "display: block;");
             fade.Attributes.Add("style", "display: block;");
+        }
+
+        protected void referrelGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            referrelGrid.PageIndex = e.NewPageIndex;
+            FilterGrid();
         }
 
         #endregion
@@ -123,6 +129,13 @@ namespace Nhs.Ptl.Comments.Web
             // Filter data
             if (null != opReferrals)
             {
+                // Filter by patient name
+                if (!string.IsNullOrEmpty(patientTextbox.Text))
+                {
+                    opReferrals = opReferrals.Where(comment => (comment.PatientForename.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                                                            || comment.PatientSurname.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0));
+                }
+
                 // Filter by Speciality
                 if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["DropDownAllText"]))
                 {
@@ -145,12 +158,19 @@ namespace Nhs.Ptl.Comments.Web
                     }
                 }
 
-                // Bind to grid
-                referrelGrid.DataSource = opReferrals;
-                referrelGrid.DataBind();
+                if (null != opReferrals)
+                {
+                    // Bind to grid
+                    referrelGrid.DataSource = opReferrals.ToList();
+                    referrelGrid.DataBind();
+
+                    referrelGrid.PageIndex = 0;
+                }
+
             }
         }
 
         #endregion
+
     }
 }
