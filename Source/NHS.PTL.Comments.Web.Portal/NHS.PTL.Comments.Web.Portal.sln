@@ -5,20 +5,20 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "NHS.PTL.Comments.Web.Portal
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/NHS.PTL.Comments.Web.Portal"
-		Debug.AspNetCompiler.PhysicalPath = "G:\Freelance stuff\PTL\trunk\Source\NHS.PTL.Comments.Web.Portal\"
+		Debug.AspNetCompiler.PhysicalPath = "..\NHS.PTL.Comments.Web.Portal\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\NHS.PTL.Comments.Web.Portal\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/NHS.PTL.Comments.Web.Portal"
-		Release.AspNetCompiler.PhysicalPath = "G:\Freelance stuff\PTL\trunk\Source\NHS.PTL.Comments.Web.Portal\"
+		Release.AspNetCompiler.PhysicalPath = "..\NHS.PTL.Comments.Web.Portal\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\NHS.PTL.Comments.Web.Portal\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "5103"
+		VWDPort = "14637"
 	EndProjectSection
 EndProject
 Global

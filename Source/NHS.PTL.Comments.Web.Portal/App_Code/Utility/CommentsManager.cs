@@ -27,38 +27,64 @@ namespace Nhs.Ptl.Comments.Utility
             return recordExists;
         }
 
+        public static IList<OpReferral> GetAllOpReferrals()
+        {
+            PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+            return GetStatusForReferral(ptlCommentsData.GetAllOpReferrals(), GetAllPtlComments());
+        }
+
         public static IList<PtlComment> GetAllPtlComments()
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
             return ptlCommentsData.GetAllPtlComments();
         }
 
-        public static PtlComment GetPtlComment(string uniqueRowIdentifier)
+        private static IList<OpReferral> GetStatusForReferral(IList<OpReferral> opReferrals, IList<PtlComment> ptlComments)
         {
-            PtlComment ptlComment = null;
-            
-            double uniqueRowIdentifierValue;
-            if (double.TryParse(uniqueRowIdentifier, out uniqueRowIdentifierValue))
+            IList<OpReferral> refferalsWithStatus = new List<OpReferral>();
+
+            if (opReferrals == null || ptlComments == null)
             {
-                PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
-                ptlComment =  ptlCommentsData.GetPtlComment(uniqueRowIdentifierValue);
+                throw new ArgumentNullException("opRefferals or ptlComments cannot be null");
             }
 
-            return ptlComment;
+            foreach (PtlComment comment in ptlComments)
+            {
+                OpReferral referral = opReferrals.SingleOrDefault(x => x.UniqueCdsRowIdentifier == comment.UniqueCdsRowIdentifier
+                                                                        && x.PatientPathwayIdentifier == comment.PatientPathwayIdentifier
+                                                                        && x.Spec == comment.Spec
+                                                                        && x.ReferralRequestReceivedDate == comment.ReferralRequestReceivedDate);
+
+                if (null != referral)
+                {
+                    OpReferral refWithStatus = new OpReferral();
+                    refWithStatus = refWithStatus.DeepClone(referral);
+                    refWithStatus.Status = comment.Status;
+                    refferalsWithStatus.Add(refWithStatus);
+                }
+            }
+
+            return refferalsWithStatus;
         }
 
-        public static bool AddUpdatePtlComment(PtlComment ptlComment, bool isUpdate)
+        public static IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, double pathwayId, double spec, DateTime referralDate)
         {
-            bool isAddedUpdated = false;
+            PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+            return ptlCommentsData.GetPtlComments(uniqueRowIdentifier, pathwayId, spec, referralDate);
+        }
+
+        public static bool AddUpdatePtlComment(PtlComment ptlComment)
+        {
+            bool isAdded = false;
 
             if (null != ptlComment)
             {
                 PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
 
-                isAddedUpdated = (isUpdate) ? ptlCommentsData.UpdatePtlComment(ptlComment) : ptlCommentsData.AddPtlComment(ptlComment);
+                isAdded = ptlCommentsData.AddPtlComment(ptlComment);
             }
 
-            return isAddedUpdated;
+            return isAdded;
         }
     }
 }

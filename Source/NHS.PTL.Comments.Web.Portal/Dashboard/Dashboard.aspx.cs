@@ -16,18 +16,18 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!this.IsPostBack)
             {
-                IList<PtlComment> ptlComments = CommentsManager.GetAllPtlComments();
+                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
 
-                if (null != ptlComments)
+                if (null != opReferrals)
                 {
                     PopulateStatusDropdown();
-                    PopulateSpecialityDropdown(ptlComments);
-                    PopulateConsultantDropdown(ptlComments);
+                    PopulateSpecialityDropdown(opReferrals);
+                    PopulateConsultantDropdown(opReferrals);
                     InsertDropdownDefaultValue();
                     referrelGrid.DataSource = new List<string>();
                     referrelGrid.DataBind();
 
-                    referrelGrid.DataSource = ptlComments;
+                    referrelGrid.DataSource = opReferrals;
                     referrelGrid.DataBind();
                 }
 
@@ -41,8 +41,15 @@ namespace Nhs.Ptl.Comments.Web
 
         protected void rowLink_Click(object sender, EventArgs e)
         {
-            GridViewRow grdrow = (GridViewRow)((LinkButton)sender).NamingContainer;
-            uniqueIdHiddenField.Value = ((LinkButton)sender).Text;
+            LinkButton link = sender as LinkButton;
+            GridViewRow row = (GridViewRow)link.NamingContainer;
+            
+            uniqueIdHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["UniqueCDSRowIdentifier"].ToString();
+            patientPathwayIdHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["PatientPathwayIdentifier"].ToString();
+            specHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["Spec"].ToString();
+            referralRecDateHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["ReferralRequestReceivedDate"].ToString();
+            futureClinicDateHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["FutureClinicDate"].ToString();
+            breachDateHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["RttBreachDate"].ToString();
 
             entryForm.Visible = true;
             entryForm.Attributes.Add("style", "display: block;");
@@ -70,12 +77,12 @@ namespace Nhs.Ptl.Comments.Web
         ///  Select distinct Speciality values in
         ///  PTL comments and bind to the Speciality dropdown
         /// </summary>
-        /// <param name="ptlComments"></param>
-        private void PopulateSpecialityDropdown(IList<PtlComment> ptlComments)
+        /// <param name="opReferrals"></param>
+        private void PopulateSpecialityDropdown(IList<OpReferral> opReferrals)
         {
-            string[] specialitiesList = ptlComments.Select(e => e.Spec).Distinct().ToArray();
-            consultantDropdown.DataSource = specialitiesList;
-            consultantDropdown.DataBind();
+            string[] specialitiesList = opReferrals.Select(e => e.SpecName).Distinct().ToArray();
+            specialityDropdown.DataSource = specialitiesList;
+            specialityDropdown.DataBind();
         }
 
         /// <summary>
@@ -83,9 +90,9 @@ namespace Nhs.Ptl.Comments.Web
         ///  PTL comments and bind to the Consultant dropdown
         /// </summary>
         /// <param name="ptlComments"></param>
-        private void PopulateConsultantDropdown(IList<PtlComment> ptlComments)
+        private void PopulateConsultantDropdown(IList<OpReferral> opReferrals)
         {
-            string[] consultantsList = ptlComments.Select(e => e.Consultant).Distinct().ToArray();
+            string[] consultantsList = opReferrals.Select(e => e.Consultant).Distinct().ToArray();
             consultantDropdown.DataSource = consultantsList;
             consultantDropdown.DataBind();
         }
@@ -111,10 +118,10 @@ namespace Nhs.Ptl.Comments.Web
         private void FilterGrid()
         {
             // Get all PTL comments
-            IEnumerable<PtlComment> ptlComments = CommentsManager.GetAllPtlComments();
+            IEnumerable<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
 
             // Filter data
-            if (null != ptlComments)
+            if (null != opReferrals)
             {
                 // Filter by Speciality
                 if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["DropDownAllText"]))
@@ -122,24 +129,24 @@ namespace Nhs.Ptl.Comments.Web
                     // Filter by Speciality
                     if (!specialityDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
                     {
-                        ptlComments = ptlComments.Where(comment => comment.SpecName.Equals(specialityDropdown.SelectedValue));
+                        opReferrals = opReferrals.Where(comment => comment.SpecName.Equals(specialityDropdown.SelectedValue));
                     }
 
                     // Filter by Consultant
                     if (!consultantDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
                     {
-                        ptlComments = ptlComments.Where(comment => comment.Consultant.Equals(consultantDropdown.SelectedValue));
+                        opReferrals = opReferrals.Where(comment => comment.Consultant.Equals(consultantDropdown.SelectedValue));
                     }
 
                     // Filter by Status
                     if (!statusDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
                     {
-                        ptlComments = ptlComments.Where(comment => comment.Status.Equals(statusDropdown.SelectedValue));
+                        opReferrals = opReferrals.Where(comment => comment.Status.Equals(statusDropdown.SelectedValue));
                     }
                 }
 
                 // Bind to grid
-                referrelGrid.DataSource = ptlComments;
+                referrelGrid.DataSource = opReferrals;
                 referrelGrid.DataBind();
             }
         }

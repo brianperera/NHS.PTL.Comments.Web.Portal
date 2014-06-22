@@ -12,9 +12,9 @@ namespace Nhs.Ptl.Comments.DataAccess
 {
     public interface IPtlCommentsDA
     {
-        IList<PtlComment> GetAllPtlComments();
+        IList<OpReferral> GetAllOpReferrals();
         bool AddPtlComment(PtlComment ptlComment);
         bool UpdatePtlComment(PtlComment ptlComment);
-        PtlComment GetPtlComment(double uniqueRowIdentifier);
+        IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, double pathwayId, double spec, DateTime referralDate);
     }
 }

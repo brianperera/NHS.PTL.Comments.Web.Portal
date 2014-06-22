@@ -42,7 +42,7 @@ namespace Nhs.Ptl.Comments.Web
             failureTextValidator.IsValid = false;
             failureTextValidator.ErrorMessage = errorMessage;
             failureTextValidator.ValidationGroup = "LoginUserValidationGroup";
-            failureTextValidator.CssClass = "alert-danger";
+            failureTextValidator.CssClass = "login alert-danger";
             this.Page.Validators.Add(failureTextValidator);
             
         }

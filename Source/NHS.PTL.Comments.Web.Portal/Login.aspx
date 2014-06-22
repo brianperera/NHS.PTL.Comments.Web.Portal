@@ -17,7 +17,7 @@
                                 SAFE STAFFING DATA ENTRY PORTAL</h1>
                             <div class="clear-fix" />
                             <div class="error_msg">
-                                <asp:ValidationSummary ID="LoginUserValidationSummary" runat="server" CssClass="alert-danger"
+                                <asp:ValidationSummary ID="LoginUserValidationSummary" runat="server" CssClass="login alert-danger"
                                     ValidationGroup="LoginUserValidationGroup" />
                             </div>
                             <div class="fieldSeperator">

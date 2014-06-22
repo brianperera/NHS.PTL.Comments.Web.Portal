@@ -27,6 +27,11 @@
                 <div id="entryForm" class="overlay" runat="server" visible="false">
                     <uc1:DataEntryControl ID="DataEntryControl1" runat="server" />
                     <asp:HiddenField ID="uniqueIdHiddenField" runat="server" />
+                    <asp:HiddenField ID="patientPathwayIdHiddenField" runat="server" />
+                    <asp:HiddenField ID="specHiddenField" runat="server" />
+                    <asp:HiddenField ID="referralRecDateHiddenField" runat="server" />
+                    <asp:HiddenField ID="futureClinicDateHiddenField" runat="server" />
+                    <asp:HiddenField ID="breachDateHiddenField" runat="server" />
                     <%--<iframe src="DataEntry/DataEntry.aspx" width="550" height="300"></iframe>--%>
                     <%--<div class="pageHeader">
                 <h2>
@@ -115,7 +120,8 @@
                             <asp:GridView ID="referrelGrid" AutoGenerateColumns="False" runat="server" CellPadding="3"
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
                                 CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
-                                ShowHeaderWhenEmpty="true" ShowHeader="true">
+                                ShowHeaderWhenEmpty="true" ShowHeader="true" 
+                                DataKeyNames="UniqueCDSRowIdentifier,PatientPathwayIdentifier,Spec,ReferralRequestReceivedDate,FutureClinicDate,RttBreachDate">
                                 <Columns>
                                     <%--<asp:BoundField HeaderText="UniqueCDSRowIdentifier" DataField="UniqueCdsRowIdentifier" />--%>
                                     <asp:TemplateField HeaderText="UniqueCDSRowIdentifier">
@@ -148,9 +154,10 @@
                                     <asp:BoundField HeaderText="Future Clinic Date" DataField="FutureClinicDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Wait At Future Clinic Date" DataField="WaitAtFutureClinicDate" />
                                     <asp:BoundField HeaderText="Status" DataField="Status" />
+                                    <%-- <asp:BoundField HeaderText="Status" DataField="Status" />
                                     <asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Updated Date" DataField="UpdatedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
-                                    <asp:BoundField HeaderText="Comment" DataField="Comment" />
+                                    <asp:BoundField HeaderText="Comment" DataField="Comment" />--%>
                                 </Columns>
                                 <FooterStyle BackColor="White" ForeColor="#000066" />
                                 <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />

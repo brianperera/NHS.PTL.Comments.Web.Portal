@@ -13,16 +13,23 @@ namespace Nhs.Ptl.Comments.DataAccess
 {
     public class DataAccessBase
     {
-        string ConnectionString;
+        string PortalConnectionString;
+        string ReferralConnectionString;
 
         public DataAccessBase()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString;
+            PortalConnectionString = ConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString;
+            ReferralConnectionString = ConfigurationManager.ConnectionStrings["PTLReferralConnection"].ConnectionString;
         }
 
-        internal SqlConnection GetConnection()
+        internal SqlConnection GetConnection(bool isReferralRequest)
         {
-            return new SqlConnection(ConnectionString);
+            if (isReferralRequest)
+            {
+                return new SqlConnection(ReferralConnectionString);
+            }
+
+            return new SqlConnection(PortalConnectionString);
         }
 
         internal SqlParameter GetParameter(string parameterName, SqlDbType sqlDbType,object value)
