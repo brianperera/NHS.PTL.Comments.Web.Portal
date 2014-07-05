@@ -64,9 +64,9 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     protected void submitButton_Click(object sender, EventArgs e)
     {
         DateTime appointmentDate;
-       
+
         //TODO: check inputs
-        
+
 
         PtlComment ptlComment = new PtlComment();
 
@@ -87,11 +87,11 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         ptlComment.Spec = Spec;
         ptlComment.ReferralRequestReceivedDate = ReferralRecievedDate;
         ptlComment.Status = statusDropdown.SelectedItem.Text;
-        
+
         ptlComment.UpdatedDate = DateTime.Now.Date;
         ptlComment.Comment = commentTextbox.Text;
 
-        DisplayMessage(CommentsManager.AddUpdatePtlComment(ptlComment));        
+        DisplayMessage(CommentsManager.AddUpdatePtlComment(ptlComment));
     }
 
     #endregion
@@ -112,11 +112,11 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     {
         IList<PtlComment> comments = CommentsManager.GetPtlComments(UniqueRowId, PatientPathwayId, Spec, ReferralRecievedDate);
 
-        if (null != comments)
-        {
-            commentsGrid.DataSource = comments;
-            commentsGrid.DataBind();
-        }
+        //if (null != comments)
+        //{
+        commentsGrid.DataSource = comments;
+        commentsGrid.DataBind();
+        //}
     }
 
     private void DisplayMessage(bool executionStatus)
@@ -174,8 +174,8 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 
     private void SetBreachDatePassedStatus()
     {
-        if (FutureClinicDate != DateTime.MinValue 
-            && BreachDate != DateTime.MinValue 
+        if (FutureClinicDate != DateTime.MinValue
+            && BreachDate != DateTime.MinValue
             && FutureClinicDate >= BreachDate)
         {
             string bringFowardStatus = StatusConfigurationManager.GetStatusValue("BringForward");

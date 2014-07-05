@@ -48,19 +48,28 @@ namespace Nhs.Ptl.Comments.Utility
                 throw new ArgumentNullException("opRefferals or ptlComments cannot be null");
             }
 
-            foreach (PtlComment comment in ptlComments)
+            foreach (OpReferral referral in opReferrals)
             {
-                OpReferral referral = opReferrals.SingleOrDefault(x => x.UniqueCdsRowIdentifier == comment.UniqueCdsRowIdentifier
-                                                                        && x.PatientPathwayIdentifier == comment.PatientPathwayIdentifier
-                                                                        && x.Spec == comment.Spec
-                                                                        && x.ReferralRequestReceivedDate == comment.ReferralRequestReceivedDate);
+                IList<PtlComment> commentsForReferral = ptlComments.Where(x => x.UniqueCdsRowIdentifier == referral.UniqueCdsRowIdentifier
+                                                                            && x.PatientPathwayIdentifier == referral.PatientPathwayIdentifier
+                                                                            && x.Spec == referral.Spec
+                                                                            && x.ReferralRequestReceivedDate == referral.ReferralRequestReceivedDate).ToList();
 
-                if (null != referral)
+                if (null != commentsForReferral && commentsForReferral.Count > 0)
                 {
-                    OpReferral refWithStatus = new OpReferral();
-                    refWithStatus = refWithStatus.DeepClone(referral);
-                    refWithStatus.Status = comment.Status;
-                    refferalsWithStatus.Add(refWithStatus);
+                    foreach (PtlComment comment in commentsForReferral)
+                    {
+                        // Add one row for each comment
+                        OpReferral refWithStatus = new OpReferral();
+                        refWithStatus = refWithStatus.DeepClone(referral);
+                        refWithStatus.Status = comment.Status;
+                        refferalsWithStatus.Add(refWithStatus);
+                    }
+                }
+                else
+                {
+                    // If no comments found, just add the original OpReferral
+                    refferalsWithStatus.Add(referral);
                 }
             }
 
