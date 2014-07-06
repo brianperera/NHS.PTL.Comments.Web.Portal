@@ -17,8 +17,8 @@ namespace Nhs.Ptl.Comments.Contracts.Dto
         public DateTime AppointmentDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string Comment { get; set; }
-        public double PatientPathwayIdentifier { get; set; }
-        public double Spec { get; set; }
+        public string PatientPathwayIdentifier { get; set; }
+        public string Spec { get; set; }
         public DateTime ReferralRequestReceivedDate { get; set; }
         public DateTime RttBreachDate { get; set; }
         public DateTime FutureClinicDate { get; set; }        

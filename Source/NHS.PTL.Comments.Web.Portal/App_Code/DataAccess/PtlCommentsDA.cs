@@ -62,17 +62,13 @@ namespace Nhs.Ptl.Comments.DataAccess
                                     opRefferal.AttStatus = reader["AttStatus"].ToString();
                                     opRefferal.RttText = reader["RTTText"].ToString();
                                     opRefferal.WaitingListStatus = reader["WaitingListStatus"].ToString();
-                                    opRefferal.WaitAtFutureClinicDate = reader["WaitAtFutureClinicDate"].ToString();
+                                    opRefferal.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
+                                    opRefferal.Spec = reader["Spec"].ToString();
+                                    opRefferal.RttStatus = reader["RTTStatus"].ToString();
 
-                                    double tempDouble = 0;
-                                    double.TryParse(reader["PatientPathwayIdentifier"].ToString(), out tempDouble);
-                                    opRefferal.PatientPathwayIdentifier = tempDouble;
-
-                                    double.TryParse(reader["Spec"].ToString(), out tempDouble);
-                                    opRefferal.Spec = tempDouble;
-
-                                    double.TryParse(reader["RTTStatus"].ToString(), out tempDouble);
-                                    opRefferal.RttStatus = tempDouble;
+                                    int tempInt = 0;
+                                    int.TryParse(reader["WaitAtFutureClinicDate"].ToString(), out tempInt);
+                                    opRefferal.WaitAtFutureClinicDate = tempInt;
 
                                     DateTime tempDateTime = DateTime.MinValue;
 
@@ -95,12 +91,12 @@ namespace Nhs.Ptl.Comments.DataAccess
                                     // TODO: we might want to change below code when we get the acTual schema.
                                     // SQL server exported below fields as NVARCHAR, not DATETIME                                                                       
 
-                                    DateTime.TryParse(reader["AttendanceDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    //DateTime.TryParse(reader["AttendanceDate"].ToString(), out tempDateTime);
+                                    //DateTime.TryParse(reader["AttendanceDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    DateTime.TryParse(reader["AttendanceDate"].ToString(), out tempDateTime);
                                     opRefferal.AttendanceDate = tempDateTime;
 
-                                    DateTime.TryParse(reader["FutureClinicDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    //DateTime.TryParse(reader["FutureClinicDate"].ToString(), out tempDateTime);
+                                    //DateTime.TryParse(reader["FutureClinicDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    DateTime.TryParse(reader["FutureClinicDate"].ToString(), out tempDateTime);
                                     opRefferal.FutureClinicDate = tempDateTime;
 
                                     opReferrals.Add(opRefferal);
@@ -214,13 +210,8 @@ namespace Nhs.Ptl.Comments.DataAccess
                                     comment.UniqueCdsRowIdentifier = !Convert.IsDBNull(reader["UniqueCDSRowIdentifier"]) ? reader["UniqueCDSRowIdentifier"].ToString() : string.Empty;
                                     comment.Comment = !Convert.IsDBNull(reader["Comment"]) ? reader["Comment"].ToString() : string.Empty;
                                     comment.Status = !Convert.IsDBNull(reader["Status"]) ? reader["Status"].ToString() : string.Empty;
-
-                                    double tempDouble;
-                                    double.TryParse(reader["PatientPathwayIdentifier"].ToString(), out tempDouble);
-                                    comment.PatientPathwayIdentifier = tempDouble;
-
-                                    double.TryParse(reader["Spec"].ToString(), out tempDouble);
-                                    comment.Spec = tempDouble;
+                                    comment.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
+                                    comment.Spec = reader["Spec"].ToString();
 
                                     DateTime tempDateTime = DateTime.MinValue;
 
@@ -302,7 +293,7 @@ namespace Nhs.Ptl.Comments.DataAccess
         /// </summary>
         /// <param name="uniqueRowIdentifier"></param>
         /// <returns></returns>        
-        public IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, double pathwayId, double spec, DateTime referralDate)
+        public IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, string pathwayId, string spec, DateTime referralDate)
         {
             IList<PtlComment> ptlComments = null;
 

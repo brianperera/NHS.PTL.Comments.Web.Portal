@@ -43,40 +43,43 @@ namespace Nhs.Ptl.Comments.Utility
         {
             IList<OpReferral> refferalsWithStatus = new List<OpReferral>();
 
-            if (opReferrals == null || ptlComments == null)
+            if (null != opReferrals)
             {
-                throw new ArgumentNullException("opRefferals or ptlComments cannot be null");
-            }
-
-            foreach (OpReferral referral in opReferrals)
-            {
-                IList<PtlComment> commentsForReferral = ptlComments.Where(x => x.UniqueCdsRowIdentifier == referral.UniqueCdsRowIdentifier
-                                                                            && x.PatientPathwayIdentifier == referral.PatientPathwayIdentifier
-                                                                            && x.Spec == referral.Spec
-                                                                            && x.ReferralRequestReceivedDate == referral.ReferralRequestReceivedDate).ToList();
-
-                if (null != commentsForReferral && commentsForReferral.Count > 0)
+                foreach (OpReferral referral in opReferrals)
                 {
-                    foreach (PtlComment comment in commentsForReferral)
+                    IList<PtlComment> commentsForReferral = null;
+
+                    if (null != ptlComments)
                     {
-                        // Add one row for each comment
-                        OpReferral refWithStatus = new OpReferral();
-                        refWithStatus = refWithStatus.DeepClone(referral);
-                        refWithStatus.Status = comment.Status;
-                        refferalsWithStatus.Add(refWithStatus);
+                        commentsForReferral = ptlComments.Where(x => x.UniqueCdsRowIdentifier == referral.UniqueCdsRowIdentifier
+                                                                                && x.PatientPathwayIdentifier == referral.PatientPathwayIdentifier
+                                                                                && x.Spec == referral.Spec
+                                                                                && x.ReferralRequestReceivedDate == referral.ReferralRequestReceivedDate).ToList();
                     }
-                }
-                else
-                {
-                    // If no comments found, just add the original OpReferral
-                    refferalsWithStatus.Add(referral);
+
+                    if (null != commentsForReferral && commentsForReferral.Count > 0)
+                    {
+                        foreach (PtlComment comment in commentsForReferral)
+                        {
+                            // Add one row for each comment
+                            OpReferral refWithStatus = new OpReferral();
+                            refWithStatus = refWithStatus.DeepClone(referral);
+                            refWithStatus.Status = comment.Status;
+                            refferalsWithStatus.Add(refWithStatus);
+                        }
+                    }
+                    else
+                    {
+                        // If no comments found, just add the original OpReferral
+                        refferalsWithStatus.Add(referral);
+                    }
                 }
             }
 
             return refferalsWithStatus;
         }
 
-        public static IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, double pathwayId, double spec, DateTime referralDate)
+        public static IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, string pathwayId, string spec, DateTime referralDate)
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
             return ptlCommentsData.GetPtlComments(uniqueRowIdentifier, pathwayId, spec, referralDate);

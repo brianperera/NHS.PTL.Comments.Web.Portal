@@ -14,8 +14,8 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     #region Private properties
 
     private string UniqueRowId { get; set; }
-    private double PatientPathwayId { get; set; }
-    private double Spec { get; set; }
+    private string PatientPathwayId { get; set; }
+    private string Spec { get; set; }
     private DateTime ReferralRecievedDate { get; set; }
     private DateTime BreachDate { get; set; }
     private DateTime FutureClinicDate { get; set; }
@@ -149,19 +149,17 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
             && null != futureClinicDateHiddenField
             && null != breachDateHiddenField)
         {
-            double pathwayIdValue;
-            double specValue;
             DateTime referralDateValue;
             DateTime futureClinicDateValue;
             DateTime breachDateValue;
 
-            if (double.TryParse(patientPathwayIdHiddenField.Value, out pathwayIdValue)
-               && double.TryParse(specHiddenField.Value, out specValue)
+            if (!string.IsNullOrEmpty(patientPathwayIdHiddenField.Value)
+               && !string.IsNullOrEmpty(specHiddenField.Value)
                && DateTime.TryParse(referralRecDateHiddenField.Value, out referralDateValue))
             {
                 UniqueRowId = uniqueIdHiddenField.Value;
-                PatientPathwayId = pathwayIdValue;
-                Spec = specValue;
+                PatientPathwayId = patientPathwayIdHiddenField.Value;
+                Spec = specHiddenField.Value;
                 ReferralRecievedDate = referralDateValue;
 
                 DateTime.TryParse(futureClinicDateHiddenField.Value, out futureClinicDateValue);
@@ -187,6 +185,10 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
                     statusDropdown.SelectedValue = bringFowardStatus;
                 }
             }
+        }
+        else
+        {
+            statusDropdown.SelectedIndex = 0;
         }
     }
     #endregion
