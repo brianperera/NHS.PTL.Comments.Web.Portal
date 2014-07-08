@@ -48,6 +48,9 @@
             <asp:SiteMapDataSource ID="SiteMapDataSource" runat="server" 
                 ShowStartingNode="False" />
             </span>
+            <span class="searchBox">
+                <asp:ContentPlaceHolder ID="SearchBoxContent" runat="server" />
+            </span>
             <span class="loginDisplay">
                 <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
                     <LoggedInTemplate>

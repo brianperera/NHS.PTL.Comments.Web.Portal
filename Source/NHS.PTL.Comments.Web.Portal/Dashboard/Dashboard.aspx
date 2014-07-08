@@ -12,15 +12,23 @@
     <script src="../Scripts/ui.dialog.js" type="text/javascript"></script>
     <script src="../Scripts/CommentsScript.js" type="text/javascript"></script>
     <link href="../Styles/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="../Scripts/ClientSideUtility.js" type="text/javascript"></script>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="SearchBoxContent" runat="Server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager2" runat="server">
+    </asp:ToolkitScriptManager>
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+        <ContentTemplate>
+            <asp:TextBox ID="patientTextbox" CssClass="searchInput" Width="100px" runat="server"
+        ViewStateMode="Enabled"></asp:TextBox>
+    <input type="text" id="txtWaterMark" class="waterMarkText searchInput" value="e.g. Brian Thomas" />
+    <asp:ImageButton CssClass="searchButton" runat="server" ID="globalSearchButton" OnClick="searchButton_Click"
+        ImageUrl="~/Images/searchIcon.png" ToolTip="Also search by MRN, Pathway ID and NHS number" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
-    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
-    </asp:ToolkitScriptManager>
     <div class="main">
-        <div class="pageHeader">
-            <h2>               
-            </h2>
-        </div>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <div id="entryForm" class="overlay" runat="server" visible="false">
@@ -35,33 +43,40 @@
                 <div>
                     <div class="filterContainer">
                         <div>
-                            <ul class="formSection">
-                                <li><span class="formTitleFields">Patient</span> <span class="formFieldControl">
-                                    <asp:TextBox ID="patientTextbox" runat="server" ViewStateMode="Enabled"></asp:TextBox>
-                                </span></li>
-                                <li><span class="formTitleFields">Speciality</span> <span class="formFieldControl">
-                                    <asp:DropDownList ID="specialityDropdown" runat="server" CssClass="defaultDropDown">
-                                    </asp:DropDownList>
-                                </span></li>
-                                <li><span class="formTitleFields">Consultant</span> <span class="formFieldControl">
+                            <ul class="formSection noBottonBorders noPadding">
+                                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Speciality</span>
+                                    <span class="formFieldControl">
+                                        <asp:DropDownList ID="specialityDropdown" runat="server" CssClass="defaultDropDown">
+                                        </asp:DropDownList>
+                                    </span></li>
+                                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Consultant</span> <span class="formFieldControl">
                                     <asp:DropDownList ID="consultantDropdown" runat="server" CssClass="defaultDropDown">
                                     </asp:DropDownList>
                                 </span></li>
-                                <li><span class="formTitleFields">Status</span> <span class="formFieldControl">
+                                <li><span class="shortFormTitleFieldsWithoutFloat">Status</span> <span class="formFieldControl">
                                     <asp:DropDownList ID="statusDropdown" runat="server" CssClass="defaultDropDown">
                                     </asp:DropDownList>
                                 </span></li>
-                                <li><span class="formTitleFields">RTT Wait</span> <span class="formFieldControl">
-                                    <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown">
-                                    </asp:DropDownList>
-                                </span></li>
-                                <li><span class="formTitleFields">Attendance Status</span> <span class="formFieldControl">
+                            </ul>
+                            <ul class="formSection noBottonBorders noPadding">
+                                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">RTT Wait</span>
+                                    <span class="formFieldControl">
+                                        <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown">
+                                        </asp:DropDownList>
+                                    </span></li>
+                                <li><span class="shortFormTitleFieldsWithoutFloat">Attendance Status</span> <span
+                                    class="formFieldControl">
                                     <asp:DropDownList ID="AttendanceStatusDropDown" runat="server" CssClass="defaultDropDown">
                                     </asp:DropDownList>
                                 </span></li>
+                            </ul>
+                            <ul class="formSection">
                                 <li><span>
                                     <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton"
                                         OnClick="searchButton_Click" />
+                                </span><span>
+                                    <asp:Button CssClass="submitButton" Text="Reset" runat="server" ID="resetButton"
+                                        OnClick="resetButton_Click" />
                                 </span></li>
                             </ul>
                         </div>
@@ -74,10 +89,9 @@
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
                                 CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
                                 ShowHeaderWhenEmpty="true" ShowHeader="true" DataKeyNames="UniqueCDSRowIdentifier,PatientPathwayIdentifier,Spec,ReferralRequestReceivedDate,FutureClinicDate,RttBreachDate"
-                                PageSize="10" AllowPaging="true" 
-                                onpageindexchanging="referrelGrid_PageIndexChanging">
+                                PageSize="10" AllowPaging="true" OnPageIndexChanging="referrelGrid_PageIndexChanging">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="No">
+                                    <asp:TemplateField HeaderText="CDS ID">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="rowLink" CssClass="rowLink" Text='<%# Eval("UniqueCDSRowIdentifier")%>'
                                                 runat="server" OnClick="rowLink_Click"></asp:LinkButton>
@@ -93,8 +107,7 @@
                                     <asp:BoundField HeaderText="Spec Name" DataField="SpecName" />
                                     <asp:BoundField HeaderText="Division" DataField="NewDivision" />
                                     <asp:BoundField HeaderText="Consultant" DataField="Consultant" />
-                                    <asp:BoundField HeaderText="Ref Date" DataField="ReferralRequestReceivedDate"
-                                        DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                    <asp:BoundField HeaderText="Ref Date" DataField="ReferralRequestReceivedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Source Of Referral" DataField="SourceOfReferralText" />
                                     <asp:BoundField HeaderText="Priority Type" DataField="PriorityType" />
                                     <asp:BoundField HeaderText="RTT Clock Start" DataField="RttClockStart" />

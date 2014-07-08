@@ -71,22 +71,18 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 
     protected void submitButton_Click(object sender, EventArgs e)
     {
-        DateTime appointmentDate;
-
-        //TODO: check inputs
-
-
+        //DateTime appointmentDate;
         PtlComment ptlComment = new PtlComment();
 
-        if (DateTime.TryParse(appointmentDateTextbox.Text, out appointmentDate))
-        {
-            ptlComment.AppointmentDate = appointmentDate;
-        }
-        else
-        {
-            DisplayMessage(false, "Please select an appointment date");
-            return;
-        }
+        //if (DateTime.TryParse(appointmentDateTextbox.Text, out appointmentDate))
+        //{
+        //    ptlComment.AppointmentDate = appointmentDate;
+        //}
+        //else
+        //{
+        //    DisplayMessage(false, "Please select an appointment date");
+        //    return;
+        //}
 
         ReadKeyValues();
 

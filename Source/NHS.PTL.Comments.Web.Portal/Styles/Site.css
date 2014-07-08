@@ -401,6 +401,7 @@ div.NHS_name
 div.menu
 {
     padding: 2px 0px 4px 8px;
+    margin-left:24px;
 }
 
 div.menu ul
@@ -423,7 +424,7 @@ div.menu ul li a, div.menu ul li a:visited
     color: #707070;
     display: block;
     line-height: 1.35em;
-    padding: 4px 20px;
+    padding: 4px 8px;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -533,15 +534,16 @@ div.accountInfo
 
 .shortFormTitleFieldsWithoutFloat
 {
-    width: 50px;
-    text-align: center;
+    width: 80px;
+    text-align: left;
     vertical-align: middle;
+    display:inline-block;
 }
 
 .formFieldControl
 {
     width: 200px;
-    padding-right: 10px;
+    padding-right: 55px;
 }
 
 .formFieldControlHelpText
@@ -595,6 +597,14 @@ div.accountInfoCentered
     float: left;
     text-align: left;
     width: auto;
+}
+
+.searchBox
+{
+    width:170px;
+    margin-left:65%;
+    padding: 6px;
+    display:inline-block;
 }
 
 .loginDisplay
@@ -711,6 +721,11 @@ div.accountInfoCentered
     background: -ms-linear-gradient(#CC0000, #FF0000);
     background: -o-linear-gradient(#CC0000, #FF0000);
     background: linear-gradient(#CC0000, #FF0000);
+}
+
+.searchButton
+{
+    margin-left:4px;
 }
 
 .aspNetDisabled
@@ -1189,4 +1204,15 @@ label, span
     width: 100%;
     height: 100%;
     z-index: 90; /* makes the div the second most top layer, so it’ll lay on top of everything else EXCEPT for divs with a higher z-index (meaning the #overlay ruleset) */
+}
+
+.waterMarkText
+{
+    color: #999999;
+    font-style:italic;
+}
+
+.searchInput
+{
+    width:100px !important;    
 }

@@ -18,18 +18,18 @@
                     <asp:Label ID="MessageLabel" runat="server" />
                 </div>
                 <ul class="formSection">
-                    <li><span class="formTitleFields">UniqueCDSRowIdentifier</span> <span class="formFieldControl uniqueIdentifier">
+                    <li><span class="formTitleFields">CDS ID</span> <span class="formFieldControl uniqueIdentifier">
                         <asp:Literal runat="server" ID="uniqueIdentifier"></asp:Literal>
                     </span></li>
                     <li><span class="formTitleFields">Status</span> <span class="formFieldControl">
                         <asp:DropDownList ID="statusDropdown" runat="server" CssClass="defaultDropDown">
                         </asp:DropDownList>
                     </span></li>
-                    <li><span class="formTitleFields">Appointment Date</span> <span class="formFieldControl">
+<%--                    <li><span class="formTitleFields">Appointment Date</span> <span class="formFieldControl">
                         <asp:TextBox ID="appointmentDateTextbox" runat="server" ViewStateMode="Enabled"></asp:TextBox>
                         <asp:CalendarExtender Animated="true" Format="dd/MM/yyyy" ID="CalendarExtender1"
                             TargetControlID="appointmentDateTextbox" runat="server" ViewStateMode="Enabled" />
-                    </span></li>
+                    </span></li>--%>
                     <li><span class="formTitleFields">Comment</span> <span class="formFieldControl">
                         <asp:TextBox ID="commentTextbox" runat="server" TextMode="MultiLine"></asp:TextBox>
                     </span></li>
@@ -47,9 +47,9 @@
                             ShowHeaderWhenEmpty="true" ShowHeader="true">
                             <Columns>
                                 <asp:BoundField HeaderText="Status" DataField="Status" />
-                                <asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <%--<asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />--%>
                                 <asp:BoundField HeaderText="Comment" DataField="Comment" />
-                                <asp:BoundField HeaderText="Updated Date" DataField="UpdatedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                <asp:BoundField HeaderText="Created Date" DataField="UpdatedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                             </Columns>
                         </asp:GridView>
                     </div>

@@ -41,6 +41,18 @@ namespace Nhs.Ptl.Comments.Web
             FilterGrid();
         }
 
+        protected void resetButton_Click(object sender, EventArgs e)
+        {
+            specialityDropdown.SelectedIndex = 0;
+            consultantDropdown.SelectedIndex = 0;
+            statusDropdown.SelectedIndex = 0;
+            RTTWaitDropDown.SelectedIndex = 0;
+            AttendanceStatusDropDown.SelectedIndex = 0;
+            patientTextbox.Text = string.Empty;
+
+            FilterGrid();
+        }
+
         protected void rowLink_Click(object sender, EventArgs e)
         {
             LinkButton link = sender as LinkButton;
