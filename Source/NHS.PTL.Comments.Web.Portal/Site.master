@@ -30,7 +30,7 @@
         <div class="header">
             <div class="title">
                 <h1>
-                    <span>PTL Comments Web Portal</span>
+                    <span>OP PTL VALIDATION PORTAL</span>
                 </h1>
             </div>
             <div class="logos">
@@ -41,12 +41,12 @@
         </div>
         <div class="navigationBar" id="NavigationBar" runat="server" visible="true">
             <span class="navigationBarItems">
-                <%--<asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="False"
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="False"
                     IncludeStyleBlock="False" Orientation="Horizontal" 
                 DataSourceID="SiteMapDataSource">
                 </asp:Menu>
             <asp:SiteMapDataSource ID="SiteMapDataSource" runat="server" 
-                ShowStartingNode="False" />--%>
+                ShowStartingNode="False" />
             </span>
             <span class="loginDisplay">
                 <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">

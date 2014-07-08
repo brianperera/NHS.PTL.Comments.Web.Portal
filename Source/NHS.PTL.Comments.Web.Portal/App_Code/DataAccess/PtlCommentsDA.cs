@@ -109,9 +109,11 @@ namespace Nhs.Ptl.Comments.DataAccess
             }
             catch (SqlException ex)
             {
+                throw ex;
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             return opReferrals;
@@ -170,12 +172,14 @@ namespace Nhs.Ptl.Comments.DataAccess
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;                
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return isAdded;
         }
 
@@ -233,9 +237,11 @@ namespace Nhs.Ptl.Comments.DataAccess
             }
             catch (SqlException ex)
             {
+                throw ex;
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             return ptlComments;
@@ -280,9 +286,11 @@ namespace Nhs.Ptl.Comments.DataAccess
             }
             catch (SqlException ex)
             {
+                throw ex;
             }
             catch (Exception ex)
             {
+                throw ex;
             }
 
             return uniqueRowIdentifiers;
@@ -353,13 +361,13 @@ namespace Nhs.Ptl.Comments.DataAccess
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;              
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             return ptlComments;
         }
@@ -413,13 +421,13 @@ namespace Nhs.Ptl.Comments.DataAccess
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             return isUpdated;
         }

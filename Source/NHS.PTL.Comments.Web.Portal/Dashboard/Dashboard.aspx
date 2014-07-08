@@ -18,8 +18,7 @@
     </asp:ToolkitScriptManager>
     <div class="main">
         <div class="pageHeader">
-            <h2>
-                PTL Comments Dashboard
+            <h2>               
             </h2>
         </div>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -70,35 +69,35 @@
                                 PageSize="10" AllowPaging="true" 
                                 onpageindexchanging="referrelGrid_PageIndexChanging">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="UniqueCDSRowIdentifier">
+                                    <asp:TemplateField HeaderText="No">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="rowLink" CssClass="rowLink" Text='<%# Eval("UniqueCDSRowIdentifier")%>'
                                                 runat="server" OnClick="rowLink_Click"></asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:BoundField HeaderText="Patient Pathway Identifier" DataField="PatientPathwayIdentifier" />
+                                    <asp:BoundField HeaderText="Pathway ID" DataField="PatientPathwayIdentifier" />
                                     <asp:BoundField HeaderText="MRN" DataField="LocalPatientID" />
                                     <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
-                                    <asp:BoundField HeaderText="Date Of Birth" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
-                                    <asp:BoundField HeaderText="Patient Forename" DataField="PatientForename" />
-                                    <asp:BoundField HeaderText="Patient Surname" DataField="PatientSurname" />
+                                    <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                    <asp:BoundField HeaderText="Forename" DataField="PatientForename" />
+                                    <asp:BoundField HeaderText="Surname" DataField="PatientSurname" />
                                     <asp:BoundField HeaderText="Spec Code" DataField="Spec" />
                                     <asp:BoundField HeaderText="Spec Name" DataField="SpecName" />
                                     <asp:BoundField HeaderText="Division" DataField="NewDivision" />
                                     <asp:BoundField HeaderText="Consultant" DataField="Consultant" />
-                                    <asp:BoundField HeaderText="Referral Date" DataField="ReferralRequestReceivedDate"
+                                    <asp:BoundField HeaderText="Ref Date" DataField="ReferralRequestReceivedDate"
                                         DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Source Of Referral" DataField="SourceOfReferralText" />
                                     <asp:BoundField HeaderText="Priority Type" DataField="PriorityType" />
                                     <asp:BoundField HeaderText="RTT Clock Start" DataField="RttClockStart" />
                                     <asp:BoundField HeaderText="RTT Breach Date" DataField="RttBreachDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
-                                    <asp:BoundField HeaderText="Attendance Date" DataField="AttendanceDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
-                                    <asp:BoundField HeaderText="Attendance Status" DataField="AttStatus" />
+                                    <asp:BoundField HeaderText="Att Date" DataField="AttendanceDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                    <asp:BoundField HeaderText="Att Status" DataField="AttStatus" />
                                     <asp:BoundField HeaderText="RTT Status Code" DataField="RttStatus" />
                                     <asp:BoundField HeaderText="RTT Status" DataField="RttText" />
                                     <asp:BoundField HeaderText="Waiting List Status" DataField="WaitingListStatus" />
                                     <asp:BoundField HeaderText="Future Clinic Date" DataField="FutureClinicDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
-                                    <asp:BoundField HeaderText="Wait At Future Clinic Date" DataField="WaitAtFutureClinicDate" />
+                                    <asp:BoundField HeaderText="Wait" DataField="WaitAtFutureClinicDate" />
                                     <asp:BoundField HeaderText="Status" DataField="Status" />
                                     <%-- <asp:BoundField HeaderText="Status" DataField="Status" />
                                     <asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />

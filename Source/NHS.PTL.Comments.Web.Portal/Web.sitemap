@@ -2,7 +2,7 @@
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
   <siteMapNode roles="*"  title="Login">
     <siteMapNode url="~/Dashboard/Dashboard.aspx" title="Home" />
-    <siteMapNode url="~/Dashboard/DataEntry/DataEntry.aspx" roles="Admin, Super Admin, Data Entry Staff" title="Data Entry"></siteMapNode>
+    <!--<siteMapNode url="~/Dashboard/DataEntry/DataEntry.aspx" roles="Admin, Super Admin, Data Entry Staff" title="Data Entry"></siteMapNode>-->
     <siteMapNode roles="Super Admin, Admin" title="Settings">
       <siteMapNode title="Users" roles="Super Admin, Admin">
         <siteMapNode url="~/Administration/Users/UserAccount.aspx?action=add" title="Add"/>
