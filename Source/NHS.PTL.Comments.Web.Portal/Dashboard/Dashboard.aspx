@@ -20,10 +20,10 @@
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
             <asp:TextBox ID="patientTextbox" CssClass="searchInput" Width="100px" runat="server"
-        ViewStateMode="Enabled"></asp:TextBox>
-    <input type="text" id="txtWaterMark" class="waterMarkText searchInput" value="e.g. Brian Thomas" />
-    <asp:ImageButton CssClass="searchButton" runat="server" ID="globalSearchButton" OnClick="searchButton_Click"
-        ImageUrl="~/Images/searchIcon.png" ToolTip="Also search by MRN, Pathway ID and NHS number" />
+                ViewStateMode="Enabled"></asp:TextBox>
+            <input type="text" id="txtWaterMark" class="waterMarkText searchInput" value="e.g. Brian Thomas" />
+            <asp:ImageButton CssClass="searchButton" runat="server" ID="globalSearchButton" OnClick="searchButton_Click"
+                ImageUrl="~/Images/searchIcon.png" ToolTip="Also search by MRN, Pathway ID and NHS number" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
@@ -43,30 +43,41 @@
                 <div>
                     <div class="filterContainer">
                         <div>
+                            <asp:HiddenField ID="specDdHiddenField" runat="server" />
+                            <asp:HiddenField ID="consultantDdHiddenField" runat="server" />
+                            <asp:HiddenField ID="statusDdHiddenField" runat="server" />
+                            <asp:HiddenField ID="rttWaitDdHiddenField" runat="server" />
+                            <asp:HiddenField ID="attStatusDdHiddenField" runat="server" />
                             <ul class="formSection noBottonBorders noPadding">
                                 <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Speciality</span>
                                     <span class="formFieldControl">
-                                        <asp:DropDownList ID="specialityDropdown" runat="server" CssClass="defaultDropDown">
+                                        <asp:DropDownList ID="specialityDropdown" runat="server" CssClass="defaultDropDown"
+                                            AutoPostBack="True" OnSelectedIndexChanged="specialityDropdown_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </span></li>
-                                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Consultant</span> <span class="formFieldControl">
-                                    <asp:DropDownList ID="consultantDropdown" runat="server" CssClass="defaultDropDown">
-                                    </asp:DropDownList>
-                                </span></li>
+                                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Consultant</span>
+                                    <span class="formFieldControl">
+                                        <asp:DropDownList ID="consultantDropdown" runat="server" CssClass="defaultDropDown"
+                                            AutoPostBack="True" OnSelectedIndexChanged="consultantDropdown_SelectedIndexChanged">
+                                        </asp:DropDownList>
+                                    </span></li>
                                 <li><span class="shortFormTitleFieldsWithoutFloat">Status</span> <span class="formFieldControl">
-                                    <asp:DropDownList ID="statusDropdown" runat="server" CssClass="defaultDropDown">
+                                    <asp:DropDownList ID="statusDropdown" runat="server" CssClass="defaultDropDown" AutoPostBack="True"
+                                        OnSelectedIndexChanged="statusDropdown_SelectedIndexChanged">
                                     </asp:DropDownList>
                                 </span></li>
                             </ul>
                             <ul class="formSection noBottonBorders noPadding">
                                 <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">RTT Wait</span>
                                     <span class="formFieldControl">
-                                        <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown">
+                                        <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
+                                            AutoPostBack="True" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </span></li>
                                 <li><span class="shortFormTitleFieldsWithoutFloat">Attendance Status</span> <span
                                     class="formFieldControl">
-                                    <asp:DropDownList ID="AttendanceStatusDropDown" runat="server" CssClass="defaultDropDown">
+                                    <asp:DropDownList ID="AttendanceStatusDropDown" runat="server" CssClass="defaultDropDown"
+                                        AutoPostBack="True" OnSelectedIndexChanged="AttendanceStatusDropDown_SelectedIndexChanged">
                                     </asp:DropDownList>
                                 </span></li>
                             </ul>

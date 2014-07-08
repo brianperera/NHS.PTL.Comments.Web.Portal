@@ -43,11 +43,22 @@ namespace Nhs.Ptl.Comments.Web
 
         protected void resetButton_Click(object sender, EventArgs e)
         {
-            specialityDropdown.SelectedIndex = 0;
-            consultantDropdown.SelectedIndex = 0;
-            statusDropdown.SelectedIndex = 0;
-            RTTWaitDropDown.SelectedIndex = 0;
-            AttendanceStatusDropDown.SelectedIndex = 0;
+            //specialityDropdown.SelectedIndex = 0;
+            //consultantDropdown.SelectedIndex = 0;
+            //statusDropdown.SelectedIndex = 0;
+            //RTTWaitDropDown.SelectedIndex = 0;
+            //AttendanceStatusDropDown.SelectedIndex = 0;
+            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+            if (null != opReferrals)
+            {
+                PopulateSpecialityDropdown(opReferrals);
+                PopulateConsultantDropdown(opReferrals);
+                PopulateAttendanceStatusDropDown(opReferrals);
+                PopulateRTTWaitDropDown(opReferrals);
+            }
+
+            PopulateStatusDropdown();
+            InsertDropdownDefaultValue();
             patientTextbox.Text = string.Empty;
 
             FilterGrid();
@@ -76,6 +87,167 @@ namespace Nhs.Ptl.Comments.Web
         {
             referrelGrid.PageIndex = e.NewPageIndex;
             FilterGrid();
+        }
+
+        protected void specialityDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+            if (null != opReferrals)
+            {
+                IList<OpReferral> filtered = opReferrals.Where(x => x.SpecName == specialityDropdown.SelectedItem.Text).ToList();
+
+                if (null != filtered)
+                {
+                    // Save current selected values
+                    SaveCurrentDropdownValues();
+
+                    consultantDropdown.DataSource = filtered.Select(x => x.Consultant).Distinct().ToArray();
+                    consultantDropdown.DataBind();
+                    SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
+
+                    statusDropdown.DataSource = filtered.Select(x => x.Status).Distinct().ToArray();
+                    statusDropdown.DataBind();
+                    SetSavedValue(statusDropdown, statusDdHiddenField.Value);
+
+                    RTTWaitDropDown.DataSource = filtered.Select(x => x.WeekswaitGrouped).Distinct().ToArray();
+                    RTTWaitDropDown.DataBind();
+                    SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+
+                    AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
+                    AttendanceStatusDropDown.DataBind();
+                    SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+                }
+            }
+
+        }
+
+        protected void consultantDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+            if (null != opReferrals)
+            {
+                IList<OpReferral> filtered = opReferrals.Where(x => x.Consultant == consultantDropdown.SelectedItem.Text).ToList();
+
+                if (null != filtered)
+                {
+                    // Save current selected values
+                    SaveCurrentDropdownValues();
+
+                    specialityDropdown.DataSource = filtered.Select(x => x.SpecName).Distinct().ToArray();
+                    specialityDropdown.DataBind();
+                    SetSavedValue(specialityDropdown, specDdHiddenField.Value);
+
+                    statusDropdown.DataSource = filtered.Select(x => x.Status).Distinct().ToArray();
+                    statusDropdown.DataBind();
+                    SetSavedValue(statusDropdown, statusDdHiddenField.Value);
+
+                    RTTWaitDropDown.DataSource = filtered.Select(x => x.WeekswaitGrouped).Distinct().ToArray();
+                    RTTWaitDropDown.DataBind();
+                    SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+
+                    AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
+                    AttendanceStatusDropDown.DataBind();
+                    SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+                }
+            }
+        }
+
+        protected void statusDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+            if (null != opReferrals)
+            {
+                IList<OpReferral> filtered = opReferrals.Where(x => x.Status == statusDropdown.SelectedItem.Text).ToList();
+
+                if (null != filtered)
+                {
+                    // Save current selected values
+                    SaveCurrentDropdownValues();
+
+                    specialityDropdown.DataSource = filtered.Select(x => x.SpecName).Distinct().ToArray();
+                    specialityDropdown.DataBind();
+                    SetSavedValue(specialityDropdown, specDdHiddenField.Value);
+
+                    consultantDropdown.DataSource = filtered.Select(x => x.Consultant).Distinct().ToArray();
+                    consultantDropdown.DataBind();
+                    SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
+
+                    RTTWaitDropDown.DataSource = filtered.Select(x => x.WeekswaitGrouped).Distinct().ToArray();
+                    RTTWaitDropDown.DataBind();
+                    SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+
+                    AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
+                    AttendanceStatusDropDown.DataBind();
+                    SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+                }
+            }
+        }
+
+        protected void RTTWaitDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+            if (null != opReferrals)
+            {
+                IList<OpReferral> filtered = opReferrals.Where(x => x.WeekswaitGrouped == RTTWaitDropDown.SelectedItem.Text).ToList();
+
+                if (null != filtered)
+                {
+                    // Save current selected values
+                    SaveCurrentDropdownValues();
+
+                    specialityDropdown.DataSource = filtered.Select(x => x.SpecName).Distinct().ToArray();
+                    specialityDropdown.DataBind();
+                    SetSavedValue(specialityDropdown, specDdHiddenField.Value);
+
+                    consultantDropdown.DataSource = filtered.Select(x => x.Consultant).Distinct().ToArray();
+                    consultantDropdown.DataBind();
+                    SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
+
+                    statusDropdown.DataSource = filtered.Select(x => x.Status).Distinct().ToArray();
+                    statusDropdown.DataBind();
+                    SetSavedValue(statusDropdown, statusDdHiddenField.Value);
+
+                    AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
+                    AttendanceStatusDropDown.DataBind();
+                    SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+                }
+            }
+        }
+
+        protected void AttendanceStatusDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+            if (null != opReferrals)
+            {
+                // Save current selected values
+                SaveCurrentDropdownValues();
+
+                IList<OpReferral> filtered = opReferrals.Where(x => x.AttStatus == AttendanceStatusDropDown.SelectedItem.Text).ToList();
+
+                if (null != filtered)
+                {
+                    specialityDropdown.DataSource = filtered.Select(x => x.SpecName).Distinct().ToArray();
+                    specialityDropdown.DataBind();
+                    SetSavedValue(specialityDropdown, specDdHiddenField.Value);
+
+                    consultantDropdown.DataSource = filtered.Select(x => x.Consultant).Distinct().ToArray();
+                    consultantDropdown.DataBind();
+                    SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
+
+                    statusDropdown.DataSource = filtered.Select(x => x.Status).Distinct().ToArray();
+                    statusDropdown.DataBind();
+                    SetSavedValue(statusDropdown, statusDdHiddenField.Value);
+
+                    RTTWaitDropDown.DataSource = filtered.Select(x => x.RttStatus).Distinct().ToArray();
+                    RTTWaitDropDown.DataBind();
+                    SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+                }
+            }
         }
 
         #endregion
@@ -226,7 +398,29 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        private void SaveCurrentDropdownValues()
+        {
+            specDdHiddenField.Value = specialityDropdown.SelectedItem.Text;
+            consultantDdHiddenField.Value = consultantDropdown.SelectedItem.Text;
+            statusDdHiddenField.Value = statusDropdown.SelectedItem.Text;
+            rttWaitDdHiddenField.Value = RTTWaitDropDown.SelectedItem.Text;
+            attStatusDdHiddenField.Value = AttendanceStatusDropDown.SelectedItem.Text;
+        }
+
+        private void SetSavedValue(DropDownList dropDown, string value)
+        {
+            if (null != dropDown.Items.FindByText(value))
+            {
+                dropDown.Items.FindByText(value).Selected = true;
+            }
+            else
+            {
+                dropDown.SelectedIndex = 0;
+            }
+        }
+
         #endregion
+
 
     }
 }

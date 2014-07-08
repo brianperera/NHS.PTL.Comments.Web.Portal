@@ -87,6 +87,7 @@ namespace Nhs.Ptl.Comments.Utility
                     else
                     {
                         // If no comments found, just add the original OpReferral
+                        referral.Status = string.Empty;
                         refferalsWithStatus.Add(referral);
                     }
 
