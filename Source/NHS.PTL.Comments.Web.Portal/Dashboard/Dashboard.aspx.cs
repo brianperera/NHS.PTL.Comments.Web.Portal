@@ -23,9 +23,11 @@ namespace Nhs.Ptl.Comments.Web
                     PopulateStatusDropdown();
                     PopulateSpecialityDropdown(opReferrals);
                     PopulateConsultantDropdown(opReferrals);
+                    PopulateAttendanceStatusDropDown(opReferrals);
+                    PopulateRTTWaitDropDown(opReferrals);
                     InsertDropdownDefaultValue();
-                    referrelGrid.DataSource = new List<string>();
-                    referrelGrid.DataBind();
+                    //referrelGrid.DataSource = new List<string>();
+                    //referrelGrid.DataBind();
 
                     referrelGrid.DataSource = opReferrals;
                     referrelGrid.DataBind();
@@ -54,6 +56,8 @@ namespace Nhs.Ptl.Comments.Web
             entryForm.Visible = true;
             entryForm.Attributes.Add("style", "display: block;");
             fade.Attributes.Add("style", "display: block;");
+
+            DataEntryControl1.ClearField();
         }
 
         protected void referrelGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -77,6 +81,20 @@ namespace Nhs.Ptl.Comments.Web
                 statusDropdown.DataSource = statusList;
                 statusDropdown.DataBind();
             }
+        }
+
+        private void PopulateRTTWaitDropDown(IList<OpReferral> opReferrals)
+        {
+            string[] rttWaitList = opReferrals.Select(e => e.WeekswaitGrouped).Distinct().ToArray();
+            RTTWaitDropDown.DataSource = rttWaitList;
+            RTTWaitDropDown.DataBind();
+        }
+
+        private void PopulateAttendanceStatusDropDown(IList<OpReferral> opReferrals)
+        {
+            string[] attStatusList = opReferrals.Select(e => e.AttStatus).Distinct().ToArray();
+            AttendanceStatusDropDown.DataSource = attStatusList;
+            AttendanceStatusDropDown.DataBind();
         }
 
         /// <summary>
@@ -115,6 +133,8 @@ namespace Nhs.Ptl.Comments.Web
                 specialityDropdown.Items.Insert(0, defaultItem);
                 consultantDropdown.Items.Insert(0, defaultItem);
                 statusDropdown.Items.Insert(0, defaultItem);
+                RTTWaitDropDown.Items.Insert(0, defaultItem);
+                AttendanceStatusDropDown.Items.Insert(0, defaultItem);
             }
         }
 
@@ -124,7 +144,7 @@ namespace Nhs.Ptl.Comments.Web
         private void FilterGrid()
         {
             // Get all PTL comments
-            IEnumerable<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+            List<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals().ToList();
 
             // Filter data
             if (null != opReferrals)
@@ -133,7 +153,7 @@ namespace Nhs.Ptl.Comments.Web
                 if (!string.IsNullOrEmpty(patientTextbox.Text))
                 {
                     opReferrals = opReferrals.Where(comment => (comment.PatientForename.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                                                            || comment.PatientSurname.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0));
+                                                            || comment.PatientSurname.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
                 }
 
                 // Filter by Speciality
@@ -142,26 +162,50 @@ namespace Nhs.Ptl.Comments.Web
                     // Filter by Speciality
                     if (!specialityDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
                     {
-                        opReferrals = opReferrals.Where(comment => comment.SpecName.Equals(specialityDropdown.SelectedValue));
+                        opReferrals = opReferrals.Where(comment => comment.SpecName.Equals(specialityDropdown.SelectedValue)).ToList();
                     }
 
                     // Filter by Consultant
                     if (!consultantDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
                     {
-                        opReferrals = opReferrals.Where(comment => comment.Consultant.Equals(consultantDropdown.SelectedValue));
+                        opReferrals = opReferrals.Where(comment => comment.Consultant.Equals(consultantDropdown.SelectedValue)).ToList();
                     }
 
                     // Filter by Status
                     if (!statusDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
                     {
-                        opReferrals = opReferrals.Where(comment => comment.Status.Equals(statusDropdown.SelectedValue));
+                        List<OpReferral> tempOpReferrals = new List<OpReferral>();
+
+                        foreach (var item in opReferrals)
+                        {
+                            if (string.Equals(item.Status, statusDropdown.SelectedValue))
+                            {
+                                tempOpReferrals.Add(item);
+                            }
+                        }
+
+                        opReferrals = tempOpReferrals;
+                    }
+
+                    // Filter by RTT Wait
+                    if (!RTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    {
+                        opReferrals = opReferrals.Where(comment => comment.WeekswaitGrouped.Equals(RTTWaitDropDown.SelectedValue)).ToList();
+                    }
+
+                    // Filter by AttStatus
+                    if (!AttendanceStatusDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    {
+                        opReferrals = opReferrals.Where(comment => comment.AttStatus.Equals(AttendanceStatusDropDown.SelectedValue)).ToList();
                     }
                 }
+
+                // Filter by Status
 
                 if (null != opReferrals)
                 {
                     // Bind to grid
-                    referrelGrid.DataSource = opReferrals.ToList();
+                    referrelGrid.DataSource = opReferrals;
                     referrelGrid.DataBind();
 
                     referrelGrid.PageIndex = 0;

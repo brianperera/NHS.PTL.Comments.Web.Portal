@@ -30,6 +30,14 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         {
             PopulateStatusDropdown();
         }
+
+        
+    }
+
+    public void ClearField()
+    {
+        commentTextbox.Text = string.Empty;
+//      statusDropdown.SelectedIndex = 0;
     }
 
     protected override void OnPreRender(EventArgs e)
@@ -88,7 +96,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         ptlComment.ReferralRequestReceivedDate = ReferralRecievedDate;
         ptlComment.Status = statusDropdown.SelectedItem.Text;
 
-        ptlComment.UpdatedDate = DateTime.Now.Date;
+        ptlComment.UpdatedDate = DateTime.Now;
         ptlComment.Comment = commentTextbox.Text;
 
         DisplayMessage(CommentsManager.AddUpdatePtlComment(ptlComment));

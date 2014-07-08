@@ -51,6 +51,14 @@
                                     <asp:DropDownList ID="statusDropdown" runat="server" CssClass="defaultDropDown">
                                     </asp:DropDownList>
                                 </span></li>
+                                <li><span class="formTitleFields">RTT Wait</span> <span class="formFieldControl">
+                                    <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown">
+                                    </asp:DropDownList>
+                                </span></li>
+                                <li><span class="formTitleFields">Attendance Status</span> <span class="formFieldControl">
+                                    <asp:DropDownList ID="AttendanceStatusDropDown" runat="server" CssClass="defaultDropDown">
+                                    </asp:DropDownList>
+                                </span></li>
                                 <li><span>
                                     <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton"
                                         OnClick="searchButton_Click" />

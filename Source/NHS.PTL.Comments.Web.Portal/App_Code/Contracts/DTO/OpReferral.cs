@@ -32,6 +32,7 @@ public class OpReferral
     public DateTime FutureClinicDate { get; set; }
     public int WaitAtFutureClinicDate { get; set; }
     public string Status { get; set; }
+    public string WeekswaitGrouped { get; set; }
 
     public OpReferral()
     {
@@ -64,6 +65,7 @@ public class OpReferral
         clonedRef.UniqueCdsRowIdentifier = referral.UniqueCdsRowIdentifier;
         clonedRef.WaitAtFutureClinicDate = referral.WaitAtFutureClinicDate;
         clonedRef.WaitingListStatus = referral.WaitingListStatus;
+        clonedRef.WeekswaitGrouped = referral.WeekswaitGrouped;
 
         return clonedRef;
     }   

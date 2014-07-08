@@ -1,4 +1,4 @@
-USE [RTT]
+USE [OP_Referral_PTL]
 GO
 
 /****** Object:  Table [dbo].[OP_Referral_PTL]    Script Date: 07/05/2014 17:07:52 ******/

@@ -20,7 +20,7 @@ namespace Nhs.Ptl.Comments.DataAccess
         /// Gets all PTL comments
         /// </summary>
         /// <returns></returns>
-        public IList<OpReferral> GetAllOpReferrals()
+        public IList<OpReferral> GetAllOpReferrals(CommandType commandType)
         {
             IList<OpReferral> opReferrals = null;
 
@@ -35,8 +35,17 @@ namespace Nhs.Ptl.Comments.DataAccess
 
                     using (SqlCommand command = connection.CreateCommand())
                     {
-                        command.CommandType = CommandType.StoredProcedure;
+                        command.CommandType = commandType;
                         command.CommandText = "SelectAllPtlReferrals";
+
+                        if(commandType == CommandType.StoredProcedure)
+                        {
+                            command.CommandText = "SelectAllPtlReferrals";
+                        }
+                        else if (commandType == CommandType.Text)
+                        {
+                            command.CommandText = "SELECT * FROM OP_Referral_PTL";   
+                        }
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -65,6 +74,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                                     opRefferal.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
                                     opRefferal.Spec = reader["Spec"].ToString();
                                     opRefferal.RttStatus = reader["RTTStatus"].ToString();
+                                    opRefferal.WeekswaitGrouped = reader["WeekswaitGrouped"].ToString();
 
                                     int tempInt = 0;
                                     int.TryParse(reader["WaitAtFutureClinicDate"].ToString(), out tempInt);
@@ -153,7 +163,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                         SqlParameter referralDate = GetParameter("@ReferralRequestReceivedDate", SqlDbType.DateTime, ptlComment.ReferralRequestReceivedDate);
                         SqlParameter status = GetParameter("@Status", SqlDbType.VarChar, ptlComment.Status);
                         SqlParameter appointmentDate = GetParameter("@AppointmentDate", SqlDbType.Date, ptlComment.AppointmentDate);
-                        SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.Date, ptlComment.UpdatedDate);
+                        SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.DateTime, ptlComment.UpdatedDate);
                         SqlParameter comment = GetParameter("@Comment", SqlDbType.VarChar, ptlComment.Comment);
 
                         command.Parameters.Add(rowIdentifier);
@@ -405,7 +415,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                         SqlParameter rowIdentifier = GetParameter("@UniqueCDSRowIdentifier", SqlDbType.BigInt, ptlComment.UniqueCdsRowIdentifier);
                         SqlParameter status = GetParameter("@Status", SqlDbType.VarChar, ptlComment.Status);
                         SqlParameter appointmentDate = GetParameter("@AppointmentDate", SqlDbType.Date, ptlComment.AppointmentDate);
-                        SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.Date, ptlComment.UpdatedDate);
+                        SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.DateTime, ptlComment.UpdatedDate);
                         SqlParameter comment = GetParameter("@Comment", SqlDbType.VarChar, ptlComment.Comment);
 
                         command.Parameters.Add(rowIdentifier);

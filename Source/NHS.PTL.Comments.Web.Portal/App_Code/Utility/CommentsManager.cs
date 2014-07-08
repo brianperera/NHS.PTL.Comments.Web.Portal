@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Nhs.Ptl.Comments.DataAccess;
 using Nhs.Ptl.Comments.Contracts.Dto;
+using System.Data;
 
 /// <summary>
 /// Summary description for CommentsManager
@@ -30,7 +31,9 @@ namespace Nhs.Ptl.Comments.Utility
         public static IList<OpReferral> GetAllOpReferrals()
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
-            return GetStatusForReferral(ptlCommentsData.GetAllOpReferrals(), GetAllPtlComments());
+            return GetStatusForReferral(ptlCommentsData.GetAllOpReferrals(CommandType.Text), GetAllPtlComments());
+
+            //return ptlCommentsData.GetAllOpReferrals(CommandType.Text);
         }
 
         public static IList<PtlComment> GetAllPtlComments()
@@ -59,20 +62,37 @@ namespace Nhs.Ptl.Comments.Utility
 
                     if (null != commentsForReferral && commentsForReferral.Count > 0)
                     {
-                        foreach (PtlComment comment in commentsForReferral)
-                        {
-                            // Add one row for each comment
-                            OpReferral refWithStatus = new OpReferral();
-                            refWithStatus = refWithStatus.DeepClone(referral);
-                            refWithStatus.Status = comment.Status;
-                            refferalsWithStatus.Add(refWithStatus);
-                        }
+                        PtlComment comment = commentsForReferral.OrderByDescending(x => x.UpdatedDate).FirstOrDefault();
+
+
+                        //PtlComment comment = from n in commentsForReferral
+                        //                     group n by n.UpdatedDate into g
+                        //                     select new { AccountId = g.Key, Date = g.Max(t => t.Date) };
+
+                        // Add one row for each comment
+                        OpReferral refWithStatus = new OpReferral();
+                        refWithStatus = refWithStatus.DeepClone(referral);
+                        refWithStatus.Status = comment.Status;
+                        refferalsWithStatus.Add(refWithStatus);
+
+                        //foreach (PtlComment comment in commentsForReferral)
+                        //{
+                        //    // Add one row for each comment
+                        //    OpReferral refWithStatus = new OpReferral();
+                        //    refWithStatus = refWithStatus.DeepClone(referral);
+                        //    refWithStatus.Status = comment.Status;
+                        //    refferalsWithStatus.Add(refWithStatus);
+                        //}
                     }
                     else
                     {
                         // If no comments found, just add the original OpReferral
                         refferalsWithStatus.Add(referral);
                     }
+
+                    // If no comments found, just add the original OpReferral
+                    //refferalsWithStatus.Add(referral);
+
                 }
             }
 
