@@ -17,6 +17,19 @@ namespace Nhs.Ptl.Comments.Contracts.Dto
         public DateTime AppointmentDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string Comment { get; set; }
+        public string SortComment {
+            get
+            {
+                if (Comment.Length > 30)
+                {
+                    return Nhs.Ptl.Comments.Utility.Utility.Truncate(Comment, 30);
+                }
+                else
+                {
+                    return Comment;
+                }
+            }
+        }
         public string PatientPathwayIdentifier { get; set; }
         public string Spec { get; set; }
         public DateTime ReferralRequestReceivedDate { get; set; }

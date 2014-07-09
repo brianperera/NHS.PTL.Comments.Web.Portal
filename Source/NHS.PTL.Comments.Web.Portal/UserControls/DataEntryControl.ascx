@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="DataEntryControl.ascx.cs"
     Inherits="UserControls_DataEntryControl" ViewStateMode="Enabled" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
-<asp:UpdatePanel ID="UpdatePanel2" runat="server">
-    <ContentTemplate>
+<%--<asp:UpdatePanel ID="UpdatePanel2" runat="server">
+    <ContentTemplate>--%>
         <div>
             <span style="float: left;">
                 Data Entry
@@ -74,7 +74,11 @@
                                 <asp:BoundField HeaderText="Created By" DataField="CreatedBy"/>
                                 <asp:BoundField HeaderText="Status" DataField="Status" />
                                 <%--<asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />--%>
-                                <asp:BoundField HeaderText="Comment" DataField="Comment" />
+                                <asp:TemplateField HeaderText="Comment" SortExpression="SortComment">
+                                     <ItemTemplate>
+                                         <asp:Label ID="Label1" runat="server" Text='<%# Bind("SortComment") %>' ToolTip ='<%# Bind("Comment") %>'></asp:Label>
+                                     </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                             <FooterStyle BackColor="White" ForeColor="#000066" />
                                 <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
@@ -86,5 +90,5 @@
                 </div>
             </div>
         </div>
-    </ContentTemplate>
-</asp:UpdatePanel>
+<%--    </ContentTemplate>
+</asp:UpdatePanel>--%>
