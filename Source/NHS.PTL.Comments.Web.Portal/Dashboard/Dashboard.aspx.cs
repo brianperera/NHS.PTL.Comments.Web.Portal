@@ -337,7 +337,10 @@ namespace Nhs.Ptl.Comments.Web
                 if (!string.IsNullOrEmpty(patientTextbox.Text))
                 {
                     opReferrals = opReferrals.Where(comment => (comment.PatientForename.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                                                            || comment.PatientSurname.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
+                                                            || comment.PatientSurname.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                                                            || comment.PatientPathwayIdentifier.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                                                            || comment.NhsNumber.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                                                            || comment.LocalPatientID.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 }
 
                 // Filter by Speciality

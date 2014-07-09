@@ -165,6 +165,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                         SqlParameter appointmentDate = GetParameter("@AppointmentDate", SqlDbType.Date, ptlComment.AppointmentDate);
                         SqlParameter updatedDate = GetParameter("@UpdatedDate", SqlDbType.DateTime, ptlComment.UpdatedDate);
                         SqlParameter comment = GetParameter("@Comment", SqlDbType.VarChar, ptlComment.Comment);
+                        SqlParameter createdBy = GetParameter("@CreatedBy", SqlDbType.VarChar, ptlComment.CreatedBy);
 
                         command.Parameters.Add(rowIdentifier);
                         command.Parameters.Add(patientPathwayId);
@@ -174,6 +175,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                         command.Parameters.Add(appointmentDate);
                         command.Parameters.Add(updatedDate);
                         command.Parameters.Add(comment);
+                        command.Parameters.Add(createdBy);
 
                         if (command.ExecuteNonQuery() > -1)
                         {
@@ -226,6 +228,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                                     comment.Status = !Convert.IsDBNull(reader["Status"]) ? reader["Status"].ToString() : string.Empty;
                                     comment.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
                                     comment.Spec = reader["Spec"].ToString();
+                                    comment.CreatedBy = !Convert.IsDBNull(reader["CreatedBy"]) ? reader["CreatedBy"].ToString() : string.Empty;
 
                                     DateTime tempDateTime = DateTime.MinValue;
 
@@ -355,11 +358,12 @@ namespace Nhs.Ptl.Comments.DataAccess
                                     ptlComment.UniqueCdsRowIdentifier = uniqueRowIdentifier;
                                     ptlComment.Comment = !Convert.IsDBNull(reader["Comment"]) ? reader["Comment"].ToString() : string.Empty;
                                     ptlComment.Status = !Convert.IsDBNull(reader["Status"]) ? reader["Status"].ToString() : string.Empty;
+                                    ptlComment.CreatedBy = !Convert.IsDBNull(reader["CreatedBy"]) ? reader["CreatedBy"].ToString() : string.Empty;
 
                                     DateTime tempDateTime = DateTime.MinValue;
 
-                                    DateTime.TryParse(reader["AppointmentDate"].ToString(), out tempDateTime);
-                                    ptlComment.AppointmentDate = tempDateTime;
+                                    //DateTime.TryParse(reader["AppointmentDate"].ToString(), out tempDateTime);
+                                    //ptlComment.AppointmentDate = tempDateTime;
 
                                     DateTime.TryParse(reader["UpdatedDate"].ToString(), out tempDateTime);
                                     ptlComment.UpdatedDate = tempDateTime;

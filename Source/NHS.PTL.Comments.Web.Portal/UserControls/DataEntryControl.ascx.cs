@@ -8,6 +8,8 @@ using Nhs.Ptl.Comments;
 using System.Web.UI.HtmlControls;
 using Nhs.Ptl.Comments.Utility;
 using Nhs.Ptl.Comments.Contracts.Dto;
+using System.Web.Security;
+using System.Configuration;
 
 public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 {
@@ -19,6 +21,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     private DateTime ReferralRecievedDate { get; set; }
     private DateTime BreachDate { get; set; }
     private DateTime FutureClinicDate { get; set; }
+    IList<PtlComment> comments;
 
     #endregion
 
@@ -29,14 +32,14 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         if (!IsPostBack)
         {
             PopulateStatusDropdown();
-        }
-
-        
+            
+        } 
     }
 
     public void ClearField()
     {
         commentTextbox.Text = string.Empty;
+        createdUserDropdown.Items.Clear();
 //      statusDropdown.SelectedIndex = 0;
     }
 
@@ -49,6 +52,10 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         uniqueIdentifier.Text = UniqueRowId;
 
         LoadCommentsGrid();
+
+        PopulateCreatedByDropdown();
+
+        InsertDropdownDefaultValue();
 
         SetBreachDatePassedStatus();
     }
@@ -67,6 +74,11 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         }
 
         MessageLabel.Visible = false;
+    }
+
+    protected void searchButton_Click(object sender, EventArgs e)
+    {
+        //do nothing. Let the postback handle it
     }
 
     protected void submitButton_Click(object sender, EventArgs e)
@@ -92,6 +104,9 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         ptlComment.ReferralRequestReceivedDate = ReferralRecievedDate;
         ptlComment.Status = statusDropdown.SelectedItem.Text;
 
+        MembershipUser userInfo = Membership.GetUser();
+        ptlComment.CreatedBy = userInfo.UserName;
+
         ptlComment.UpdatedDate = DateTime.Now;
         ptlComment.Comment = commentTextbox.Text;
 
@@ -112,15 +127,34 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         }
     }
 
+    private void PopulateCreatedByDropdown()
+    {
+        if (null != comments)
+        {
+            List<string> createdUsers = comments.Select(x => x.CreatedBy).Distinct().ToList();
+
+            createdUserDropdown.DataSource = createdUsers;
+            createdUserDropdown.DataBind();
+        }
+    }
+
     private void LoadCommentsGrid()
     {
-        IList<PtlComment> comments = CommentsManager.GetPtlComments(UniqueRowId, PatientPathwayId, Spec, ReferralRecievedDate);
+        List<PtlComment> filteredList = new List<PtlComment>();
 
-        //if (null != comments)
-        //{
-        commentsGrid.DataSource = comments;
+        comments = CommentsManager.GetPtlComments(UniqueRowId, PatientPathwayId, Spec, ReferralRecievedDate);
+
+        if (!createdUserDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]) && !string.IsNullOrEmpty(createdUserDropdown.SelectedValue))
+        {
+            filteredList = comments.Where(comment => comment.CreatedBy.Equals(createdUserDropdown.SelectedValue)).ToList();
+            commentsGrid.DataSource = filteredList;
+        }
+        else
+        {
+            commentsGrid.DataSource = comments;
+        }
+
         commentsGrid.DataBind();
-        //}
     }
 
     private void DisplayMessage(bool executionStatus)
@@ -195,6 +229,19 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
             statusDropdown.SelectedIndex = 0;
         }
     }
+
+    /// <summary>
+    /// Add default 'All' item to each dropdown
+    /// </summary>
+    private void InsertDropdownDefaultValue()
+    {
+        if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["DropDownAllText"]))
+        {
+            ListItem defaultItem = new ListItem(ConfigurationManager.AppSettings["DropDownAllText"]);
+            createdUserDropdown.Items.Insert(0, defaultItem);
+        }
+    }
+
     #endregion
 
 }

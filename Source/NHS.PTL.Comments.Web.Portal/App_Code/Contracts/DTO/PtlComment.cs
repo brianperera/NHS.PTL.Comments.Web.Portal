@@ -21,6 +21,7 @@ namespace Nhs.Ptl.Comments.Contracts.Dto
         public string Spec { get; set; }
         public DateTime ReferralRequestReceivedDate { get; set; }
         public DateTime RttBreachDate { get; set; }
-        public DateTime FutureClinicDate { get; set; }        
+        public DateTime FutureClinicDate { get; set; }
+        public string CreatedBy { get; set; }
     }
 }
