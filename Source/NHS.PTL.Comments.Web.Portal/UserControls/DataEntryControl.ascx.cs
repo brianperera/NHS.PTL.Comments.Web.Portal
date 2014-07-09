@@ -37,8 +37,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     {
         if (!IsPostBack)
         {
-            PopulateStatusDropdown();
-            
+            PopulateStatusDropdown();   
         }
     }
 
@@ -174,6 +173,15 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         //Sort the comments
         filteredList = filteredList.OrderByDescending(c => c.UpdatedDate).ToList();
 
+        if (filteredList.Count > 5)
+        {
+            PopupGridWrapper.Attributes["Class"] = "overlayWithScrollBar";
+        }
+        else
+        {
+            PopupGridWrapper.Attributes["Class"] = string.Empty;
+        }
+
         commentsGrid.DataSource = filteredList;
         commentsGrid.DataBind();
     }
@@ -264,5 +272,4 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     }
 
     #endregion
-
 }

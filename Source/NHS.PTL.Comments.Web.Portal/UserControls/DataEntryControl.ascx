@@ -64,17 +64,19 @@
                         <span>
                             <strong>Comments History</strong>
                         </span>
-                        <asp:GridView ID="commentsGrid" AutoGenerateColumns="False" runat="server" CellPadding="3"
+                        <div runat="server" ID="PopupGridWrapper">
+                            <asp:GridView ID="commentsGrid" AutoGenerateColumns="False" runat="server" CellPadding="3"
                             BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
-                            CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
-                            ShowHeaderWhenEmpty="true" ShowHeader="true" AllowPaging="True" 
-                            PageSize="5">
+                            CssClass="grid" EmptyDataText="No matching records found"
+                            ShowHeaderWhenEmpty="true" ShowHeader="true" 
+                            PageSize="5" 
+                            >
                             <Columns>
                                 <asp:BoundField HeaderText="Created Date" DataField="UpdatedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                 <asp:BoundField HeaderText="Created By" DataField="CreatedBy"/>
                                 <asp:BoundField HeaderText="Status" DataField="Status" />
                                 <%--<asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />--%>
-                                <asp:TemplateField HeaderText="Comment" SortExpression="SortComment">
+                                <asp:TemplateField HeaderText="Comment">
                                      <ItemTemplate>
                                          <asp:Label ID="Label1" runat="server" Text='<%# Bind("SortComment") %>' ToolTip ='<%# Bind("Comment") %>'></asp:Label>
                                      </ItemTemplate>
@@ -86,6 +88,7 @@
                                 <RowStyle ForeColor="#000066" />
                                 <AlternatingRowStyle CssClass="altrow" />
                         </asp:GridView>
+                        </div>                        
                     </div>
                 </div>
             </div>
