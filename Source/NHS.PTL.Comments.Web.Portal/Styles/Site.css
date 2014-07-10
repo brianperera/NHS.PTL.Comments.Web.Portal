@@ -136,7 +136,7 @@ ul
     font-weight: bold;
     vertical-align: middle;
     padding: 4px 6px;
-    width: 50px;
+    /*width: 50px;*/
 }
 
 .regularTable tr td
@@ -145,7 +145,7 @@ ul
     color: #000;
     vertical-align: middle;
     padding: 4px 6px;
-    width: 50px;
+    /*width: 50px;*/
 }
 
 .tableColumnLargeWidth

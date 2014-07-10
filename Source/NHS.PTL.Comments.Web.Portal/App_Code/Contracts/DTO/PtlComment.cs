@@ -20,9 +20,9 @@ namespace Nhs.Ptl.Comments.Contracts.Dto
         public string SortComment {
             get
             {
-                if (Comment.Length > 30)
+                if (Comment.Length > 80)
                 {
-                    return Nhs.Ptl.Comments.Utility.Utility.Truncate(Comment, 30);
+                    return Nhs.Ptl.Comments.Utility.Utility.Truncate(Comment, 80);
                 }
                 else
                 {
