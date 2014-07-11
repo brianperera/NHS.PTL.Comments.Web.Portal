@@ -48,7 +48,7 @@
             <asp:SiteMapDataSource ID="SiteMapDataSource" runat="server" 
                 ShowStartingNode="False" />
             </span>
-            <span class="searchBox">
+            <span class="searchBox" style="float:left">
                 <asp:ContentPlaceHolder ID="SearchBoxContent" runat="server" />
             </span>
             <span class="loginDisplay">

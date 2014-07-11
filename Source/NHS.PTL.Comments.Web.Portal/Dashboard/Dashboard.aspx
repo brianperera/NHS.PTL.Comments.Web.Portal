@@ -19,8 +19,7 @@
     </asp:ToolkitScriptManager>
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
-            <asp:TextBox ID="patientTextbox" CssClass="searchInput" Width="100px" runat="server"
-                ViewStateMode="Enabled"></asp:TextBox>
+            <asp:TextBox ID="patientTextbox" CssClass="searchInput" runat="server"></asp:TextBox>
             <input type="text" id="txtWaterMark" class="waterMarkText searchInput" value="e.g. Brian Thomas" />
             <asp:ImageButton CssClass="searchButton" runat="server" ID="globalSearchButton" OnClick="searchButton_Click"
                 ImageUrl="~/Images/searchIcon.png" ToolTip="Also search by MRN, Pathway ID and NHS number" />

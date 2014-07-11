@@ -606,9 +606,9 @@ div.accountInfoCentered
 
 .searchBox
 {
-    width:170px;
-    margin-left:65%;
-    padding: 6px;
+    /*width:170px;*/
+    margin-left:64%;
+    padding-top: 6px;
     display:inline-block;
 }
 
@@ -1199,9 +1199,8 @@ label, span
 .overlayWithScrollBar
 {
     height:140px;
-    overflow-y: scroll; 
-    overflow-x: hidden;
-    -ms-overflow-y: hidden;    
+    overflow: scroll; 
+    -ms-overflow-x: hidden;    
 }
 
 .fade
@@ -1221,13 +1220,13 @@ label, span
 
 .waterMarkText
 {
-    color: #999999;
+    color: #C7C7C4 !important;
     font-style:italic;
 }
 
 .searchInput
 {
-    width:100px !important;    
+    width:150px !important;    
 }
 
 .classButton
@@ -1261,4 +1260,16 @@ label, span
 .gridScroll
 {
        
+}
+
+.popup .formSection
+{
+    margin:0 !important;    
+}
+
+.popup .formSection
+{
+    padding-bottom: 10px;
+    font-size: 11px;
+    border-bottom: 0px !important;
 }

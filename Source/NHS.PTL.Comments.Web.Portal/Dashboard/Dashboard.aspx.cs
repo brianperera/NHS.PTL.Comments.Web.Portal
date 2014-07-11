@@ -82,6 +82,7 @@ namespace Nhs.Ptl.Comments.Web
             fade.Attributes.Add("style", "display: block;");
 
             DataEntryControl1.ClearField();
+            DataEntryControl1.PopulateDefaultValues();
         }
 
         protected void referrelGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)

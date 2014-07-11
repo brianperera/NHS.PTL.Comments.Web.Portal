@@ -41,13 +41,20 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         }
     }
 
-    private void PopulateDefaultValues()
+    public void PopulateDefaultValues()
     {
         //Get the latest comment
+        if (Comments == null)
+            return;
+
         PtlComment currentComment = Comments.OrderByDescending(c => c.UpdatedDate).FirstOrDefault();
-        commentTextbox.Text = currentComment.Comment;
-        createdUserDropdown.SelectedValue = currentComment.CreatedBy;
-        createdDateTextbox.Text = currentComment.UpdatedDate.ToString("dd/MM/yyyy");
+        if (currentComment != null)
+        {
+            commentTextbox.Text = currentComment.Comment;
+            statusDropdown.SelectedValue = currentComment.Status;
+            createdUserDropdown.SelectedValue = currentComment.CreatedBy;
+            createdDateTextbox.Text = currentComment.UpdatedDate.ToString("dd/MM/yyyy");
+        }
     }
 
     public void ClearField()
@@ -74,8 +81,6 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         }
 
         SetBreachDatePassedStatus();
-
-        PopulateDefaultValues();
     }
 
     protected void closeLink_Click(object sender, EventArgs e)
@@ -159,6 +164,12 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     private void LoadCommentsGrid()
     {
         List<PtlComment> filteredList = new List<PtlComment>();
+        
+        if (Comments == null)
+        {
+            return;
+        }
+
         filteredList = Comments.ToList();
 
         if (!createdUserDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]) && !string.IsNullOrEmpty(createdUserDropdown.SelectedValue))
@@ -239,23 +250,26 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 
     private void SetBreachDatePassedStatus()
     {
-        if (FutureClinicDate != DateTime.MinValue
-            && BreachDate != DateTime.MinValue
-            && FutureClinicDate >= BreachDate)
+        if (Comments == null || Comments.Count <= 0)
         {
-            string bringFowardStatus = StatusConfigurationManager.GetStatusValue("BringForward");
-
-            if (!string.IsNullOrEmpty(bringFowardStatus))
+            if (FutureClinicDate != DateTime.MinValue
+                && BreachDate != DateTime.MinValue
+                && FutureClinicDate >= BreachDate)
             {
-                if (null != statusDropdown.Items.FindByText(bringFowardStatus))
+                string bringFowardStatus = StatusConfigurationManager.GetStatusValue("BringForward");
+
+                if (!string.IsNullOrEmpty(bringFowardStatus))
                 {
-                    statusDropdown.SelectedValue = bringFowardStatus;
+                    if (null != statusDropdown.Items.FindByText(bringFowardStatus))
+                    {
+                        statusDropdown.SelectedValue = bringFowardStatus;
+                    }
                 }
             }
-        }
-        else
-        {
-            statusDropdown.SelectedIndex = 0;
+            else
+            {
+                statusDropdown.SelectedIndex = 0;
+            }
         }
     }
 
