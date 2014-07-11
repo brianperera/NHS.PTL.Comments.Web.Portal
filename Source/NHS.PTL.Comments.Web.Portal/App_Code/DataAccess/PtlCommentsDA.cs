@@ -158,7 +158,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                         command.CommandText = "InsertPtlComment";
 
                         SqlParameter rowIdentifier = GetParameter("@UniqueCDSRowIdentifier", SqlDbType.NVarChar, ptlComment.UniqueCdsRowIdentifier);
-                        SqlParameter patientPathwayId = GetParameter("@PatientPathwayIdentifier", SqlDbType.Float, ptlComment.PatientPathwayIdentifier);
+                        SqlParameter patientPathwayId = GetParameter("@PatientPathwayIdentifier", SqlDbType.NVarChar, ptlComment.PatientPathwayIdentifier);
                         SqlParameter spec = GetParameter("@Spec", SqlDbType.Float, ptlComment.Spec);
                         SqlParameter referralDate = GetParameter("@ReferralRequestReceivedDate", SqlDbType.DateTime, ptlComment.ReferralRequestReceivedDate);
                         SqlParameter status = GetParameter("@Status", SqlDbType.VarChar, ptlComment.Status);
@@ -335,7 +335,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                         SqlParameter rowIdentifierParam = GetParameter("@UniqueCDSRowIdentifier", SqlDbType.NVarChar, uniqueRowIdentifier);
                         command.Parameters.Add(rowIdentifierParam);
 
-                        SqlParameter pathwayIdParam = GetParameter("@PatientPathwayIdentifier", SqlDbType.Float, pathwayId);
+                        SqlParameter pathwayIdParam = GetParameter("@PatientPathwayIdentifier", SqlDbType.NVarChar, pathwayId);
                         command.Parameters.Add(pathwayIdParam);
 
                         SqlParameter specParam = GetParameter("@Spec", SqlDbType.Float, spec);

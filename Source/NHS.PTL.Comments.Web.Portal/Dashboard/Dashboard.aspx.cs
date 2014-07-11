@@ -82,7 +82,7 @@ namespace Nhs.Ptl.Comments.Web
             fade.Attributes.Add("style", "display: block;");
 
             DataEntryControl1.ClearField();
-            DataEntryControl1.PopulateDefaultValues();
+            DataEntryControl1.PopulateDefaultValues(DataEntryControl1.GetAllComments());
         }
 
         protected void referrelGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)

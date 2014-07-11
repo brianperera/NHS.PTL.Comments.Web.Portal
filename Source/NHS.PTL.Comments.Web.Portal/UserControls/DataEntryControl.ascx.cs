@@ -21,13 +21,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     private DateTime ReferralRecievedDate { get; set; }
     private DateTime BreachDate { get; set; }
     private DateTime FutureClinicDate { get; set; }
-    public IList<PtlComment> Comments {
-        get
-        {
-            ReadKeyValues();
-            return CommentsManager.GetPtlComments(UniqueRowId, PatientPathwayId, Spec, ReferralRecievedDate);
-        }
-    }
+    public List<PtlComment> ModifiedComments { get; set; }
 
     #endregion
 
@@ -41,13 +35,19 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         }
     }
 
-    public void PopulateDefaultValues()
+    public IList<PtlComment> GetAllComments()
+    {
+        ReadKeyValues();
+        return CommentsManager.GetPtlComments(UniqueRowId, PatientPathwayId, Spec, ReferralRecievedDate);
+    }
+
+    public void PopulateDefaultValues(IList<PtlComment> comments)
     {
         //Get the latest comment
-        if (Comments == null)
+        if (comments == null)
             return;
 
-        PtlComment currentComment = Comments.OrderByDescending(c => c.UpdatedDate).FirstOrDefault();
+        PtlComment currentComment = comments.OrderByDescending(c => c.UpdatedDate).FirstOrDefault();
         if (currentComment != null)
         {
             commentTextbox.Text = currentComment.Comment;
@@ -72,15 +72,15 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 
         uniqueIdentifier.Text = UniqueRowId;
 
-        LoadCommentsGrid();
+        ModifiedComments = LoadCommentsGrid();
 
         if (!IsPostBack || createdUserDropdown.Items.Count <= 0)
         {
-            PopulateCreatedByDropdown();
+            PopulateCreatedByDropdown(ModifiedComments);
             InsertDropdownDefaultValue();
         }
 
-        SetBreachDatePassedStatus();
+        SetBreachDatePassedStatus(ModifiedComments);
     }
 
     protected void closeLink_Click(object sender, EventArgs e)
@@ -150,27 +150,29 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         }
     }
 
-    private void PopulateCreatedByDropdown()
+    private void PopulateCreatedByDropdown(List<PtlComment> comments)
     {
-        if (null != Comments)
+        if (null != comments)
         {
-            List<string> createdUsers = Comments.Select(x => x.CreatedBy).Distinct().ToList();
+            List<string> createdUsers = comments.Select(x => x.CreatedBy).Distinct().ToList();
 
             createdUserDropdown.DataSource = createdUsers;
             createdUserDropdown.DataBind();
         }
     }
 
-    private void LoadCommentsGrid()
+    private List<PtlComment> LoadCommentsGrid()
     {
         List<PtlComment> filteredList = new List<PtlComment>();
+        var comments = GetAllComments();
         
-        if (Comments == null)
+        if (comments == null)
         {
-            return;
+            return null;
         }
 
-        filteredList = Comments.ToList();
+        filteredList = comments.ToList();
+               
 
         if (!createdUserDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]) && !string.IsNullOrEmpty(createdUserDropdown.SelectedValue))
         {
@@ -195,6 +197,8 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 
         commentsGrid.DataSource = filteredList;
         commentsGrid.DataBind();
+
+        return filteredList;
     }
 
     private void DisplayMessage(bool executionStatus)
@@ -248,9 +252,9 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         }
     }
 
-    private void SetBreachDatePassedStatus()
+    private void SetBreachDatePassedStatus(List<PtlComment> comments)
     {
-        if (Comments == null || Comments.Count <= 0)
+        if (comments == null || comments.Count <= 0)
         {
             if (FutureClinicDate != DateTime.MinValue
                 && BreachDate != DateTime.MinValue
