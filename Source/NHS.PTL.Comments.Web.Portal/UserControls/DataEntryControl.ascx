@@ -33,7 +33,7 @@
                     <li><span>Add your comment on the below textbox:</span></li>
 
                     <li><div>
-                        <asp:TextBox ID="commentTextbox" runat="server" Width="615px" Height="50px" TextMode="MultiLine"></asp:TextBox>
+                        <asp:TextBox ID="commentTextbox" runat="server" Width="98%" Height="50px" TextMode="MultiLine"></asp:TextBox>
                     </div></li>
 
                     <li><span>
