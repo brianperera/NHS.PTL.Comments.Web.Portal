@@ -20,7 +20,7 @@ namespace Nhs.Ptl.Comments.Web
 
                 if (null != opReferrals)
                 {
-                    PopulateStatusDropdown();
+                    PopulateStatusDropdown(opReferrals);
                     PopulateSpecialityDropdown(opReferrals);
                     PopulateConsultantDropdown(opReferrals);
                     PopulateAttendanceStatusDropDown(opReferrals);
@@ -299,11 +299,11 @@ namespace Nhs.Ptl.Comments.Web
         /// <summary>
         /// Populate Status dropdown
         /// </summary>
-        private void PopulateStatusDropdown()
+        private void PopulateStatusDropdown(IList<OpReferral> opReferrals)
         {
-            List<string> statusList = StatusConfigurationManager.GetAllStatuses().ToList();
-            if (null != statusList)
+            if (null != opReferrals)
             {
+                string[] statusList = opReferrals.Select(e => e.Status).Distinct().ToArray();
                 statusDropdown.DataSource = statusList;
                 statusDropdown.DataBind();
             }
@@ -507,9 +507,9 @@ namespace Nhs.Ptl.Comments.Web
                 PopulateConsultantDropdown(opReferrals);
                 PopulateAttendanceStatusDropDown(opReferrals);
                 PopulateRTTWaitDropDown(opReferrals);
+                PopulateStatusDropdown(opReferrals);
             }
-
-            PopulateStatusDropdown();
+            
             InsertDropdownDefaultValue();
             patientTextbox.Text = string.Empty;
         }
