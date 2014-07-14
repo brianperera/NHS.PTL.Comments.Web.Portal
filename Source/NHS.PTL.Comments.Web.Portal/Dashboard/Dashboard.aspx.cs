@@ -60,7 +60,7 @@ namespace Nhs.Ptl.Comments.Web
             //PopulateStatusDropdown();
             //InsertDropdownDefaultValue();
             //patientTextbox.Text = string.Empty;
-            
+
             ResetControls();
             FilterGrid();
         }
@@ -122,6 +122,12 @@ namespace Nhs.Ptl.Comments.Web
                         AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+
+                        InsertDropdownDefaultValue();
+                        consultantDropdown.Items[0].Selected = true;
+                        statusDropdown.Items[0].Selected = true;
+                        RTTWaitDropDown.Items[0].Selected = true;
+                        AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
 
@@ -163,6 +169,12 @@ namespace Nhs.Ptl.Comments.Web
                         AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+
+                        InsertDropdownDefaultValue();
+
+                        statusDropdown.Items[0].Selected = true;
+                        RTTWaitDropDown.Items[0].Selected = true;
+                        AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
             }
@@ -203,6 +215,11 @@ namespace Nhs.Ptl.Comments.Web
                         AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+
+                        InsertDropdownDefaultValue();
+
+                        RTTWaitDropDown.Items[0].Selected = true;
+                        AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
             }
@@ -243,6 +260,10 @@ namespace Nhs.Ptl.Comments.Web
                         AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
+
+                        InsertDropdownDefaultValue();
+
+                        AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
             }
@@ -283,6 +304,8 @@ namespace Nhs.Ptl.Comments.Web
                         RTTWaitDropDown.DataSource = filtered.Select(x => x.RttStatus).Distinct().ToArray();
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+
+                        InsertDropdownDefaultValue();
                     }
                 }
             }
@@ -356,11 +379,23 @@ namespace Nhs.Ptl.Comments.Web
             {
                 ListItem defaultItem = new ListItem(ConfigurationManager.AppSettings["DropDownAllText"]);
 
-                specialityDropdown.Items.Insert(0, defaultItem);
-                consultantDropdown.Items.Insert(0, defaultItem);
-                statusDropdown.Items.Insert(0, defaultItem);
-                RTTWaitDropDown.Items.Insert(0, defaultItem);
-                AttendanceStatusDropDown.Items.Insert(0, defaultItem);
+                // This is just to avoid checking one by one :)
+                List<DropDownList> dropDownLists = new List<DropDownList>() 
+                { 
+                            specialityDropdown,
+                            consultantDropdown,
+                            statusDropdown,
+                            RTTWaitDropDown,
+                            AttendanceStatusDropDown
+                };
+                
+                foreach (DropDownList ddl in dropDownLists)
+                {
+                    if (!ddl.Items.Contains(defaultItem))
+                    {
+                        ddl.Items.Insert(0, defaultItem);
+                    }
+                }                
             }
         }
 
@@ -509,7 +544,7 @@ namespace Nhs.Ptl.Comments.Web
                 PopulateRTTWaitDropDown(opReferrals);
                 PopulateStatusDropdown(opReferrals);
             }
-            
+
             InsertDropdownDefaultValue();
             patientTextbox.Text = string.Empty;
         }
