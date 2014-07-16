@@ -62,6 +62,8 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         commentTextbox.Text = string.Empty;
         createdUserDropdown.Items.Clear();
         createdDateTextbox.Text = string.Empty;
+        commentsGrid.DataSource = null;
+        commentsGrid.DataBind();
     }
 
     protected override void OnPreRender(EventArgs e)
