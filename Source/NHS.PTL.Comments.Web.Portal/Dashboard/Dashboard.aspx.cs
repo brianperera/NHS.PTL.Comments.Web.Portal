@@ -107,19 +107,27 @@ namespace Nhs.Ptl.Comments.Web
                         // Save current selected values
                         SaveCurrentDropdownValues();
 
-                        consultantDropdown.DataSource = filtered.Select(x => x.Consultant).Distinct().ToArray();
+                        var filteredList1 = filtered.Select(x => x.Consultant).Distinct().ToList();
+                        filteredList1.Insert(0, "");
+                        consultantDropdown.DataSource = filteredList1;
                         consultantDropdown.DataBind();
                         SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
 
-                        statusDropdown.DataSource = filtered.Select(x => x.Status).Distinct().ToArray();
+                        var filteredList2 = filtered.Select(x => x.Status).Distinct().ToList();
+                        filteredList2.Insert(0, "");
+                        statusDropdown.DataSource = filteredList2;
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = filtered.Select(x => x.WeekswaitGrouped).Distinct().ToArray();
+                        var filteredList3 = filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList();
+                        filteredList3.Insert(0, "");
+                        RTTWaitDropDown.DataSource = filteredList3;
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
-                        AttendanceStatusDropDown.DataSource = filtered.Select(x => x.AttStatus).Distinct().ToArray();
+                        var filteredList4 = filtered.Select(x => x.AttStatus).Distinct().ToList();
+                        filteredList4.Insert(0, "");
+                        AttendanceStatusDropDown.DataSource = filteredList4;
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
@@ -391,10 +399,31 @@ namespace Nhs.Ptl.Comments.Web
                 
                 foreach (DropDownList ddl in dropDownLists)
                 {
+                    //ddl.AppendDataBoundItems = true;
+                    //var a = ddl.DataSource;
+
+
+                    //Shift 1 item to the front
+
+                    //foreach (var item in ddl)
+                    //{
+                    //    item
+                    //}
+
                     if (!ddl.Items.Contains(defaultItem))
                     {
-                        ddl.Items.Insert(0, defaultItem);
+                        //ddl.Items.Insert(1, ddl.Items[0]);
+
+                        ddl.Items[0].Value = "All";
+                        ddl.Items[0].Text = "All";
                     }
+
+                    
+
+                    //if (!ddl.Items.Contains(defaultItem))
+                    //{
+                    //    ddl.Items.Insert(0, new ListItem("D","D"));
+                    //}
                 }                
             }
         }
