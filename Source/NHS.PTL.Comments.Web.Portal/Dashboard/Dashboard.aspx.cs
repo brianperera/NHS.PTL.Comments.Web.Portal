@@ -538,6 +538,7 @@ namespace Nhs.Ptl.Comments.Web
             {
                 if (null != dropDown.Items.FindByText(value))
                 {
+                    dropDown.SelectedItem.Selected = false;
                     dropDown.Items.FindByText(value).Selected = true;
                 }
                 else
