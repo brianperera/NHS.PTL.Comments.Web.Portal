@@ -50,10 +50,11 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         PtlComment currentComment = comments.OrderByDescending(c => c.UpdatedDate).FirstOrDefault();
         if (currentComment != null)
         {
-            commentTextbox.Text = currentComment.Comment;
+            //commentTextbox.Text = currentComment.Comment;
             statusDropdown.SelectedValue = currentComment.Status;
-            createdUserDropdown.SelectedValue = currentComment.CreatedBy;
-            createdDateTextbox.Text = currentComment.UpdatedDate.ToString("dd/MM/yyyy");
+            if(createdUserDropdown.Items.Count > 0)
+                createdUserDropdown.SelectedIndex = 0;
+            //createdDateTextbox.Text = currentComment.UpdatedDate.ToString("dd/MM/yyyy");
         }
     }
 

@@ -927,6 +927,7 @@ label, span
     background-color: #417696;
     border: none;
     padding: 3px 3px;
+    text-align:center !important;
 }
 
 .grid tr td

@@ -29,11 +29,34 @@ namespace Nhs.Ptl.Comments.Web
                     //referrelGrid.DataSource = new List<string>();
                     //referrelGrid.DataBind();
 
+                    RefineDatesInOpReferrals(opReferrals);
                     referrelGrid.DataSource = opReferrals;
                     referrelGrid.DataBind();
                 }
 
             }
+        }
+
+        private void RefineDatesInOpReferrals(IList<OpReferral> opReferrals)
+        {
+            //Apply date time rules
+            foreach (OpReferral item in opReferrals)
+            {
+                item.DateOfBirth = this.ConvertDefaultDateTimeToNullConverter(item.DateOfBirth);
+                item.ReferralRequestReceivedDate = this.ConvertDefaultDateTimeToNullConverter(item.ReferralRequestReceivedDate);
+                item.RttClockStart = this.ConvertDefaultDateTimeToNullConverter(item.RttClockStart);
+                item.RttBreachDate = this.ConvertDefaultDateTimeToNullConverter(item.RttBreachDate);
+                item.AttendanceDate = this.ConvertDefaultDateTimeToNullConverter(item.AttendanceDate);
+                item.FutureClinicDate = this.ConvertDefaultDateTimeToNullConverter(item.FutureClinicDate); ;
+            }
+        }
+
+        private DateTime? ConvertDefaultDateTimeToNullConverter(DateTime? currentDateTime)
+        {
+            if (string.Equals(currentDateTime.Value.ToShortDateString(), "01/01/0001"))
+                return null;
+            else
+                return currentDateTime;
         }
 
         protected void searchButton_Click(object sender, EventArgs e)
@@ -124,10 +147,14 @@ namespace Nhs.Ptl.Comments.Web
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
                         //InsertDropdownDefaultValue();
-                        consultantDropdown.Items[0].Selected = true;
-                        statusDropdown.Items[0].Selected = true;
-                        RTTWaitDropDown.Items[0].Selected = true;
-                        AttendanceStatusDropDown.Items[0].Selected = true;
+                        //consultantDropdown.ClearSelection();
+                        //statusDropdown.ClearSelection();
+                        //RTTWaitDropDown.ClearSelection();
+                        //AttendanceStatusDropDown.ClearSelection();
+                        //consultantDropdown.Items[0].Selected = true;
+                        //statusDropdown.Items[0].Selected = true;
+                        //RTTWaitDropDown.Items[0].Selected = true;
+                        //AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
 
@@ -171,10 +198,9 @@ namespace Nhs.Ptl.Comments.Web
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
                         //InsertDropdownDefaultValue();
-
-                        statusDropdown.Items[0].Selected = true;
-                        RTTWaitDropDown.Items[0].Selected = true;
-                        AttendanceStatusDropDown.Items[0].Selected = true;
+                        //statusDropdown.Items[0].Selected = true;
+                        //RTTWaitDropDown.Items[0].Selected = true;
+                        //AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
             }
@@ -217,9 +243,10 @@ namespace Nhs.Ptl.Comments.Web
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
                         //InsertDropdownDefaultValue();
-
-                        RTTWaitDropDown.Items[0].Selected = true;
-                        AttendanceStatusDropDown.Items[0].Selected = true;
+                        //RTTWaitDropDown.ClearSelection();
+                        //AttendanceStatusDropDown.ClearSelection();
+                        //RTTWaitDropDown.Items[0].Selected = true;
+                        //AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
             }
@@ -262,8 +289,7 @@ namespace Nhs.Ptl.Comments.Web
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
                         //InsertDropdownDefaultValue();
-
-                        AttendanceStatusDropDown.Items[0].Selected = true;
+                        //AttendanceStatusDropDown.Items[0].Selected = true;
                     }
                 }
             }
@@ -487,6 +513,7 @@ namespace Nhs.Ptl.Comments.Web
                 if (null != opReferrals)
                 {
                     // Bind to grid
+                    RefineDatesInOpReferrals(opReferrals);
                     referrelGrid.DataSource = opReferrals;
                     referrelGrid.DataBind();
 
@@ -538,7 +565,6 @@ namespace Nhs.Ptl.Comments.Web
             {
                 if (null != dropDown.Items.FindByText(value))
                 {
-                    dropDown.SelectedItem.Selected = false;
                     dropDown.Items.FindByText(value).Selected = true;
                 }
                 else

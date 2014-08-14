@@ -7,11 +7,11 @@
     TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
     <script src="../Scripts/jquery-1.4.1.js" type="text/javascript"></script>
-    <%--<script src="../Scripts/ui.core.js" type="text/javascript"></script>
+    <script src="../Scripts/ui.core.js" type="text/javascript"></script>
     <script src="../Scripts/effects.core.js" type="text/javascript"></script>
     <script src="../Scripts/ui.dialog.js" type="text/javascript"></script>
     <script src="../Scripts/CommentsScript.js" type="text/javascript"></script>
-    <link href="../Styles/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />--%>
+    <link href="../Styles/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script src="../Scripts/ClientSideUtility.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="SearchBoxContent" runat="Server">
@@ -120,7 +120,7 @@
                                     <asp:BoundField HeaderText="Ref Date" DataField="ReferralRequestReceivedDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Source Of Referral" DataField="SourceOfReferralText" />
                                     <asp:BoundField HeaderText="Priority Type" DataField="PriorityType" />
-                                    <asp:BoundField HeaderText="RTT Clock Start" DataField="RttClockStart" />
+                                    <asp:BoundField HeaderText="RTT Clock Start" DataField="RttClockStart" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="RTT Breach Date" DataField="RttBreachDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Att Date" DataField="AttendanceDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Att Status" DataField="AttStatus" />
@@ -128,7 +128,7 @@
                                     <asp:BoundField HeaderText="RTT Status" DataField="RttText" />
                                     <asp:BoundField HeaderText="Waiting List Status" DataField="WaitingListStatus" />
                                     <asp:BoundField HeaderText="Future Clinic Date" DataField="FutureClinicDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
-                                    <asp:BoundField HeaderText="Wait" DataField="WaitAtFutureClinicDate" />
+                                    <asp:BoundField HeaderText="Wait" DataField="WeekswaitGrouped" />
                                     <asp:BoundField HeaderText="Status" DataField="Status" />
                                     <%-- <asp:BoundField HeaderText="Status" DataField="Status" />
                                     <asp:BoundField HeaderText="Appointment Date" DataField="AppointmentDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
@@ -136,7 +136,7 @@
                                     <asp:BoundField HeaderText="Comment" DataField="Comment" />--%>
                                 </Columns>
                                 <FooterStyle BackColor="White" ForeColor="#000066" />
-                                <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White"/>
                                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" CssClass="gridPagerStyle" />
                                 <RowStyle ForeColor="#000066" />
                                 <AlternatingRowStyle CssClass="altrow" />
