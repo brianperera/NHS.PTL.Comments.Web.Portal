@@ -15,5 +15,7 @@ namespace Nhs.Ptl.Comments
         public const string IncorrectCredentialsErrorMessage = "Incorrect username or password. Please try again.";
         public const string UserLockedoutErrorMessage = "Your account has been locked out. Please contact an administrator.";
         public const string UserNotActiveErrorMessage = "Your account has not yet been approved. Please contact an administrator.";
+        public const string WithDate = "With Date";
+        public const string NoDate = "No Date";
     }
 }

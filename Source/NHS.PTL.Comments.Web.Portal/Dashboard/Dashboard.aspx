@@ -73,12 +73,19 @@
                                             AutoPostBack="True" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </span></li>
-                                <li><span class="shortFormTitleFieldsWithoutFloat">Attendance Status</span> <span
+                                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Attendance Status</span> <span
                                     class="formFieldControl">
                                     <asp:DropDownList ID="AttendanceStatusDropDown" runat="server" CssClass="defaultDropDown"
                                         AutoPostBack="True" OnSelectedIndexChanged="AttendanceStatusDropDown_SelectedIndexChanged">
                                     </asp:DropDownList>
                                 </span></li>
+
+                                <li><span class="shortFormTitleFieldsWithoutFloat">Future Appt Status</span> <span class="formFieldControl">
+                                    <asp:DropDownList ID="FutureApptStatusDropDownList" runat="server" CssClass="defaultDropDown" AutoPostBack="True"
+                                        OnSelectedIndexChanged="FutureApptStatusDropDown_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </span></li>
+
                             </ul>
                             <ul class="formSection">
                                 <li><span>

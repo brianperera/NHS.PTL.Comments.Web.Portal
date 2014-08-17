@@ -36,6 +36,7 @@ namespace Nhs.Ptl.Comments.Web
                     PopulateConsultantDropdown(opReferrals);
                     PopulateAttendanceStatusDropDown(opReferrals);
                     PopulateRTTWaitDropDown(opReferrals);
+                    PopulateFutureApptStatusDropDown();
                     InsertDropdownDefaultValue();
                     //referrelGrid.DataSource = new List<string>();
                     //referrelGrid.DataBind();
@@ -343,6 +344,54 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        protected void FutureApptStatusDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!FutureApptStatusDropDownList.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+            {
+                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+                if (null != opReferrals)
+                {
+                    string mainFilterCriteria = FutureApptStatusDropDownList.SelectedItem.Text;
+                    IList<OpReferral> filtered;
+
+                    if (string.Equals(mainFilterCriteria, Constants.NoDate))
+                        filtered = opReferrals.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                    else
+                        filtered = opReferrals.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+
+
+                    if (null != filtered)
+                    {
+                        // Save current selected values
+                        SaveCurrentDropdownValues();
+
+                        specialityDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
+                        specialityDropdown.DataBind();
+                        SetSavedValue(specialityDropdown, specDdHiddenField.Value);
+
+                        consultantDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
+                        consultantDropdown.DataBind();
+                        SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
+
+                        statusDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
+                        statusDropdown.DataBind();
+                        SetSavedValue(statusDropdown, statusDdHiddenField.Value);
+
+                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.RttStatus).Distinct().ToList());
+                        RTTWaitDropDown.DataBind();
+                        SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+
+                        //InsertDropdownDefaultValue();
+                    }
+                }
+            }
+            else
+            {
+                ResetControls();
+            }
+        }
+
         protected void referrelGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row != null && e.Row.RowType == DataControlRowType.DataRow)
@@ -449,7 +498,8 @@ namespace Nhs.Ptl.Comments.Web
                             consultantDropdown,
                             statusDropdown,
                             RTTWaitDropDown,
-                            AttendanceStatusDropDown
+                            AttendanceStatusDropDown,
+                            FutureApptStatusDropDownList
                 };
 
                 foreach (DropDownList ddl in dropDownLists)
@@ -525,9 +575,20 @@ namespace Nhs.Ptl.Comments.Web
                     {
                         opReferrals = opReferrals.Where(comment => comment.AttStatus.Equals(AttendanceStatusDropDown.SelectedValue)).ToList();
                     }
+
+                    // Filter by Future Appt Status
+                    if (!FutureApptStatusDropDownList.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    {
+                        string mainFilterCriteria = FutureApptStatusDropDownList.SelectedItem.Text;
+
+                        if (string.Equals(mainFilterCriteria, Constants.NoDate))
+                            opReferrals = opReferrals.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                        else
+                            opReferrals = opReferrals.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                    }
                 }
 
-                // Filter by Status
+                
 
                 if (null != opReferrals)
                 {
@@ -607,10 +668,19 @@ namespace Nhs.Ptl.Comments.Web
                 PopulateAttendanceStatusDropDown(opReferrals);
                 PopulateRTTWaitDropDown(opReferrals);
                 PopulateStatusDropdown(opReferrals);
+                PopulateFutureApptStatusDropDown();
             }
 
             InsertDropdownDefaultValue();
             patientTextbox.Text = string.Empty;
+        }
+
+        private void PopulateFutureApptStatusDropDown()
+        {
+            //TODO: Need to move to config file
+            string[] futureApptStatusList = { "With Date", "No Date" };
+            FutureApptStatusDropDownList.DataSource = futureApptStatusList;
+            FutureApptStatusDropDownList.DataBind();
         }
 
         private void RefineDatesInOpReferrals(IList<OpReferral> opReferrals)
