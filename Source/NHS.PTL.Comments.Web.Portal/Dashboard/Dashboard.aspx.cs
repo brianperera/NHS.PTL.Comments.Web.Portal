@@ -5,11 +5,22 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using Nhs.Ptl.Comments.Contracts.Dto;
 using Nhs.Ptl.Comments.Utility;
+using System.Data;
+
+// IMPORTANT!!!: Look at the constants before you change the columns!
+// Change the constants accordingly
 
 namespace Nhs.Ptl.Comments.Web
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        #region Constants
+
+        private const int ReferralRequestColumnNo = 10;
+        private const int FutureClinicDateColumnNo = 19;
+
+        #endregion
+
         #region Page Events
 
         protected void Page_Load(object sender, EventArgs e)
@@ -37,23 +48,9 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
-        private void RefineDatesInOpReferrals(IList<OpReferral> opReferrals)
-        {
-            //Apply date time rules
-            foreach (OpReferral item in opReferrals)
-            {
-                item.DateOfBirth = this.ConvertDefaultDateTimeToNullConverter(item.DateOfBirth);
-                item.ReferralRequestReceivedDate = this.ConvertDefaultDateTimeToNullConverter(item.ReferralRequestReceivedDate);
-                item.RttClockStart = this.ConvertDefaultDateTimeToNullConverter(item.RttClockStart);
-                item.RttBreachDate = this.ConvertDefaultDateTimeToNullConverter(item.RttBreachDate);
-                item.AttendanceDate = this.ConvertDefaultDateTimeToNullConverter(item.AttendanceDate);
-                item.FutureClinicDate = this.ConvertDefaultDateTimeToNullConverter(item.FutureClinicDate); ;
-            }
-        }
-
         private DateTime? ConvertDefaultDateTimeToNullConverter(DateTime? currentDateTime)
         {
-            if (string.Equals(currentDateTime.Value.ToShortDateString(), "01/01/0001"))
+            if (string.Equals(currentDateTime.Value, DateTime.MinValue))
                 return null;
             else
                 return currentDateTime;
@@ -85,6 +82,11 @@ namespace Nhs.Ptl.Comments.Web
             //patientTextbox.Text = string.Empty;
 
             ResetControls();
+            FilterGrid();
+        }
+
+        protected void refreshButton_Click(object sender, EventArgs e)
+        {
             FilterGrid();
         }
 
@@ -341,6 +343,23 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        protected void referrelGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row != null && e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Special care taken for key values
+                if (e.Row.Cells[ReferralRequestColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
+                {
+                    e.Row.Cells[ReferralRequestColumnNo].Text = string.Empty;
+                }
+
+                if (e.Row.Cells[FutureClinicDateColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
+                {
+                    e.Row.Cells[FutureClinicDateColumnNo].Text = string.Empty;
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -432,14 +451,14 @@ namespace Nhs.Ptl.Comments.Web
                             RTTWaitDropDown,
                             AttendanceStatusDropDown
                 };
-                
+
                 foreach (DropDownList ddl in dropDownLists)
                 {
                     if (!ddl.Items.Contains(defaultItem))
                     {
                         ddl.Items.Insert(0, defaultItem);
                     }
-                }                
+                }
             }
         }
 
@@ -594,8 +613,23 @@ namespace Nhs.Ptl.Comments.Web
             patientTextbox.Text = string.Empty;
         }
 
-        #endregion
+        private void RefineDatesInOpReferrals(IList<OpReferral> opReferrals)
+        {
+            //Apply date time rules
+            foreach (OpReferral item in opReferrals)
+            {
+                item.DateOfBirth = this.ConvertDefaultDateTimeToNullConverter(item.DateOfBirth);
+                // Can't do this since ReferralRequestReceivedDate is a key
+                //item.ReferralRequestReceivedDate = this.ConvertDefaultDateTimeToNullConverter(item.ReferralRequestReceivedDate);
+                item.RttClockStart = this.ConvertDefaultDateTimeToNullConverter(item.RttClockStart);
+                item.RttBreachDate = this.ConvertDefaultDateTimeToNullConverter(item.RttBreachDate);
+                item.AttendanceDate = this.ConvertDefaultDateTimeToNullConverter(item.AttendanceDate);
+                // Can't do this since FutureClinicDate is a key
+                //item.FutureClinicDate = this.ConvertDefaultDateTimeToNullConverter(item.FutureClinicDate); ;
+            }
+        }
 
+        #endregion
 
     }
 }

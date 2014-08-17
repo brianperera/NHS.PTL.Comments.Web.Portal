@@ -84,7 +84,12 @@
                                 <li><span>
                                     <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton"
                                         OnClick="searchButton_Click" />
-                                </span><span>
+                                </span>
+                                <span>
+                                    <asp:Button CssClass="submitButton" Text="Refresh" runat="server" 
+                                        ID="refreshButton" onclick="refreshButton_Click" />
+                                </span>
+                                <span>
                                     <asp:Button CssClass="submitButton" Text="Reset" runat="server" ID="resetButton"
                                         OnClick="resetButton_Click" />
                                 </span></li>
@@ -99,7 +104,9 @@
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
                                 CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
                                 ShowHeaderWhenEmpty="true" ShowHeader="true" DataKeyNames="UniqueCDSRowIdentifier,PatientPathwayIdentifier,Spec,ReferralRequestReceivedDate,FutureClinicDate,RttBreachDate"
-                                PageSize="10" AllowPaging="true" OnPageIndexChanging="referrelGrid_PageIndexChanging">
+                                PageSize="10" AllowPaging="true" 
+                                OnPageIndexChanging="referrelGrid_PageIndexChanging" 
+                                onrowdatabound="referrelGrid_RowDataBound">
                                 <Columns>
                                     <asp:TemplateField HeaderText="CDS ID">
                                         <ItemTemplate>
@@ -107,7 +114,7 @@
                                                 runat="server" OnClick="rowLink_Click"></asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:BoundField HeaderText="Pathway ID" DataField="PatientPathwayIdentifier" />
+                                    <%--<asp:BoundField HeaderText="Pathway ID" DataField="PatientPathwayIdentifier" />--%>
                                     <asp:BoundField HeaderText="MRN" DataField="LocalPatientID" />
                                     <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
                                     <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
@@ -125,7 +132,7 @@
                                     <asp:BoundField HeaderText="Att Date" DataField="AttendanceDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Att Status" DataField="AttStatus" />
                                     <asp:BoundField HeaderText="RTT Status Code" DataField="RttStatus" />
-                                    <asp:BoundField HeaderText="RTT Status" DataField="RttText" />
+                                    <%--<asp:BoundField HeaderText="RTT Status" DataField="RttText" />--%>
                                     <asp:BoundField HeaderText="Waiting List Status" DataField="WaitingListStatus" />
                                     <asp:BoundField HeaderText="Future Clinic Date" DataField="FutureClinicDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Wait" DataField="WeekswaitGrouped" />
