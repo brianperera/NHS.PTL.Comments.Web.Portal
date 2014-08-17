@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using Nhs.Ptl.Comments.Contracts.Dto;
 using Nhs.Ptl.Comments.Utility;
 using System.Data;
+using System.Collections;
 
 // IMPORTANT!!!: Look at the constants before you change the columns!
 // Change the constants accordingly
@@ -43,13 +44,34 @@ namespace Nhs.Ptl.Comments.Web
                             specialitesTable.Columns.Add(statusType, typeof(string));
                     }
 
-                    specialitesTable.Columns.Add("Totals", typeof(int));
+                    specialitesTable.Columns.Add("Totals", typeof(string));
 
                     //
                     // Here we add five DataRows.
-                    //
-                    specialitesTable.Rows.Add("Gen Surg", "1", "2", "3","6");
 
+                    int filteredListCount = 0;
+                    ArrayList rowDataParam = new ArrayList();
+
+                    foreach (string speciality in specialites)
+                    {
+                        int rowTotal = 0;
+                        rowDataParam.Add(speciality);
+
+                        foreach (var status in statusTypes)
+                        {
+                            if (!string.IsNullOrEmpty(status))
+                            {
+                                filteredListCount = opReferrals.Where(x => x.SpecName == speciality).Where(y => y.Status == status).Count();
+                                rowDataParam.Add(filteredListCount.ToString());
+                                rowTotal += filteredListCount;
+                            }
+                        }
+
+                        rowDataParam.Add(rowTotal.ToString());
+
+                        specialitesTable.Rows.Add(rowDataParam.ToArray());
+                        rowDataParam.Clear();
+                    }
 
                     statusSummaryGrid.DataSource = specialitesTable;
                     statusSummaryGrid.DataBind();

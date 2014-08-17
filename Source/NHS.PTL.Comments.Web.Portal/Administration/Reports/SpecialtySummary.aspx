@@ -20,7 +20,6 @@
     <div class="main">
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-            statusSummaryGrid
                     <div class="subSections regularTable">
                         <div class="gridOuter">
                             <asp:GridView ID="statusSummaryGrid" AutoGenerateColumns="True" runat="server" CellPadding="3"
