@@ -9,6 +9,7 @@
         <siteMapNode url="~/Administration/Users/UserSearch.aspx?action=update" title="Update"/>
       </siteMapNode>
       <siteMapNode url="~/Administration/Users/ChangePassword.aspx" roles="Super Admin, Admin" title="Change Password"/>
+      <siteMapNode url="~/Administration/Reports/SpecialtySummary.aspx" roles="Super Admin, Admin" title="Summary Report"/>
     </siteMapNode>
   </siteMapNode>
 </siteMap>
