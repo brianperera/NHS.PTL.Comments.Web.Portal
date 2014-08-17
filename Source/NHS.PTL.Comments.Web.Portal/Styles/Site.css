@@ -135,8 +135,7 @@ ul
     color: #000;
     font-weight: bold;
     vertical-align: middle;
-    padding: 4px 6px;
-    /*width: 50px;*/
+    padding: 4px 6px; /*width: 50px;*/
 }
 
 .regularTable tr td
@@ -144,8 +143,7 @@ ul
     border: solid 1px #dddddd;
     color: #000;
     vertical-align: middle;
-    padding: 4px 6px;
-    /*width: 50px;*/
+    padding: 4px 6px; /*width: 50px;*/
 }
 
 .tableColumnLargeWidth
@@ -401,7 +399,7 @@ div.NHS_name
 div.menu
 {
     padding: 2px 0px 4px 8px;
-    margin-left:24px;
+    margin-left: 24px;
 }
 
 div.menu ul
@@ -537,7 +535,7 @@ div.accountInfo
     width: 80px;
     text-align: left;
     vertical-align: middle;
-    display:inline-block;
+    display: inline-block;
 }
 
 .formFieldControl
@@ -585,7 +583,7 @@ div.accountInfoCentered
 .clearNoMargin
 {
     clear: both;
-    margin:0px;
+    margin: 0px;
 }
 .clear-fix:after
 {
@@ -607,9 +605,9 @@ div.accountInfoCentered
 .searchBox
 {
     /*width:170px;*/
-    margin-left:60%;
+    margin-left: 60%;
     padding-top: 6px;
-    display:inline-block;
+    display: inline-block;
 }
 
 .loginDisplay
@@ -730,7 +728,7 @@ div.accountInfoCentered
 
 .searchButton
 {
-    margin-left:4px;
+    margin-left: 4px;
 }
 
 .aspNetDisabled
@@ -899,7 +897,7 @@ label, span
     border: solid 1px #dddddd;
     text-align: left;
     width: 100%;
-    font-size: 11px;    
+    font-size: 11px;
 }
 
 .grid .altrow
@@ -927,7 +925,7 @@ label, span
     background-color: #417696;
     border: none;
     padding: 3px 3px;
-    text-align:center !important;
+    text-align: center !important;
 }
 
 .grid tr td
@@ -1194,14 +1192,15 @@ label, span
     background-color: #ffffff;
     width: 46%;
     z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+    height: 100%;
 }
 
 
 .overlayWithScrollBar
 {
-    height:140px;
-    overflow: scroll; 
-    -ms-overflow-x: hidden;    
+    height: 140px;
+    overflow: scroll;
+    -ms-overflow-x: hidden;
 }
 
 .fade
@@ -1222,50 +1221,49 @@ label, span
 .waterMarkText
 {
     color: #C7C7C4 !important;
-    font-style:italic;
+    font-style: italic;
 }
 
 .searchInput
 {
-    width:150px !important;    
+    width: 150px !important;
 }
 
 .classButton
 {
-    width:50px;
+    width: 50px;
     background: #dff0d8 url(../images/icon_close.png) no-repeat left;
 }
 
 .popup li
 {
-    margin-bottom:6px !important;    
+    margin-bottom: 6px !important;
 }
 
 .popup .formFieldControl
 {
-    margin-left:10px;    
-    padding-right:10px !important;
+    margin-left: 10px;
+    padding-right: 10px !important;
 }
 
 .popup .error_msg span
 {
     font-size: 12px !important;
-    padding: 5px 0 5px 60px !important;    
+    padding: 5px 0 5px 60px !important;
 }
 
 .popup .error_msg
 {
-    margin-bottom:2px !important;    
+    margin-bottom: 2px !important;
 }
 
 .gridScroll
 {
-       
 }
 
 .popup .formSection
 {
-    margin:0 !important;    
+    margin: 0 !important;
 }
 
 .popup .formSection

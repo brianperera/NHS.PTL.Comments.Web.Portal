@@ -18,6 +18,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     private string UniqueRowId { get; set; }
     private string PatientPathwayId { get; set; }
     private string Spec { get; set; }
+    private string Mrn { get; set; }
     private DateTime ReferralRecievedDate { get; set; }
     private DateTime BreachDate { get; set; }
     private DateTime FutureClinicDate { get; set; }
@@ -73,7 +74,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 
         ReadKeyValues();
 
-        uniqueIdentifier.Text = UniqueRowId;
+        uniqueIdentifier.Text = Mrn;
 
         ModifiedComments = LoadCommentsGrid();
 
@@ -226,13 +227,15 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
         HiddenField referralRecDateHiddenField = Parent.FindControl("referralRecDateHiddenField") as HiddenField;
         HiddenField futureClinicDateHiddenField = Parent.FindControl("futureClinicDateHiddenField") as HiddenField;
         HiddenField breachDateHiddenField = Parent.FindControl("breachDateHiddenField") as HiddenField;
+        HiddenField mrnHiddenField = Parent.FindControl("mrnHiddenField") as HiddenField;
 
         if (null != uniqueIdHiddenField
             && null != patientPathwayIdHiddenField
             && null != specHiddenField
             && null != referralRecDateHiddenField
             && null != futureClinicDateHiddenField
-            && null != breachDateHiddenField)
+            && null != breachDateHiddenField
+            && null != mrnHiddenField)
         {
             DateTime referralDateValue;
             DateTime futureClinicDateValue;
@@ -246,6 +249,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
                 PatientPathwayId = patientPathwayIdHiddenField.Value;
                 Spec = specHiddenField.Value;
                 ReferralRecievedDate = referralDateValue;
+                Mrn = mrnHiddenField.Value;
 
                 DateTime.TryParse(futureClinicDateHiddenField.Value, out futureClinicDateValue);
                 DateTime.TryParse(breachDateHiddenField.Value, out breachDateValue);

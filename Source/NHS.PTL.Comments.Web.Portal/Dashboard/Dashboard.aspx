@@ -5,13 +5,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <%@ Register Src="../UserControls/DataEntryControl.ascx" TagName="DataEntryControl"
     TagPrefix="uc1" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
-    <script src="../Scripts/jquery-1.4.1.js" type="text/javascript"></script>
-    <script src="../Scripts/ui.core.js" type="text/javascript"></script>
-    <script src="../Scripts/effects.core.js" type="text/javascript"></script>
-    <script src="../Scripts/ui.dialog.js" type="text/javascript"></script>
-    <script src="../Scripts/CommentsScript.js" type="text/javascript"></script>
-    <link href="../Styles/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">    
     <script src="../Scripts/ClientSideUtility.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="SearchBoxContent" runat="Server">
@@ -38,6 +32,7 @@
                     <asp:HiddenField ID="referralRecDateHiddenField" runat="server" />
                     <asp:HiddenField ID="futureClinicDateHiddenField" runat="server" />
                     <asp:HiddenField ID="breachDateHiddenField" runat="server" />
+                    <asp:HiddenField ID="mrnHiddenField" runat="server" />
                 </div>
                 <div>
                     <div class="filterContainer">
@@ -91,12 +86,10 @@
                                 <li><span>
                                     <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton"
                                         OnClick="searchButton_Click" />
-                                </span>
-                                <span>
-                                    <asp:Button CssClass="submitButton" Text="Refresh" runat="server" 
-                                        ID="refreshButton" onclick="refreshButton_Click" />
-                                </span>
-                                <span>
+                                </span><span>
+                                    <asp:Button CssClass="submitButton" Text="Refresh" runat="server" ID="refreshButton"
+                                        OnClick="refreshButton_Click" />
+                                </span><span>
                                     <asp:Button CssClass="submitButton" Text="Reset" runat="server" ID="resetButton"
                                         OnClick="resetButton_Click" />
                                 </span></li>
@@ -111,22 +104,21 @@
                                 BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px"
                                 CssClass="grid" AllowSorting="True" EmptyDataText="No matching records found"
                                 ShowHeaderWhenEmpty="true" ShowHeader="true" DataKeyNames="UniqueCDSRowIdentifier,PatientPathwayIdentifier,Spec,ReferralRequestReceivedDate,FutureClinicDate,RttBreachDate"
-                                PageSize="10" AllowPaging="true" 
-                                OnPageIndexChanging="referrelGrid_PageIndexChanging" 
-                                onrowdatabound="referrelGrid_RowDataBound">
+                                PageSize="10" AllowPaging="true" OnPageIndexChanging="referrelGrid_PageIndexChanging"
+                                OnRowDataBound="referrelGrid_RowDataBound" UseAccessibleHeader="true">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="CDS ID">
+                                    <asp:TemplateField HeaderText="MRN">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="rowLink" CssClass="rowLink" Text='<%# Eval("UniqueCDSRowIdentifier")%>'
+                                            <asp:LinkButton ID="rowLink" CssClass="rowLink" Text='<%# Eval("LocalPatientID")%>'
                                                 runat="server" OnClick="rowLink_Click"></asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <%--<asp:BoundField HeaderText="Pathway ID" DataField="PatientPathwayIdentifier" />--%>
-                                    <asp:BoundField HeaderText="MRN" DataField="LocalPatientID" />
-                                    <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
-                                    <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                                    <%--<asp:BoundField HeaderText="MRN" DataField="LocalPatientID" />--%>
                                     <asp:BoundField HeaderText="Forename" DataField="PatientForename" />
                                     <asp:BoundField HeaderText="Surname" DataField="PatientSurname" />
+                                    <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
+                                    <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                                     <asp:BoundField HeaderText="Spec Code" DataField="Spec" />
                                     <asp:BoundField HeaderText="Spec Name" DataField="SpecName" />
                                     <asp:BoundField HeaderText="Division" DataField="NewDivision" />
@@ -150,7 +142,7 @@
                                     <asp:BoundField HeaderText="Comment" DataField="Comment" />--%>
                                 </Columns>
                                 <FooterStyle BackColor="White" ForeColor="#000066" />
-                                <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White"/>
+                                <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
                                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" CssClass="gridPagerStyle" />
                                 <RowStyle ForeColor="#000066" />
                                 <AlternatingRowStyle CssClass="altrow" />

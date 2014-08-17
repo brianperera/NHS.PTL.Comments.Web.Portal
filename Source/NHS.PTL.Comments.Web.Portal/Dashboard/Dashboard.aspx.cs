@@ -16,8 +16,8 @@ namespace Nhs.Ptl.Comments.Web
     {
         #region Constants
 
-        private const int ReferralRequestColumnNo = 10;
-        private const int FutureClinicDateColumnNo = 19;
+        private const int ReferralRequestColumnNo = 9;
+        private const int FutureClinicDateColumnNo = 18;
 
         #endregion
 
@@ -44,6 +44,7 @@ namespace Nhs.Ptl.Comments.Web
                     RefineDatesInOpReferrals(opReferrals);
                     referrelGrid.DataSource = opReferrals;
                     referrelGrid.DataBind();
+                    referrelGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
                 }
 
             }
@@ -102,6 +103,7 @@ namespace Nhs.Ptl.Comments.Web
             referralRecDateHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["ReferralRequestReceivedDate"].ToString();
             futureClinicDateHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["FutureClinicDate"].ToString();
             breachDateHiddenField.Value = referrelGrid.DataKeys[row.DataItemIndex]["RttBreachDate"].ToString();
+            mrnHiddenField.Value = link.Text;
 
             entryForm.Visible = true;
             entryForm.Attributes.Add("style", "display: block;");
@@ -406,6 +408,20 @@ namespace Nhs.Ptl.Comments.Web
                 {
                     e.Row.Cells[FutureClinicDateColumnNo].Text = string.Empty;
                 }
+
+                
+            }
+
+            if (e.Row.RowType != DataControlRowType.Pager)
+            {
+                e.Row.Cells[0].CssClass = "locked";
+                e.Row.Cells[1].CssClass = "locked";
+                e.Row.Cells[2].CssClass = "locked";
+            }
+
+            if (e.Row.RowType == DataControlRowType.Pager)
+            {
+                e.Row.Cells[0].CssClass = "locked";
             }
         }
 
@@ -596,6 +612,7 @@ namespace Nhs.Ptl.Comments.Web
                     RefineDatesInOpReferrals(opReferrals);
                     referrelGrid.DataSource = opReferrals;
                     referrelGrid.DataBind();
+                    referrelGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
 
                     referrelGrid.PageIndex = 0;
                 }

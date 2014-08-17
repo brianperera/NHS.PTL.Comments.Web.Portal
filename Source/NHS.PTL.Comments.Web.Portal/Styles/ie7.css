@@ -1,7 +1,6 @@
 ﻿.dashBoard tr th
 {
     /*width: 200px !important;*/
-    
 }
 
 .regularTable tr th, .regularTable tr td
@@ -17,24 +16,24 @@
 .menu .dynamic
 {
     border-bottom: 1px solid white !important;
-    cursor: pointer;  
+    cursor: pointer;
 }
 
 .menu .static
 {
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .menu .level2 li
 {
-    width:220px;
-    height:100%;
-    margin-bottom:-4px;
+    width: 220px;
+    height: 100%;
+    margin-bottom: -4px;
 }
 
 .menu .level3 li
 {
-    width:100px;
+    width: 100px;
     border-bottom: 1px solid white !important;
 }
 
@@ -42,7 +41,7 @@
 {
     width: 50px;
     padding-right: 0px;
-    overflow: hidden;        
+    overflow: hidden;
     height: 15px;
 }
 
@@ -51,7 +50,12 @@
     background-color: #eff9fd;
 }
 
-.error_msg .login 
+.error_msg .login
 {
-    padding: 30px 0 10px 20px !important;    
+    padding: 30px 0 10px 20px !important;
+}
+
+select
+{
+    width: 160px;
 }
