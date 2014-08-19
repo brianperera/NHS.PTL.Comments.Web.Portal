@@ -1272,3 +1272,17 @@ label, span
     font-size: 11px;
     border-bottom: 0px !important;
 }
+
+.tableFooter
+{
+    background-color:#417696 !important;
+    font-weight:bold !important;
+    color:White !important;   
+}
+
+.tableFooter td
+{
+    font-weight:bold !important;
+    color:White !important;
+    text-align:center;
+}
