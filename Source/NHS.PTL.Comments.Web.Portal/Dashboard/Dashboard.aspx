@@ -34,6 +34,7 @@
                     <asp:HiddenField ID="breachDateHiddenField" runat="server" />
                     <asp:HiddenField ID="mrnHiddenField" runat="server" />
                 </div>
+                <div class="clear"></div>
                 <div>
                     <div class="filterContainer">
                         <div>
@@ -42,7 +43,7 @@
                             <asp:HiddenField ID="statusDdHiddenField" runat="server" />
                             <asp:HiddenField ID="rttWaitDdHiddenField" runat="server" />
                             <asp:HiddenField ID="attStatusDdHiddenField" runat="server" />
-                            <ul class="formSection noBottonBorders noPadding">
+                            <ul class="formSection noBottonBorders noPadding clearNoMargin">
                                 <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Speciality</span>
                                     <span class="formFieldControl">
                                         <asp:DropDownList ID="specialityDropdown" runat="server" CssClass="defaultDropDown"
@@ -61,7 +62,7 @@
                                     </asp:DropDownList>
                                 </span></li>
                             </ul>
-                            <ul class="formSection noBottonBorders noPadding">
+                            <ul class="formSection noBottonBorders noPadding clearNoMargin">
                                 <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">RTT Wait</span>
                                     <span class="formFieldControl">
                                         <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
@@ -82,7 +83,7 @@
                                 </span></li>
 
                             </ul>
-                            <ul class="formSection">
+                            <ul class="formSection clearNoMargin">
                                 <li><span>
                                     <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton"
                                         OnClick="searchButton_Click" />
