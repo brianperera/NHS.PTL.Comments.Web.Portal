@@ -126,7 +126,7 @@ ul
 .regularTable
 {
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .regularTable tr th
@@ -249,7 +249,8 @@ first child of the left and right table columns */
 
 .subSections
 {
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 20px 0px !important;
+    z-index: -1 !important;
 }
 
 .subSections span
@@ -383,6 +384,7 @@ div.NHS_name
 {
     background-color: #EEEEEE;
     padding-left: 10px;
+    z-index: 99999;
 }
 
 .navigationBarItems
@@ -605,7 +607,7 @@ div.accountInfoCentered
 .searchBox
 {
     /*width:170px;*/
-    margin-left: 60%;
+    margin-left: 57%;
     padding-top: 6px;
     display: inline-block;
 }
@@ -900,10 +902,11 @@ label, span
     font-size: 11px;
 }
 
-.grid .altrow
+.altrow
 {
     background-color: #eff9fd;
 }
+
 
 .gridtitle
 {
@@ -1285,4 +1288,11 @@ label, span
     font-weight:bold !important;
     color:White !important;
     text-align:center;
+}
+
+#chart_div
+{
+position: relative;
+z-index: -9999999999999999999;
+display: block;
 }

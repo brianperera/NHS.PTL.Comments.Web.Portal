@@ -10,6 +10,7 @@ using Nhs.Ptl.Comments.Utility;
 using Nhs.Ptl.Comments.Contracts.Dto;
 using System.Web.Security;
 using System.Configuration;
+using Nhs.Ptl.Comments.DataAccess;
 
 public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 {
@@ -146,7 +147,8 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
 
     private void PopulateStatusDropdown()
     {
-        List<string> statusList = StatusConfigurationManager.GetAllStatuses().ToList();
+        StatusDA statusDA = new StatusDA();
+        List<string> statusList = statusDA.GetAllStatuses();
         if (null != statusList)
         {
             statusDropdown.DataSource = statusList;
