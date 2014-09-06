@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Nhs.Ptl.Comments.Utility;
 
 /// <summary>
 /// Summary description for OpReferral
@@ -31,7 +32,33 @@ public class OpReferral
     public string WaitingListStatus { get; set; }
     public DateTime? FutureClinicDate { get; set; }
     public int WaitAtFutureClinicDate { get; set; }
-    public string Status { get; set; }
+    //public string Status { get; set; }
+
+    private string status;
+
+    public string Status
+    {
+        get 
+        {
+            if (string.IsNullOrEmpty(status)
+                && FutureClinicDate != DateTime.MinValue
+                && RttBreachDate != DateTime.MinValue
+                && FutureClinicDate >= RttBreachDate)
+            {
+                string bringFowardStatus = StatusConfigurationManager.GetStatusValue("BringForward");
+
+                if (!string.IsNullOrEmpty(bringFowardStatus))
+                {
+                    status = bringFowardStatus;
+                }
+            }
+
+            return status; 
+        }
+        set { status = value; }
+    }
+    
+
     public string WeekswaitGrouped { get; set; }
 
     public OpReferral()

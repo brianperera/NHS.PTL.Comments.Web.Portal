@@ -241,6 +241,8 @@ namespace Nhs.Ptl.Comments.DataAccess
                                     DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), out tempDateTime);
                                     comment.ReferralRequestReceivedDate = tempDateTime;
 
+                                    //Short Circuit Logic
+
                                     ptlComments.Add(comment);
                                 }
                             }

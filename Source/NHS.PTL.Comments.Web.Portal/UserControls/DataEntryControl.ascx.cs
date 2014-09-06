@@ -40,6 +40,12 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     public IList<PtlComment> GetAllComments()
     {
         ReadKeyValues();
+        if (string.IsNullOrEmpty(UniqueRowId) && string.IsNullOrEmpty(PatientPathwayId) &&
+            string.IsNullOrEmpty(Spec))
+        {
+            return null;
+        }
+
         return CommentsManager.GetPtlComments(UniqueRowId, PatientPathwayId, Spec, ReferralRecievedDate);
     }
 
@@ -149,6 +155,14 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
     {
         StatusDA statusDA = new StatusDA();
         List<string> statusList = statusDA.GetAllStatuses();
+
+        string defaultItem = "";
+
+        if (!statusList.Contains(defaultItem))
+        {
+            statusList.Insert(0, defaultItem);
+        }
+
         if (null != statusList)
         {
             statusDropdown.DataSource = statusList;
