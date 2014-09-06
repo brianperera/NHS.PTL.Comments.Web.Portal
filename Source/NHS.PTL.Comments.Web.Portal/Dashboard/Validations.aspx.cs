@@ -366,7 +366,7 @@ namespace Nhs.Ptl.Comments.Web
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.RttStatus).Distinct().ToList());
+                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
@@ -421,7 +421,7 @@ namespace Nhs.Ptl.Comments.Web
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.RttStatus).Distinct().ToList());
+                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
