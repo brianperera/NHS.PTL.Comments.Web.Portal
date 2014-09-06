@@ -141,6 +141,7 @@
                 </asp:TemplateField>
                 <asp:BoundField HeaderText="Forename" DataField="PatientForename" ItemStyle-BackColor="#EEEEEE" />
                 <asp:BoundField HeaderText="Surname" DataField="PatientSurname" ItemStyle-BackColor="#EEEEEE"  ItemStyle-CssClass="rightDropShadow"/>
+                <asp:BoundField HeaderText="Status" DataField="Status" />
                 <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
                 <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="Spec Code" DataField="Spec" />
@@ -158,7 +159,6 @@
                 <asp:BoundField HeaderText="Waiting List Status" DataField="WaitingListStatus" />
                 <asp:BoundField HeaderText="Future Clinic Date" DataField="FutureClinicDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="Wait" DataField="WeekswaitGrouped" />
-                <asp:BoundField HeaderText="Status" DataField="Status" />
             </Columns>
             <HeaderStyle CssClass="GridviewScrollC1Header" />
             <RowStyle CssClass="GridviewScrollC1Item" />

@@ -28,6 +28,7 @@ namespace Nhs.Ptl.Comments.Web
             {
                 IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
                 PopulateRTTWaitDropDown(opReferrals);
+                PopulateFutureApptStatusDropDown();
                 InsertDropdownDefaultValue();
                 GenerateDataGrid(opReferrals);
             }
@@ -122,14 +123,14 @@ namespace Nhs.Ptl.Comments.Web
                     string values = string.Empty;
                     System.Text.StringBuilder javaScript = new System.Text.StringBuilder();
                     javaScript.Append("<script type=\"text/javascript\"> google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
-                    javaScript.Append("google.setOnLoadCallback(drawChart); function drawChart() { var data = google.visualization.arrayToDataTable([ ['Status', 'Total'],");
+                    javaScript.Append("google.setOnLoadCallback(drawChart); function drawChart() { var data = google.visualization.arrayToDataTable([ ['Status', 'Total', { role: 'annotation' }],");
 
                     int i = 0;
                     foreach (var statusType in statusTypes)
                     {
                         if (statusType != "")
                         {
-                            values = values + "['" + statusType + "'," + statusCount[i] + "],";
+                            values = values + "['" + statusType + "'," + statusCount[i] + ",'" + statusCount[i] + "'],";
                             i++;
                         }
                     }
@@ -138,7 +139,16 @@ namespace Nhs.Ptl.Comments.Web
                     values = values.Substring(0, values.Length - 1);
                     javaScript.Append(values);
                     javaScript.Append("]);");
-                    javaScript.Append("var options = {chartArea:{left:0,top:30}, title: '',colors: ['#58D3F7'],vAxis: { format: '0'},hAxis: { title: 'Status', titleTextStyle: { color: 'black'} }}; var chart = new google.visualization.ColumnChart(document.getElementById('chart_div')); chart.draw(data, options);}");
+                    javaScript.Append("var options = {" + 
+                        "chartArea:{top:30}, "+
+                        "focusTarget: 'category'," +
+                        "tooltip: {isHtml: true},"+
+                        "legend: 'none'," +
+                        "colors:['#58D3F7'],"+
+                        "vAxis:{ format: '0'},"+
+                        "hAxis:{ title: 'Status', titleTextStyle: { italic: false} }"+
+                        "};"
+                        +" var chart = new google.visualization.ColumnChart(document.getElementById('chart_div')); chart.draw(data, options);}");
                     javaScript.Append("</script>");
 
                     Page.RegisterStartupScript("Graph", javaScript.ToString());
@@ -146,6 +156,7 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        List<string> headerList = new List<string>();
 
         protected void statusSummaryGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -165,40 +176,29 @@ namespace Nhs.Ptl.Comments.Web
 
             for (int i = 0; i < e.Row.Cells.Count; i++)
             {
+                if (e.Row.RowType == DataControlRowType.Header)
+                {
+                    headerList.Add(e.Row.Cells[i].Text);
+                }
+            }
+
+            for (int i = 0; i < e.Row.Cells.Count; i++)
+            {
                 if(i != 0)
                     e.Row.Cells[i].HorizontalAlign = HorizontalAlign.Center;
 
                 if (i == e.Row.Cells.Count - 1)
                     e.Row.Cells[i].CssClass = "tableFooter";
 
-                if (e.Row.RowType == DataControlRowType.DataRow && i != 0 && e.Row.Cells[i].CssClass != "tableFooter")
+                if (e.Row.RowType == DataControlRowType.DataRow && i != 0 && i != e.Row.Cells.Count-1 && e.Row.Cells[i].CssClass != "tableFooter")
                 {
                     // Insert a real hyperlink into Cells[1] using HyperLinkValue.
                     HyperLink myLink = new HyperLink();
-                    myLink.NavigateUrl = "Validations.aspx?specialty=" + e.Row.Cells[0].Text;
+                    myLink.NavigateUrl = "Validations.aspx?specialty=" + e.Row.Cells[0].Text + "&status=" + headerList[i];
                     myLink.Text = e.Row.Cells[i].Text;
                     // then add the control to the cell.
                     e.Row.Cells[i].Controls.Add(myLink);
                 }
-            }
-        }
-
-        protected void RTTWaitDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!RTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
-            {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
-
-                if (null != opReferrals)
-                {
-
-                    IList<OpReferral> filtered = opReferrals.Where(x => x.WeekswaitGrouped == RTTWaitDropDown.SelectedItem.Text).ToList();
-                    GenerateDataGrid(filtered);
-                }
-            }
-            else
-            {
-                ResetControls();
             }
         }
 
@@ -224,7 +224,8 @@ namespace Nhs.Ptl.Comments.Web
                 // This is just to avoid checking one by one :)
                 List<DropDownList> dropDownLists = new List<DropDownList>() 
                 { 
-                            RTTWaitDropDown
+                            RTTWaitDropDown,
+                            FutureApptStatusDropDownList
                 };
 
                 foreach (DropDownList ddl in dropDownLists)
@@ -237,5 +238,60 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
-    }
+        protected void FutureApptStatusDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FilterRecordsByFutureApptStatus();
+        }
+
+        private void FilterRecordsByFutureApptStatus()
+        {
+            if (!FutureApptStatusDropDownList.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+            {
+                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+                if (null != opReferrals)
+                {
+                    string mainFilterCriteria = FutureApptStatusDropDownList.SelectedItem.Text;
+                    IList<OpReferral> filtered;
+
+                    if (string.Equals(mainFilterCriteria, Constants.NoDate))
+                        filtered = opReferrals.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                    else
+                        filtered = opReferrals.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+
+                    GenerateDataGrid(filtered);
+                }
+            }
+            else
+            {
+                ResetControls();
+            }
+        }
+
+        protected void RTTWaitDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!RTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+            {
+                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+                if (null != opReferrals)
+                {
+
+                    IList<OpReferral> filtered = opReferrals.Where(x => x.WeekswaitGrouped == RTTWaitDropDown.SelectedItem.Text).ToList();
+                    GenerateDataGrid(filtered);
+                }
+            }
+            else
+            {
+                ResetControls();
+            }
+        }
+
+        private void PopulateFutureApptStatusDropDown()
+        {
+            //TODO: Need to move to config file
+            FutureApptStatusDropDownList.DataSource = Utility.Utility.FutureApptStatusList;
+            FutureApptStatusDropDownList.DataBind();
+        }
+}
 }

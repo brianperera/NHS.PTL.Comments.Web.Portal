@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using Nhs.Ptl.Comments.Contracts.Dto;
 using Nhs.Ptl.Comments.Utility;
 using System.Data;
+using Nhs.Ptl.Comments;
 
 // IMPORTANT!!!: Look at the constants before you change the columns!
 // Change the constants accordingly
@@ -14,15 +15,6 @@ namespace Nhs.Ptl.Comments.Web
 {
     public partial class Validations : System.Web.UI.Page
     {
-        #region Constants
-
-        private const int ReferralRequestColumnNo = 9;
-        private const int FutureClinicDateColumnNo = 18;
-
-        #endregion
-
-        string[] futureApptStatusList = { "With Date", "No Date" };
-
         public string SpecialtyType
         {
             get
@@ -33,6 +25,19 @@ namespace Nhs.Ptl.Comments.Web
                     specialtyType = Request.QueryString["Specialty"];
 
                 return specialtyType;
+            }
+        }
+
+        public string Status
+        {
+            get
+            {
+                string statusType = string.Empty;
+
+                if (Request.QueryString["status"] != null)
+                    statusType = Request.QueryString["status"];
+
+                return statusType;
             }
         }
 
@@ -47,6 +52,14 @@ namespace Nhs.Ptl.Comments.Web
                 if (!string.IsNullOrEmpty(SpecialtyType))
                 {
                     opReferrals = opReferrals.Where(x => string.Equals(x.SpecName, SpecialtyType)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(Status))
+                {
+                    if (Status == "Blank Status")
+                        opReferrals = opReferrals.Where(x => string.Equals(x.Status, "")).ToList();
+                    else
+                        opReferrals = opReferrals.Where(x => string.Equals(x.Status, Status)).ToList();
                 }
 
                 if (null != opReferrals)
@@ -153,23 +166,23 @@ namespace Nhs.Ptl.Comments.Web
                         // Save current selected values
                         SaveCurrentDropdownValues();
 
-                        consultantDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
+                        consultantDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
                         consultantDropdown.DataBind();
                         SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
 
-                        statusDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
+                        statusDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
-                        AttendanceStatusDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
+                        AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
-                        FutureApptStatusDropDownList.DataSource = GetDropdownDefaultValueToListItems(futureApptStatusList.ToList());
+                        FutureApptStatusDropDownList.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(Utility.Utility.FutureApptStatusList.ToList());
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
@@ -208,23 +221,23 @@ namespace Nhs.Ptl.Comments.Web
                         // Save current selected values
                         SaveCurrentDropdownValues();
 
-                        specialityDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
+                        specialityDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
                         specialityDropdown.DataBind();
                         SetSavedValue(specialityDropdown, specDdHiddenField.Value);
 
-                        statusDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
+                        statusDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
-                        AttendanceStatusDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
+                        AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
-                        FutureApptStatusDropDownList.DataSource = GetDropdownDefaultValueToListItems(futureApptStatusList.ToList());
+                        FutureApptStatusDropDownList.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(Utility.Utility.FutureApptStatusList.ToList());
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
@@ -257,23 +270,23 @@ namespace Nhs.Ptl.Comments.Web
                         // Save current selected values
                         SaveCurrentDropdownValues();
 
-                        specialityDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
+                        specialityDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
                         specialityDropdown.DataBind();
                         SetSavedValue(specialityDropdown, specDdHiddenField.Value);
 
-                        consultantDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
+                        consultantDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
                         consultantDropdown.DataBind();
                         SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
-                        AttendanceStatusDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
+                        AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
-                        FutureApptStatusDropDownList.DataSource = GetDropdownDefaultValueToListItems(futureApptStatusList.ToList());
+                        FutureApptStatusDropDownList.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(Utility.Utility.FutureApptStatusList.ToList());
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
@@ -307,23 +320,23 @@ namespace Nhs.Ptl.Comments.Web
                         // Save current selected values
                         SaveCurrentDropdownValues();
 
-                        specialityDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
+                        specialityDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
                         specialityDropdown.DataBind();
                         SetSavedValue(specialityDropdown, specDdHiddenField.Value);
 
-                        consultantDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
+                        consultantDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
                         consultantDropdown.DataBind();
                         SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
 
-                        statusDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
+                        statusDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        AttendanceStatusDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
+                        AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
-                        FutureApptStatusDropDownList.DataSource = GetDropdownDefaultValueToListItems(futureApptStatusList.ToList());
+                        FutureApptStatusDropDownList.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(Utility.Utility.FutureApptStatusList.ToList());
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
@@ -354,23 +367,23 @@ namespace Nhs.Ptl.Comments.Web
                         // Save current selected values
                         SaveCurrentDropdownValues();
 
-                        specialityDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
+                        specialityDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
                         specialityDropdown.DataBind();
                         SetSavedValue(specialityDropdown, specDdHiddenField.Value);
 
-                        consultantDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
+                        consultantDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
                         consultantDropdown.DataBind();
                         SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
 
-                        statusDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
+                        statusDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
-                        FutureApptStatusDropDownList.DataSource = GetDropdownDefaultValueToListItems(futureApptStatusList.ToList());
+                        FutureApptStatusDropDownList.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(Utility.Utility.FutureApptStatusList.ToList());
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
                         //InsertDropdownDefaultValue();
@@ -405,23 +418,23 @@ namespace Nhs.Ptl.Comments.Web
                         // Save current selected values
                         SaveCurrentDropdownValues();
 
-                        specialityDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
+                        specialityDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.SpecName).Distinct().ToList());
                         specialityDropdown.DataBind();
                         SetSavedValue(specialityDropdown, specDdHiddenField.Value);
 
-                        consultantDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
+                        consultantDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Consultant).Distinct().ToList());
                         consultantDropdown.DataBind();
                         SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
 
-                        statusDropdown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
+                        statusDropdown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.Status).Distinct().ToList());
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        AttendanceStatusDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
+                        AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
                         RTTWaitDropDown.DataBind();
                         SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
 
@@ -440,14 +453,14 @@ namespace Nhs.Ptl.Comments.Web
             if (e.Row != null && e.Row.RowType == DataControlRowType.DataRow)
             {
                 // Special care taken for key values
-                if (e.Row.Cells[ReferralRequestColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
+                if (e.Row.Cells[Constants.ReferralRequestColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
                 {
-                    e.Row.Cells[ReferralRequestColumnNo].Text = string.Empty;
+                    e.Row.Cells[Constants.ReferralRequestColumnNo].Text = string.Empty;
                 }
 
-                if (e.Row.Cells[FutureClinicDateColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
+                if (e.Row.Cells[Constants.FutureClinicDateColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
                 {
-                    e.Row.Cells[FutureClinicDateColumnNo].Text = string.Empty;
+                    e.Row.Cells[Constants.FutureClinicDateColumnNo].Text = string.Empty;
                 }  
             }
         }
@@ -462,23 +475,7 @@ namespace Nhs.Ptl.Comments.Web
 
         #region Private Methods
 
-        /// <summary>
-        /// Add default 'All' item to each filtered list
-        /// </summary>
-        private List<string> GetDropdownDefaultValueToListItems(List<string> filteredItems)
-        {
-            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["DropDownAllText"]))
-            {
-                string defaultItem = ConfigurationManager.AppSettings["DropDownAllText"];
 
-                if (!filteredItems.Contains(defaultItem))
-                {
-                    filteredItems.Insert(0, defaultItem);
-                }
-            }
-
-            return filteredItems;
-        }
 
         /// <summary>
         /// Populate Status dropdown
@@ -733,7 +730,7 @@ namespace Nhs.Ptl.Comments.Web
         private void PopulateFutureApptStatusDropDown()
         {
             //TODO: Need to move to config file
-            FutureApptStatusDropDownList.DataSource = futureApptStatusList;
+            FutureApptStatusDropDownList.DataSource = Utility.Utility.FutureApptStatusList;
             FutureApptStatusDropDownList.DataBind();
         }
 
