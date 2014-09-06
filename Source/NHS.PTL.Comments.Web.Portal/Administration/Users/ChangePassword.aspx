@@ -19,7 +19,7 @@
             <div class="pagedata">
                 <ul class="formSection">
                     <li><span class="formTitleFields">Username</span> <span class="formFieldControl">
-                        <asp:TextBox ID="UsernameTextBox" runat="server" CssClass="passwordEntry" TextMode="SingleLine"></asp:TextBox>
+                        <asp:TextBox ID="UsernameTextBox" Enabled="false" runat="server" CssClass="passwordEntry" TextMode="SingleLine"></asp:TextBox>
                     </span><span>
                         <asp:RequiredFieldValidator ID="UsernameRequiredFieldValidator" runat="server" ControlToValidate="UsernameTextBox"
                             CssClass="failureNotification" ErrorMessage="Username is required." ToolTip="Username is required.">Username is required.</asp:RequiredFieldValidator>

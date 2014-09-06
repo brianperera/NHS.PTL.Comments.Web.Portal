@@ -17,7 +17,7 @@ namespace Nhs.Ptl.Comments
         public const string UserNotActiveErrorMessage = "Your account has not yet been approved. Please contact an administrator.";
         public const string WithDate = "With Date";
         public const string NoDate = "No Date";
-        public const int ReferralRequestColumnNo = 9;
-        public const int FutureClinicDateColumnNo = 18;
+        public const int ReferralRequestColumnNo = 10;
+        public const int FutureClinicDateColumnNo = 19;
     }
 }

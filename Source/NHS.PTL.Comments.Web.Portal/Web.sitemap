@@ -4,7 +4,7 @@
     <siteMapNode url="~/Dashboard/Dashboard.aspx" title="Home" />
     <siteMapNode url="~/Dashboard/Validations.aspx" title="Validations" />
     <!--<siteMapNode url="~/Dashboard/DataEntry/DataEntry.aspx" roles="Admin, Super Admin, Data Entry Staff" title="Data Entry"></siteMapNode>-->
-    <siteMapNode roles="Super Admin, Admin" title="Settings">
+    <siteMapNode roles="Super Admin, Admin, Data Entry Staff" title="Settings">
       <siteMapNode title="Status" roles="Super Admin, Admin">
         <siteMapNode url="~/Administration/DataEntry/StatusDataEntry.aspx?action=add" title="Add"/>
         <siteMapNode url="~/Administration/DataEntry/StatusSearch.aspx?action=update" title="Update"/>
@@ -13,7 +13,7 @@
         <siteMapNode url="~/Administration/Users/UserAccount.aspx?action=add" title="Add"/>
         <siteMapNode url="~/Administration/Users/UserSearch.aspx?action=update" title="Update"/>
       </siteMapNode>
-      <siteMapNode url="~/Administration/Users/ChangePassword.aspx" roles="Super Admin, Admin" title="Change Password"/>
+      <siteMapNode url="~/Administration/Users/ChangePassword.aspx" roles="Super Admin, Admin, Data Entry Staff" title="Change Password"/>
     </siteMapNode>
   </siteMapNode>
 </siteMap>
