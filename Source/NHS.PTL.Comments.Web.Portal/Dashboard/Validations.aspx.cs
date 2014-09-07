@@ -7,6 +7,7 @@ using Nhs.Ptl.Comments.Contracts.Dto;
 using Nhs.Ptl.Comments.Utility;
 using System.Data;
 using Nhs.Ptl.Comments;
+using Nhs.Ptl.Comments.DataAccess;
 
 // IMPORTANT!!!: Look at the constants before you change the columns!
 // Change the constants accordingly
@@ -461,7 +462,12 @@ namespace Nhs.Ptl.Comments.Web
                 if (e.Row.Cells[Constants.FutureClinicDateColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
                 {
                     e.Row.Cells[Constants.FutureClinicDateColumnNo].Text = string.Empty;
-                }  
+                }
+
+                if (e.Row.Cells[Constants.ToBeBookedByColumnNo].Text.Equals(DateTime.MinValue.ToShortDateString()))
+                {
+                    e.Row.Cells[Constants.ToBeBookedByColumnNo].Text = string.Empty;
+                }
             }
         }
 
@@ -634,7 +640,7 @@ namespace Nhs.Ptl.Comments.Web
                     }
                 }
 
-                
+
 
                 if (null != opReferrals)
                 {
@@ -736,9 +742,23 @@ namespace Nhs.Ptl.Comments.Web
 
         private void RefineDatesInOpReferrals(IList<OpReferral> opReferrals)
         {
+            //Add the 'To be booked by' column
+            SpecialityTargetDatesDA specialityTargetDatesDA = new SpecialityTargetDatesDA();
+            List<SpecialityTargetDate> specialityTargetDates = specialityTargetDatesDA.GetAllActiveSpecialityTargetDates();
+
             //Apply date time rules
             foreach (OpReferral item in opReferrals)
             {
+                if (item.ReferralRequestReceivedDate != DateTime.MinValue)
+                {
+                    var specialityTargetDate = (from targetDate in specialityTargetDates
+                                                where string.Equals(targetDate.ID.ToString(), item.Spec, StringComparison.OrdinalIgnoreCase)
+                                                select targetDate).SingleOrDefault();
+
+                    if (specialityTargetDate != null)
+                        item.ToBeBookedByDate = item.ReferralRequestReceivedDate.Value.AddDays(specialityTargetDate.TargetDay);
+                }
+
                 item.DateOfBirth = this.ConvertDefaultDateTimeToNullConverter(item.DateOfBirth);
                 // Can't do this since ReferralRequestReceivedDate is a key
                 //item.ReferralRequestReceivedDate = this.ConvertDefaultDateTimeToNullConverter(item.ReferralRequestReceivedDate);
@@ -751,5 +771,5 @@ namespace Nhs.Ptl.Comments.Web
         }
 
         #endregion
-}
+    }
 }

@@ -32,6 +32,7 @@ public class OpReferral
     public string WaitingListStatus { get; set; }
     public DateTime? FutureClinicDate { get; set; }
     public int WaitAtFutureClinicDate { get; set; }
+    public DateTime? ToBeBookedByDate { get; set; }
     //public string Status { get; set; }
 
     private string status;

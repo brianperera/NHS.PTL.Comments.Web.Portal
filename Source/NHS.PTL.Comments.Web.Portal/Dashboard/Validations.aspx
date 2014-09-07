@@ -142,6 +142,7 @@
                 <asp:BoundField HeaderText="Forename" DataField="PatientForename" ItemStyle-BackColor="#EEEEEE" />
                 <asp:BoundField HeaderText="Surname" DataField="PatientSurname" ItemStyle-BackColor="#EEEEEE"  ItemStyle-CssClass="rightDropShadow"/>
                 <asp:BoundField HeaderText="Status" DataField="Status" />
+                <asp:BoundField HeaderText="To be booked by" DataField="ToBeBookedByDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
                 <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="Spec Code" DataField="Spec" />

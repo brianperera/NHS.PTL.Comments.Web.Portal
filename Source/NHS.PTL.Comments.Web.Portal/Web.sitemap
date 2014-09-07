@@ -9,6 +9,10 @@
         <siteMapNode url="~/Administration/DataEntry/StatusDataEntry.aspx?action=add" title="Add"/>
         <siteMapNode url="~/Administration/DataEntry/StatusSearch.aspx?action=update" title="Update"/>
       </siteMapNode>
+      <siteMapNode title="Speciality Taget Days" roles="Super Admin, Admin">
+        <siteMapNode url="~/Administration/DataEntry/SpecialityTargetDays.aspx?action=add" title="Add"/>
+        <siteMapNode url="~/Administration/DataEntry/SpecialityTargetDaysSearch.aspx?action=update" title="Update"/>
+      </siteMapNode>
       <siteMapNode title="Users" roles="Super Admin, Admin">
         <siteMapNode url="~/Administration/Users/UserAccount.aspx?action=add" title="Add"/>
         <siteMapNode url="~/Administration/Users/UserSearch.aspx?action=update" title="Update"/>
