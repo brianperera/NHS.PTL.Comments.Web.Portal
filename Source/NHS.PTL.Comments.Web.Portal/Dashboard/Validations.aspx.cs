@@ -80,10 +80,7 @@ namespace Nhs.Ptl.Comments.Web
 
                 if (RttWait.Count > 0)
                 {
-                    foreach (var item in RttWait)
-                    {
-                        opReferrals = opReferrals.Where(x => string.Equals(x.WeekswaitGrouped, item)).ToList();
-                    }
+                    opReferrals = opReferrals.Where(x => RttWait.Contains(x.WeekswaitGrouped)).ToList();
                 }
 
                 if (null != opReferrals)

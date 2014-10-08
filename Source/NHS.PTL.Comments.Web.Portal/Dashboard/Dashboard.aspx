@@ -22,22 +22,33 @@
             <ContentTemplate>--%>
         <div class="subSections">
             <ul class="formSection noBottonBorders noPadding clearNoMargin">
-                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat" style="display:inline;float:left">RTT Wait</span>
+                <li style="float: left;"><span class="shortFormTitleFieldsWithoutFloat" style="display:inline;float:left">RTT Wait</span>
+                    <div style="width:650px">
                     <span class="formFieldControl">
-                        <cc1:DropDownCheckBoxes ID="RTTWaitDropDown" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged"
+                        <asp:CheckBoxList ID="RTTWaitDropDown" 
+                        RepeatDirection="Horizontal"
+                        AutoPostBack="True"
+                        CellPadding="20"
+                        CellSpacing="50"
+                        RepeatLayout="Flow"
+                        TextAlign="Right"
+                        OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged" runat="server">
+                        </asp:CheckBoxList>
+<%--                        <cc1:DropDownCheckBoxes ID="RTTWaitDropDown" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged"
                             AutoPostBack="true" runat="server" UseButtons="false" AddJQueryReference="True"
                             UseSelectAllNode="False">
                             <Style2 SelectBoxWidth="130px" />
-                            <Texts SelectBoxCaption="Select" />
+                            <Texts SelectBoxCaption="Select" />--%>
                             
-                        </cc1:DropDownCheckBoxes>
+                        <%--</cc1:DropDownCheckBoxes>--%>
                         <%--<asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
                             AutoPostBack="True" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged">
                         </asp:DropDownList>--%>
-                    </span></li>
+                    </span>
+                    </div></li>
                 <li>
-
-                <span style="margin-left:40px" class="shortFormTitleFieldsWithoutFloat">Future Appt Status</span> <span
+                <div class="clear"></div>
+                <span class="shortFormTitleFieldsWithoutFloat">Future Appt Status</span> <span
                     class="formFieldControl">
                     <asp:DropDownList ID="FutureApptStatusDropDownList" Width="130px" runat="server"
                         CssClass="defaultDropDown" AutoPostBack="True" OnSelectedIndexChanged="FutureApptStatusDropDownList_SelectedIndexChanged">

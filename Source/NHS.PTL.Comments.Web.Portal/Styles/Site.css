@@ -534,7 +534,7 @@ div.accountInfo
 
 .shortFormTitleFieldsWithoutFloat
 {
-    width: 70px;
+    width: 100px;
     text-align: left;
     vertical-align: middle;
     display: inline-block;
@@ -872,6 +872,17 @@ input[type=text], input[type=password], textarea, select
 #MainContent_RTTWaitDropDown_sl
 {
      z-index: 9; 
+}
+
+#MainContent_RTTWaitDropDown label
+{
+    margin-right:20px !important;
+}
+
+
+#MainContent_RTTWaitDropDown
+{
+    width:500px;    
 }
 
 .has-popup 

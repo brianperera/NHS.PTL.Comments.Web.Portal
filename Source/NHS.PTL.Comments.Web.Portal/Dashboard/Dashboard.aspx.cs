@@ -299,24 +299,27 @@ namespace Nhs.Ptl.Comments.Web
 
             IList<OpReferral> filtered = null;
 
+            List<string> rttWaitListItems = new List<string>();
+
             foreach (ListItem item in RTTWaitDropDown.Items)
             {
                 if (item.Selected)
                 {
-                    if (!item.Value.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
-                    {
-                        if (null != oref)
-                        {
-                            filtered = oref.Where(x => x.WeekswaitGrouped == item.Text).ToList();
-                            RTTWaitString = RTTWaitString + ";" + item.Text;
-                        }
-                    }
-                    else
-                    {
-                        filtered = oref;
-                        break;
-                    }
+                    rttWaitListItems.Add(item.Text);
+                    RTTWaitString = RTTWaitString + ";" + item.Text;
                 }
+            }
+
+            if (!rttWaitListItems.Contains(ConfigurationManager.AppSettings["DropDownAllText"]))
+            {
+                if (null != oref)
+                {
+                    filtered = oref.Where(x => rttWaitListItems.Contains(x.WeekswaitGrouped)).ToList();
+                }
+            }
+            else
+            {
+                filtered = oref;
             }
 
             return filtered;
