@@ -18,7 +18,7 @@
 
         function gridviewScroll() {
             $('#MainContent_gvMain').gridviewScroll({
-                width: $(window).width() - 200,
+                width: $(window).width() - 100,
                 height:600,
                 freezesize: 3,
                 arrowsize: 30,
@@ -110,7 +110,7 @@
                             </asp:DropDownList>
                         </span></li>
                     </ul>
-                    <ul class="formSection clearNoMargin">
+                    <ul class="formSection clearNoMargin" style="padding-top:10px">
                         <li><span>
                             <asp:Button CssClass="submitButton" Text="Search" runat="server" ID="searchButton"
                                 OnClick="searchButton_Click" />
@@ -131,7 +131,7 @@
             </div>
             <div class="clear">
             </div>
-            <div class="regularTable subSections">
+            <div class="regularTable subSections gridBorder">
             <asp:GridView ID="gvMain" runat="server" Width="100%" CssClass="" AutoGenerateColumns="False"
             GridLines="None" onpageindexchanging="gvMain_PageIndexChanging" 
                     onrowdatabound="gvMain_RowDataBound"  
@@ -144,9 +144,9 @@
                             runat="server" OnClick="rowLink_Click"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField HeaderText="Forename" DataField="PatientForename" ItemStyle-BackColor="#EEEEEE" />
-                <asp:BoundField HeaderText="Surname" DataField="PatientSurname" ItemStyle-BackColor="#EEEEEE" HeaderStyle-CssClass="rightDropShadow"  ItemStyle-CssClass="rightDropShadow"/>
-                <asp:BoundField HeaderText="Status" DataField="Status" HeaderStyle-CssClass="rightDropShadow"  ItemStyle-CssClass="rightDropShadow" />
+                <asp:BoundField HeaderText="Forename" DataField="PatientForename" ItemStyle-Wrap="true" HeaderStyle-Wrap="true" HeaderStyle-Width="80px" ItemStyle-Width="80px" ItemStyle-BackColor="#EEEEEE"   ItemStyle-CssClass="tableColumnWidthAnsWrap" />
+                <asp:BoundField HeaderText="Surname" DataField="PatientSurname" ItemStyle-Wrap="true" HeaderStyle-Wrap="true" HeaderStyle-Width="80px" ItemStyle-Width="80px" ItemStyle-BackColor="#EEEEEE"  ItemStyle-CssClass="tableColumnWidthAnsWrap"/>
+                <asp:BoundField HeaderText="Status" DataField="Status" />
                 <asp:BoundField HeaderText="To be booked by" DataField="ToBeBookedByDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
                 <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />

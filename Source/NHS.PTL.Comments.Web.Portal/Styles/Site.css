@@ -700,6 +700,7 @@ div.accountInfoCentered
     background: -ms-linear-gradient(#4a9bea, #1F7BE5);
     background: -o-linear-gradient(#4a9bea, #1F7BE5);
     background: linear-gradient(#4a9bea, #1F7BE5);
+    vertical-align:baseline;
 }
 
 .deleteButton
@@ -870,7 +871,23 @@ input[type=text], input[type=password], textarea, select
 
 #MainContent_RTTWaitDropDown_sl
 {
-   z-index:10;     
+     z-index: 9; 
+}
+
+.has-popup 
+{
+   
+   z-index: 999;     
+}
+
+.level1
+{
+   z-index: 9999;   
+}
+
+.level2
+{
+   z-index: 99;  
 }
 
 .shortTextBox input[type=text]
@@ -1307,9 +1324,15 @@ z-index: -9999999999999999999;
 display: block;
 }
 
-.rightDropShadow
+.tableColumnWidthAnsWrap
 {
-    text-wrap:unrestricted;
-    word-wrap: break-word;
-    width:50px;
+    text-wrap:unrestricted !important;    
+    word-break:break-all;
+    word-rap:break-wword;
 }
+
+.multiSelectionDropDown
+{
+    z-index:-9999;  
+}
+

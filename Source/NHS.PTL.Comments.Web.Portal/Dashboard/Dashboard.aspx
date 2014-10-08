@@ -22,19 +22,22 @@
             <ContentTemplate>--%>
         <div class="subSections">
             <ul class="formSection noBottonBorders noPadding clearNoMargin">
-                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">RTT Wait</span>
+                <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat" style="display:inline;float:left">RTT Wait</span>
                     <span class="formFieldControl">
                         <cc1:DropDownCheckBoxes ID="RTTWaitDropDown" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged"
                             AutoPostBack="true" runat="server" UseButtons="false" AddJQueryReference="True"
                             UseSelectAllNode="False">
                             <Style2 SelectBoxWidth="130px" />
                             <Texts SelectBoxCaption="Select" />
+                            
                         </cc1:DropDownCheckBoxes>
                         <%--<asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
                             AutoPostBack="True" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged">
                         </asp:DropDownList>--%>
                     </span></li>
-                <li><span class="shortFormTitleFieldsWithoutFloat">Future Appt Status</span> <span
+                <li>
+
+                <span style="margin-left:40px" class="shortFormTitleFieldsWithoutFloat">Future Appt Status</span> <span
                     class="formFieldControl">
                     <asp:DropDownList ID="FutureApptStatusDropDownList" Width="130px" runat="server"
                         CssClass="defaultDropDown" AutoPostBack="True" OnSelectedIndexChanged="FutureApptStatusDropDownList_SelectedIndexChanged">
