@@ -24,6 +24,20 @@ public class OpReferral
     public string SourceOfReferralText { get; set; }
     public string PriorityType { get; set; }
     public DateTime? RttClockStart { get; set; }
+    public DateTime? ThirteenWeekBreachDate 
+    {
+        get
+        {
+            if (string.Equals(ReferralRequestReceivedDate.Value, DateTime.MinValue))
+            {
+                return null;
+            }
+            else
+            {
+                return ReferralRequestReceivedDate.Value.AddDays(91);
+            }
+        }
+    }
     public DateTime? RttBreachDate { get; set; }
     public DateTime? AttendanceDate { get; set; }
     public string AttStatus { get; set; }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+﻿<%@ Page Title="Validations" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
     CodeFile="Validations.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.Validations" ViewStateMode="Enabled"
     EnableViewState="true" %>
 
@@ -18,7 +18,7 @@
 
         function gridviewScroll() {
             $('#MainContent_gvMain').gridviewScroll({
-                width: $(window).width() - 100,
+                width: $(window).width() - 200,
                 height:600,
                 freezesize: 3,
                 arrowsize: 30,
@@ -120,7 +120,12 @@
                         </span><span>
                             <asp:Button CssClass="submitButton" Text="Reset" runat="server" ID="resetButton"
                                 OnClick="resetButton_Click" />
-                        </span></li>
+                        </span><span>
+                            <asp:Button CssClass="submitButton" Text="Export" runat="server" ID="exportButton"
+                                OnClick="exportButton_Click" />
+                        </span>
+                        
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -140,8 +145,8 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField HeaderText="Forename" DataField="PatientForename" ItemStyle-BackColor="#EEEEEE" />
-                <asp:BoundField HeaderText="Surname" DataField="PatientSurname" ItemStyle-BackColor="#EEEEEE"  ItemStyle-CssClass="rightDropShadow"/>
-                <asp:BoundField HeaderText="Status" DataField="Status" />
+                <asp:BoundField HeaderText="Surname" DataField="PatientSurname" ItemStyle-BackColor="#EEEEEE" HeaderStyle-CssClass="rightDropShadow"  ItemStyle-CssClass="rightDropShadow"/>
+                <asp:BoundField HeaderText="Status" DataField="Status" HeaderStyle-CssClass="rightDropShadow"  ItemStyle-CssClass="rightDropShadow" />
                 <asp:BoundField HeaderText="To be booked by" DataField="ToBeBookedByDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="NHS Number" DataField="NhsNumber" />
                 <asp:BoundField HeaderText="DOB" DataField="DateOfBirth" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
@@ -153,7 +158,8 @@
                 <asp:BoundField HeaderText="Source Of Referral" DataField="SourceOfReferralText" />
                 <asp:BoundField HeaderText="Priority Type" DataField="PriorityType" />
                 <asp:BoundField HeaderText="RTT Clock Start" DataField="RttClockStart" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
-                <asp:BoundField HeaderText="RTT Breach Date" DataField="RttBreachDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                <asp:BoundField HeaderText="13 Week Breach Date" DataField="ThirteenWeekBreachDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
+                <asp:BoundField HeaderText="18 Week Breach Date" DataField="RttBreachDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="Att Date" DataField="AttendanceDate" DataFormatString="<%$ AppSettings:DateTimeFormat %>" />
                 <asp:BoundField HeaderText="Att Status" DataField="AttStatus" />
                 <asp:BoundField HeaderText="RTT Status Code" DataField="RttStatus" />
@@ -171,6 +177,9 @@
         <div class="fade" runat="server" id="fade">
         </div>
                     </ContentTemplate>
+                    <Triggers>
+        <asp:PostBackTrigger ControlID="exportButton" />
+    </Triggers>
         </asp:UpdatePanel>
     </div>
 </asp:Content>

@@ -863,6 +863,16 @@ input[type=text], input[type=password], textarea, select
     width: 200px;
 }
 
+#caption, #MainContent_RTTWaitDropDown label
+{
+   font-weight: normal !important;
+}
+
+#MainContent_RTTWaitDropDown_sl
+{
+   z-index:10;     
+}
+
 .shortTextBox input[type=text]
 {
     width: 50px !important;
@@ -1295,4 +1305,11 @@ label, span
 position: relative;
 z-index: -9999999999999999999;
 display: block;
+}
+
+.rightDropShadow
+{
+    text-wrap:unrestricted;
+    word-wrap: break-word;
+    width:50px;
 }

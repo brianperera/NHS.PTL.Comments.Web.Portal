@@ -18,3 +18,7 @@ function pageLoad() {
     });
 
 }
+
+function print() {
+    window.print();
+}

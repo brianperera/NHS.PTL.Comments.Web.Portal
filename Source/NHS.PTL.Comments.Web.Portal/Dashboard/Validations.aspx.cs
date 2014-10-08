@@ -42,6 +42,21 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        public List<string> RttWait
+        {
+            get
+            {
+                List<string> rttWait = new List<string>();
+
+                if (Request.QueryString["rttwait"] != null)
+                    rttWait = Request.QueryString["rttwait"].Split(';').ToList();
+
+                rttWait.Remove("");
+
+                return rttWait;
+            }
+        }
+
         #region Page Events
 
         protected void Page_Load(object sender, EventArgs e)
@@ -61,6 +76,14 @@ namespace Nhs.Ptl.Comments.Web
                         opReferrals = opReferrals.Where(x => string.Equals(x.Status, "")).ToList();
                     else
                         opReferrals = opReferrals.Where(x => string.Equals(x.Status, Status)).ToList();
+                }
+
+                if (RttWait.Count > 0)
+                {
+                    foreach (var item in RttWait)
+                    {
+                        opReferrals = opReferrals.Where(x => string.Equals(x.WeekswaitGrouped, item)).ToList();
+                    }
                 }
 
                 if (null != opReferrals)
@@ -769,6 +792,51 @@ namespace Nhs.Ptl.Comments.Web
                 //item.FutureClinicDate = this.ConvertDefaultDateTimeToNullConverter(item.FutureClinicDate); ;
             }
         }
+
+        protected void exportButton_Click(object sender, EventArgs e)
+        {
+            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+            FilterGrid();
+            FileExporter.ExportToExcel(GenerateDataTableForExport(), this.Page.Response, "StatusSummary.xls");
+        }
+
+        private DataTable GenerateDataTableForExport()
+        {
+            gvMain.AllowPaging = false;
+            gvMain.DataBind();
+
+            DataTable dataTable = new DataTable();            
+            foreach (DataControlField item in gvMain.Columns)
+            {
+                dataTable.Columns.Add(new DataColumn(item.HeaderText, typeof(string)));
+            }
+
+            foreach (GridViewRow gridViewRow in gvMain.Rows)
+            {
+                DataRow dataRow = dataTable.NewRow();
+                
+                for (int i = 0; i < gridViewRow.Cells.Count; i++)
+			    {
+                    if (i == 0)
+                    {
+                        LinkButton linkButton = gridViewRow.FindControl("rowLink") as LinkButton;
+                        dataRow[i] = linkButton.Text;
+                    }
+                    else
+                    {
+                        dataRow[i] = gridViewRow.Cells[i].Text.ToString();
+                    }
+			    }
+
+                dataTable.Rows.Add(dataRow);
+                gvMain.DataBind();
+            }
+
+            gvMain.AllowPaging = true;
+
+            return dataTable;
+        }
+
 
         #endregion
     }

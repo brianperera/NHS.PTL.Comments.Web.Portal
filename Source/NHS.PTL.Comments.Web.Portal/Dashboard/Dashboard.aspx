@@ -1,7 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="Dashboard.aspx.cs" Inherits="Nhs.Ptl.Comments.Web.Dashboard" ViewStateMode="Enabled"
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs"
+    Title="Dashboard" Inherits="Nhs.Ptl.Comments.Web.Dashboard" ViewStateMode="Enabled"
     EnableViewState="true" %>
 
+<%@ Register Assembly="DropDownCheckBoxes" Namespace="Saplin.Controls" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
     <script src="../Scripts/jsapi.js" type="text/javascript"></script>
@@ -12,7 +13,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div class="main">
-            <div class="pageHeader">
+        <div class="pageHeader">
             <h2>
                 Outpatient PTL by validation status
             </h2>
@@ -23,17 +24,34 @@
             <ul class="formSection noBottonBorders noPadding clearNoMargin">
                 <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">RTT Wait</span>
                     <span class="formFieldControl">
-                        <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
+                        <cc1:DropDownCheckBoxes ID="RTTWaitDropDown" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged"
+                            AutoPostBack="true" runat="server" UseButtons="false" AddJQueryReference="True"
+                            UseSelectAllNode="False">
+                            <Style2 SelectBoxWidth="130px" />
+                            <Texts SelectBoxCaption="Select" />
+                        </cc1:DropDownCheckBoxes>
+                        <%--<asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
                             AutoPostBack="True" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged">
-                        </asp:DropDownList>
+                        </asp:DropDownList>--%>
                     </span></li>
                 <li><span class="shortFormTitleFieldsWithoutFloat">Future Appt Status</span> <span
                     class="formFieldControl">
-                    <asp:DropDownList ID="FutureApptStatusDropDownList" runat="server" CssClass="defaultDropDown"
-                        AutoPostBack="True" OnSelectedIndexChanged="FutureApptStatusDropDownList_SelectedIndexChanged">
+                    <asp:DropDownList ID="FutureApptStatusDropDownList" Width="130px" runat="server"
+                        CssClass="defaultDropDown" AutoPostBack="True" OnSelectedIndexChanged="FutureApptStatusDropDownList_SelectedIndexChanged">
                     </asp:DropDownList>
                 </span></li>
             </ul>
+            <div>
+                <ul class="formSection clearNoMargin">
+                    <li><span style="margin:5px;">
+                        <asp:Button CssClass="submitButton" Text="Export" runat="server" ID="ExportButton"
+                            OnClick="ExportButton_Click" />
+                    </span><span>
+                        <button onclick="print()" class="submitButton">
+                            Print</button>
+                    </span></li>
+                </ul>
+            </div>
         </div>
         <div class="clear">
         </div>

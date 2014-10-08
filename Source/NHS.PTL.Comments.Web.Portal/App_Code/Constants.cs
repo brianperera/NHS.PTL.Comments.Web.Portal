@@ -19,6 +19,6 @@ namespace Nhs.Ptl.Comments
         public const string NoDate = "No Date";
         public const int ToBeBookedByColumnNo = 4;
         public const int ReferralRequestColumnNo = 11;
-        public const int FutureClinicDateColumnNo = 20;
+        public const int FutureClinicDateColumnNo = 21;
     }
 }
