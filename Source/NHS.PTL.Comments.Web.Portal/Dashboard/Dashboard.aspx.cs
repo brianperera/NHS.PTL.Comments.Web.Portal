@@ -198,7 +198,7 @@ namespace Nhs.Ptl.Comments.Web
                 {
                     // Insert a real hyperlink into Cells[1] using HyperLinkValue.
                     HyperLink myLink = new HyperLink();
-                    myLink.NavigateUrl = "Validations.aspx?specialty=" + e.Row.Cells[0].Text + "&status=" + headerList[i] + "&rttwait=" + RTTWaitString;
+                    myLink.NavigateUrl = "Validations.aspx?specialty=" + e.Row.Cells[0].Text + "&status=" + headerList[i] + "&rttwait=" + RTTWaitString + "&isFiltered=true";
                     myLink.Text = e.Row.Cells[i].Text;
                     // then add the control to the cell.
                     e.Row.Cells[i].Controls.Add(myLink);
@@ -217,9 +217,6 @@ namespace Nhs.Ptl.Comments.Web
             string[] rttWaitList = opReferrals.Select(e => e.WeekswaitGrouped).Distinct().ToArray();
             RTTWaitDropDown.DataSource = rttWaitList;
             RTTWaitDropDown.DataBind();
-
-            //RTTWaitCheckBoxList.DataSource = rttWaitList;
-            //RTTWaitCheckBoxList.DataBind();
         }
 
         private void InsertDropdownDefaultValue()
@@ -228,10 +225,10 @@ namespace Nhs.Ptl.Comments.Web
             {
                 ListItem defaultItem = new ListItem(ConfigurationManager.AppSettings["DropDownAllText"]);
 
-                if (!RTTWaitDropDown.Items.Contains(defaultItem))
-                {
-                    RTTWaitDropDown.Items.Insert(0, defaultItem);
-                }
+                //if (!RTTWaitDropDown.Items.Contains(defaultItem))
+                //{
+                //    RTTWaitDropDown.Items.Insert(0, defaultItem);
+                //}
 
                 if (!FutureApptStatusDropDownList.Items.Contains(defaultItem))
                 {
@@ -310,7 +307,8 @@ namespace Nhs.Ptl.Comments.Web
                 }
             }
 
-            if (!rttWaitListItems.Contains(ConfigurationManager.AppSettings["DropDownAllText"]))
+
+            if (rttWaitListItems.Count > 0)
             {
                 if (null != oref)
                 {

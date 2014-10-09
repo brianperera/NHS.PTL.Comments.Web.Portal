@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    $(".navigationBarItems").show();
+});
+
 function pageLoad() {
 
     $("#SearchBoxContent_patientTextbox").hide();
@@ -16,7 +20,6 @@ function pageLoad() {
         $("#SearchBoxContent_patientTextbox").show();
         $("#SearchBoxContent_patientTextbox").focus();
     });
-
 }
 
 function print() {
@@ -29,4 +32,4 @@ $(function () {
         $(this).css('zIndex', zIndexNumber);
         zIndexNumber -= 10;
     });
-}); 
+});

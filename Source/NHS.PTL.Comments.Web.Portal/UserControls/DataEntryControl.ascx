@@ -18,7 +18,7 @@
                     <asp:Label ID="MessageLabel" runat="server" />
                 </div>
                 <ul class="formSection">
-                    <li><span >MRN:</span> <span class="formFieldControl uniqueIdentifier">
+                    <li><span>MRN:</span> <span class="formFieldControl uniqueIdentifier">
                         <asp:Literal runat="server" ID="uniqueIdentifier"></asp:Literal>
                     </span></li>
                     <li><span>Status:</span> <span class="formFieldControl">

@@ -1,11 +1,10 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs"
     Title="Dashboard" Inherits="Nhs.Ptl.Comments.Web.Dashboard" ViewStateMode="Enabled"
     EnableViewState="true" %>
-
-<%@ Register Assembly="DropDownCheckBoxes" Namespace="Saplin.Controls" TagPrefix="cc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
     <script src="../Scripts/jsapi.js" type="text/javascript"></script>
+    <script src="../Scripts/ClientSideUtility.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="SearchBoxContent" runat="Server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager2" runat="server">
@@ -26,6 +25,7 @@
                     <div style="width:650px">
                     <span class="formFieldControl">
                         <asp:CheckBoxList ID="RTTWaitDropDown" 
+                        RepeatColumns=6
                         RepeatDirection="Horizontal"
                         AutoPostBack="True"
                         CellPadding="20"
@@ -34,16 +34,6 @@
                         TextAlign="Right"
                         OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged" runat="server">
                         </asp:CheckBoxList>
-<%--                        <cc1:DropDownCheckBoxes ID="RTTWaitDropDown" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged"
-                            AutoPostBack="true" runat="server" UseButtons="false" AddJQueryReference="True"
-                            UseSelectAllNode="False">
-                            <Style2 SelectBoxWidth="130px" />
-                            <Texts SelectBoxCaption="Select" />--%>
-                            
-                        <%--</cc1:DropDownCheckBoxes>--%>
-                        <%--<asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
-                            AutoPostBack="True" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged">
-                        </asp:DropDownList>--%>
                     </span>
                     </div></li>
                 <li>
@@ -55,9 +45,10 @@
                     </asp:DropDownList>
                 </span></li>
             </ul>
-            <div>
+            <div class="clear"></div>
+            <div style="padding-top:10px;">
                 <ul class="formSection clearNoMargin">
-                    <li><span style="margin:5px;">
+                    <li><span class="noMarginOverride">
                         <asp:Button CssClass="submitButton" Text="Export" runat="server" ID="ExportButton"
                             OnClick="ExportButton_Click" />
                     </span><span>

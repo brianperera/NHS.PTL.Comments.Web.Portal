@@ -42,6 +42,21 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        public bool IsFiltered
+        {
+            get
+            {
+                bool isFiltered = false;
+
+                if (Request.QueryString["isFiltered"] != null)
+                {
+                    isFiltered = string.Equals(Request.QueryString["isFiltered"].ToString(), "true") ? true : false;
+                }
+
+                return isFiltered;
+            }
+        }
+
         public List<string> RttWait
         {
             get
@@ -65,23 +80,8 @@ namespace Nhs.Ptl.Comments.Web
             {
                 IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
 
-                if (!string.IsNullOrEmpty(SpecialtyType))
-                {
-                    opReferrals = opReferrals.Where(x => string.Equals(x.SpecName, SpecialtyType)).ToList();
-                }
-
-                if (!string.IsNullOrEmpty(Status))
-                {
-                    if (Status == "Blank Status")
-                        opReferrals = opReferrals.Where(x => string.Equals(x.Status, "")).ToList();
-                    else
-                        opReferrals = opReferrals.Where(x => string.Equals(x.Status, Status)).ToList();
-                }
-
-                if (RttWait.Count > 0)
-                {
-                    opReferrals = opReferrals.Where(x => RttWait.Contains(x.WeekswaitGrouped)).ToList();
-                }
+                //Apply filters based on the query string paramenters
+                opReferrals = QueryStringBasedFiltering(opReferrals);
 
                 if (null != opReferrals)
                 {
@@ -92,20 +92,41 @@ namespace Nhs.Ptl.Comments.Web
                     PopulateRTTWaitDropDown(opReferrals);
                     PopulateFutureApptStatusDropDown();
                     InsertDropdownDefaultValue();
-
-                    //referrelGrid.DataSource = new List<string>();
-                    //referrelGrid.DataBind();
-
                     RefineDatesInOpReferrals(opReferrals);
-                    //referrelGrid.DataSource = opReferrals;
-                    //referrelGrid.DataBind();
-                    //referrelGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
-
+                    
                     this.gvMain.DataSource = opReferrals;
                     this.gvMain.DataBind();
                 }
 
             }
+        }
+
+        private IList<OpReferral> QueryStringBasedFiltering(IList<OpReferral> opReferrals)
+        {
+            if (!string.IsNullOrEmpty(SpecialtyType))
+            {
+                opReferrals = opReferrals.Where(x => string.Equals(x.SpecName, SpecialtyType)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(Status))
+            {
+                if (Status == "Blank Status")
+                    opReferrals = opReferrals.Where(x => string.Equals(x.Status, "")).ToList();
+                else
+                    opReferrals = opReferrals.Where(x => string.Equals(x.Status, Status)).ToList();
+            }
+
+            if (RttWait.Count > 0)
+            {
+                opReferrals = opReferrals.Where(x => RttWait.Contains(x.WeekswaitGrouped)).ToList();
+            }
+
+            if (IsFiltered)
+            {
+                isQueryStringFiltering.Value = "true";
+            }
+
+            return opReferrals;
         }
 
         private DateTime? ConvertDefaultDateTimeToNullConverter(DateTime? currentDateTime)
@@ -123,24 +144,7 @@ namespace Nhs.Ptl.Comments.Web
 
         protected void resetButton_Click(object sender, EventArgs e)
         {
-            //specialityDropdown.SelectedIndex = 0;
-            //consultantDropdown.SelectedIndex = 0;
-            //statusDropdown.SelectedIndex = 0;
-            //RTTWaitDropDown.SelectedIndex = 0;
-            //AttendanceStatusDropDown.SelectedIndex = 0;
-            //IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
-            //if (null != opReferrals)
-            //{
-            //    PopulateSpecialityDropdown(opReferrals);
-            //    PopulateConsultantDropdown(opReferrals);
-            //    PopulateAttendanceStatusDropDown(opReferrals);
-            //    PopulateRTTWaitDropDown(opReferrals);
-            //}
-
-            //PopulateStatusDropdown();
-            //InsertDropdownDefaultValue();
-            //patientTextbox.Text = string.Empty;
-
+            isQueryStringFiltering.Value = "false";
             ResetControls();
             FilterGrid();
         }
@@ -195,9 +199,9 @@ namespace Nhs.Ptl.Comments.Web
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
-                        RTTWaitDropDown.DataBind();
-                        SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+                        ValidationRTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        ValidationRTTWaitDropDown.DataBind();
+                        SetSavedValue(ValidationRTTWaitDropDown, rttWaitDdHiddenField.Value);
 
                         AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
@@ -207,15 +211,7 @@ namespace Nhs.Ptl.Comments.Web
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
-                        //InsertDropdownDefaultValue();
-                        //consultantDropdown.ClearSelection();
-                        //statusDropdown.ClearSelection();
-                        //RTTWaitDropDown.ClearSelection();
-                        //AttendanceStatusDropDown.ClearSelection();
-                        //consultantDropdown.Items[0].Selected = true;
-                        //statusDropdown.Items[0].Selected = true;
-                        //RTTWaitDropDown.Items[0].Selected = true;
-                        //AttendanceStatusDropDown.Items[0].Selected = true;
+                        isQueryStringFiltering.Value = "false";
                     }
                 }
 
@@ -250,9 +246,9 @@ namespace Nhs.Ptl.Comments.Web
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
-                        RTTWaitDropDown.DataBind();
-                        SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+                        ValidationRTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        ValidationRTTWaitDropDown.DataBind();
+                        SetSavedValue(ValidationRTTWaitDropDown, rttWaitDdHiddenField.Value);
 
                         AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
@@ -262,10 +258,7 @@ namespace Nhs.Ptl.Comments.Web
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
-                        //InsertDropdownDefaultValue();
-                        //statusDropdown.Items[0].Selected = true;
-                        //RTTWaitDropDown.Items[0].Selected = true;
-                        //AttendanceStatusDropDown.Items[0].Selected = true;
+                        isQueryStringFiltering.Value = "false";
                     }
                 }
             }
@@ -299,9 +292,9 @@ namespace Nhs.Ptl.Comments.Web
                         consultantDropdown.DataBind();
                         SetSavedValue(consultantDropdown, consultantDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
-                        RTTWaitDropDown.DataBind();
-                        SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+                        ValidationRTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        ValidationRTTWaitDropDown.DataBind();
+                        SetSavedValue(ValidationRTTWaitDropDown, rttWaitDdHiddenField.Value);
 
                         AttendanceStatusDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.AttStatus).Distinct().ToList());
                         AttendanceStatusDropDown.DataBind();
@@ -311,11 +304,7 @@ namespace Nhs.Ptl.Comments.Web
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
-                        //InsertDropdownDefaultValue();
-                        //RTTWaitDropDown.ClearSelection();
-                        //AttendanceStatusDropDown.ClearSelection();
-                        //RTTWaitDropDown.Items[0].Selected = true;
-                        //AttendanceStatusDropDown.Items[0].Selected = true;
+                        isQueryStringFiltering.Value = "false";
                     }
                 }
             }
@@ -327,14 +316,14 @@ namespace Nhs.Ptl.Comments.Web
 
         protected void RTTWaitDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!RTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+            if (!ValidationRTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
                 IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
 
                 if (null != opReferrals)
                 {
 
-                    IList<OpReferral> filtered = opReferrals.Where(x => x.WeekswaitGrouped == RTTWaitDropDown.SelectedItem.Text).ToList();
+                    IList<OpReferral> filtered = opReferrals.Where(x => x.WeekswaitGrouped == ValidationRTTWaitDropDown.SelectedItem.Text).ToList();
 
                     if (null != filtered)
                     {
@@ -361,8 +350,7 @@ namespace Nhs.Ptl.Comments.Web
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
 
-                        //InsertDropdownDefaultValue();
-                        //AttendanceStatusDropDown.Items[0].Selected = true;
+                        isQueryStringFiltering.Value = "false";
                     }
                 }
             }
@@ -400,14 +388,15 @@ namespace Nhs.Ptl.Comments.Web
                         statusDropdown.DataBind();
                         SetSavedValue(statusDropdown, statusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
-                        RTTWaitDropDown.DataBind();
-                        SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+                        ValidationRTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        ValidationRTTWaitDropDown.DataBind();
+                        SetSavedValue(ValidationRTTWaitDropDown, rttWaitDdHiddenField.Value);
 
                         FutureApptStatusDropDownList.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(Utility.Utility.FutureApptStatusList.ToList());
                         FutureApptStatusDropDownList.DataBind();
                         SetSavedValue(FutureApptStatusDropDownList, futureApptStatusDdHiddenField.Value);
-                        //InsertDropdownDefaultValue();
+
+                        isQueryStringFiltering.Value = "false";
                     }
                 }
             }
@@ -455,11 +444,11 @@ namespace Nhs.Ptl.Comments.Web
                         AttendanceStatusDropDown.DataBind();
                         SetSavedValue(AttendanceStatusDropDown, attStatusDdHiddenField.Value);
 
-                        RTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
-                        RTTWaitDropDown.DataBind();
-                        SetSavedValue(RTTWaitDropDown, rttWaitDdHiddenField.Value);
+                        ValidationRTTWaitDropDown.DataSource = Utility.Utility.GetDropdownDefaultValueToListItems(filtered.Select(x => x.WeekswaitGrouped).Distinct().ToList());
+                        ValidationRTTWaitDropDown.DataBind();
+                        SetSavedValue(ValidationRTTWaitDropDown, rttWaitDdHiddenField.Value);
 
-                        //InsertDropdownDefaultValue();
+                        isQueryStringFiltering.Value = "false";
                     }
                 }
             }
@@ -494,7 +483,20 @@ namespace Nhs.Ptl.Comments.Web
         protected void gvMain_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvMain.PageIndex = e.NewPageIndex;
-            FilterGrid();
+
+            if (isQueryStringFiltering.Value != "true")
+            {
+                FilterGrid();
+            }
+            else
+            {
+                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+
+                //Apply filters based on the query string paramenters
+                opReferrals = QueryStringBasedFiltering(opReferrals);
+                this.gvMain.DataSource = opReferrals;
+                this.gvMain.DataBind();
+            }
         }
 
         #endregion
@@ -519,8 +521,8 @@ namespace Nhs.Ptl.Comments.Web
         private void PopulateRTTWaitDropDown(IList<OpReferral> opReferrals)
         {
             string[] rttWaitList = opReferrals.Select(e => e.WeekswaitGrouped).Distinct().ToArray();
-            RTTWaitDropDown.DataSource = rttWaitList;
-            RTTWaitDropDown.DataBind();
+            ValidationRTTWaitDropDown.DataSource = rttWaitList;
+            ValidationRTTWaitDropDown.DataBind();
         }
 
         private void PopulateAttendanceStatusDropDown(IList<OpReferral> opReferrals)
@@ -569,7 +571,7 @@ namespace Nhs.Ptl.Comments.Web
                             specialityDropdown,
                             consultantDropdown,
                             statusDropdown,
-                            RTTWaitDropDown,
+                            ValidationRTTWaitDropDown,
                             AttendanceStatusDropDown,
                             FutureApptStatusDropDownList
                 };
@@ -637,9 +639,9 @@ namespace Nhs.Ptl.Comments.Web
                     }
 
                     // Filter by RTT Wait
-                    if (!RTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    if (!ValidationRTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
                     {
-                        opReferrals = opReferrals.Where(comment => comment.WeekswaitGrouped.Equals(RTTWaitDropDown.SelectedValue)).ToList();
+                        opReferrals = opReferrals.Where(comment => comment.WeekswaitGrouped.Equals(ValidationRTTWaitDropDown.SelectedValue)).ToList();
                     }
 
                     // Filter by AttStatus
@@ -696,9 +698,9 @@ namespace Nhs.Ptl.Comments.Web
                 statusDdHiddenField.Value = statusDropdown.SelectedItem.Text;
             }
 
-            if (RTTWaitDropDown.Items.Count > 0)
+            if (ValidationRTTWaitDropDown.Items.Count > 0)
             {
-                rttWaitDdHiddenField.Value = RTTWaitDropDown.SelectedItem.Text;
+                rttWaitDdHiddenField.Value = ValidationRTTWaitDropDown.SelectedItem.Text;
             }
 
             if (AttendanceStatusDropDown.Items.Count > 0)
@@ -793,7 +795,19 @@ namespace Nhs.Ptl.Comments.Web
         protected void exportButton_Click(object sender, EventArgs e)
         {
             IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
-            FilterGrid();
+
+            if (isQueryStringFiltering.Value != "true")
+            {
+                FilterGrid();
+            }
+            else
+            {
+                //Apply filters based on the query string paramenters
+                opReferrals = QueryStringBasedFiltering(opReferrals);
+                this.gvMain.DataSource = opReferrals;
+                this.gvMain.DataBind();
+            }
+                        
             FileExporter.ExportToExcel(GenerateDataTableForExport(), this.Page.Response, "StatusSummary.xls");
         }
 

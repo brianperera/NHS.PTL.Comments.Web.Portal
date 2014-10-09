@@ -390,6 +390,7 @@ div.NHS_name
 .navigationBarItems
 {
     float: left;
+    display:none;
 }
 
 .navigationBar a
@@ -587,6 +588,17 @@ div.accountInfoCentered
     clear: both;
     margin: 0px;
 }
+
+.noMarginOverride
+{
+    margin: 0px !important;
+}
+
+.noPaddingOverride
+{
+    padding: 0px !important;
+}
+
 .clear-fix:after
 {
     content: ".";
@@ -888,17 +900,17 @@ input[type=text], input[type=password], textarea, select
 .has-popup 
 {
    
-   z-index: 999;     
+   z-index: 2;     
 }
 
 .level1
 {
-   z-index: 9999;   
+   z-index: 3;   
 }
 
 .level2
 {
-   z-index: 99;  
+   z-index: 1;  
 }
 
 .shortTextBox input[type=text]
@@ -1290,7 +1302,7 @@ label, span
 .popup .error_msg span
 {
     font-size: 12px !important;
-    padding: 5px 0 5px 60px !important;
+    
 }
 
 .popup .error_msg

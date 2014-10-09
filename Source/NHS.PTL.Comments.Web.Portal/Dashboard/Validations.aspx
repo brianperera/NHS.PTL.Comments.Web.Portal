@@ -71,6 +71,7 @@
                     <asp:HiddenField ID="rttWaitDdHiddenField" runat="server" />
                     <asp:HiddenField ID="attStatusDdHiddenField" runat="server" />
                     <asp:HiddenField ID="futureApptStatusDdHiddenField" runat="server" />
+                    <asp:HiddenField ID="isQueryStringFiltering" runat="server" />
                     <ul class="formSection noBottonBorders noPadding clearNoMargin">
                         <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">Speciality</span>
                             <span class="formFieldControl">
@@ -93,7 +94,7 @@
                     <ul class="formSection noBottonBorders noPadding clearNoMargin">
                         <li style="float: left"><span class="shortFormTitleFieldsWithoutFloat">RTT Wait</span>
                             <span class="formFieldControl">
-                                <asp:DropDownList ID="RTTWaitDropDown" runat="server" CssClass="defaultDropDown"
+                                <asp:DropDownList ID="ValidationRTTWaitDropDown" runat="server" CssClass="defaultDropDown"
                                     AutoPostBack="True" OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </span></li>
