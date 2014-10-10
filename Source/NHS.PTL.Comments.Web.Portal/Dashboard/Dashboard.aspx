@@ -23,14 +23,13 @@
             <ul class="formSection noBottonBorders noPadding clearNoMargin">
                 <li style="float: left;"><span class="shortFormTitleFieldsWithoutFloat" style="display:inline;float:left">RTT Wait</span>
                     <div style="width:650px">
-                    <span class="formFieldControl">
+                    <span class="formFieldControl clearNoMargin noPaddingOverride">
                         <asp:CheckBoxList ID="RTTWaitDropDown" 
-                        RepeatColumns=6
+                        RepeatColumns="5"
                         RepeatDirection="Horizontal"
                         AutoPostBack="True"
                         CellPadding="20"
-                        CellSpacing="50"
-                        RepeatLayout="Flow"
+                        CellSpacing="20"
                         TextAlign="Right"
                         OnSelectedIndexChanged="RTTWaitDropDown_SelectedIndexChanged" runat="server">
                         </asp:CheckBoxList>

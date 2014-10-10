@@ -586,7 +586,7 @@ div.accountInfoCentered
 .clearNoMargin
 {
     clear: both;
-    margin: 0px;
+    margin: 0px !important;
 }
 
 .noMarginOverride
@@ -876,7 +876,7 @@ input[type=text], input[type=password], textarea, select
     width: 200px;
 }
 
-#caption, #MainContent_RTTWaitDropDown label
+#caption
 {
    font-weight: normal !important;
 }
@@ -888,14 +888,20 @@ input[type=text], input[type=password], textarea, select
 
 #MainContent_RTTWaitDropDown label
 {
-    margin-right:20px !important;
+    /*margin-right:20px !important;*/
 }
 
 
 #MainContent_RTTWaitDropDown
 {
-    width:500px;    
+    width:400px;    
 }
+
+#MainContent_RTTWaitDropDown td
+{
+    padding-bottom:5px;    
+}
+
 
 .has-popup 
 {
