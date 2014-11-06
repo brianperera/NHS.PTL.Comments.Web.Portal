@@ -390,7 +390,7 @@ div.NHS_name
 .navigationBarItems
 {
     float: left;
-    display:none;
+/*    display:none;*/
 }
 
 .navigationBar a
