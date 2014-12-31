@@ -38,14 +38,129 @@ namespace Nhs.Ptl.Comments.DataAccess
                         command.CommandType = commandType;
                         command.CommandText = "SelectAllPtlReferrals";
 
-                        if(commandType == CommandType.StoredProcedure)
+                        if (commandType == CommandType.StoredProcedure)
                         {
                             command.CommandText = "SelectAllPtlReferrals";
                         }
                         else if (commandType == CommandType.Text)
                         {
-                            command.CommandText = "SELECT * FROM OP_Referral_PTL";   
+                            command.CommandText = "SELECT * FROM OP_Referral_PTL";
                         }
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                opReferrals = new List<OpReferral>();
+                                OpReferral opRefferal;
+
+                                while (reader.Read())
+                                {
+                                    opRefferal = new OpReferral();
+
+                                    opRefferal.UniqueCdsRowIdentifier = reader["UniqueCDSRowIdentifier"].ToString();
+                                    opRefferal.LocalPatientID = reader["LocalPatientID"].ToString();
+                                    opRefferal.NhsNumber = reader["NHSNumber"].ToString();
+                                    opRefferal.PatientForename = reader["PatientForename"].ToString();
+                                    opRefferal.PatientSurname = reader["PatientSurname"].ToString();
+                                    opRefferal.SpecName = reader["SpecName"].ToString();
+                                    opRefferal.NewDivision = reader["NewDivision"].ToString();
+                                    opRefferal.Consultant = reader["Consultant"].ToString();
+                                    opRefferal.SourceOfReferralText = reader["SourceOfReferralText"].ToString();
+                                    opRefferal.PriorityType = reader["PriorityType"].ToString();
+                                    opRefferal.AttStatus = reader["AttStatus"].ToString();
+                                    opRefferal.RttText = reader["RTTText"].ToString();
+                                    opRefferal.WaitingListStatus = reader["WaitingListStatus"].ToString();
+                                    opRefferal.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
+                                    opRefferal.Spec = reader["Spec"].ToString();
+                                    opRefferal.RttStatus = reader["RTTStatus"].ToString();
+                                    opRefferal.WeekswaitGrouped = reader["WeekswaitGrouped"].ToString();
+
+                                    int tempInt = 0;
+                                    int.TryParse(reader["WaitAtFutureClinicDate"].ToString(), out tempInt);
+                                    opRefferal.WaitAtFutureClinicDate = tempInt;
+
+                                    DateTime tempDateTime = DateTime.MinValue;
+
+                                    DateTime.TryParse(reader["DateOfBirth"].ToString(), out tempDateTime);
+                                    //DateTime.TryParse(reader["DateOfBirth"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    opRefferal.DateOfBirth = tempDateTime;
+
+                                    DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), out tempDateTime);
+                                    //DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    opRefferal.ReferralRequestReceivedDate = tempDateTime;
+
+                                    DateTime.TryParse(reader["RTTBreachDate"].ToString(), out tempDateTime);
+                                    //DateTime.TryParse(reader["RTTBreachDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    opRefferal.RttBreachDate = tempDateTime;
+
+                                    DateTime.TryParse(reader["RTTClockStart"].ToString(), out tempDateTime);
+                                    //DateTime.TryParse(reader["RTTClockStart"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    opRefferal.RttClockStart = tempDateTime;
+
+                                    // TODO: we might want to change below code when we get the acTual schema.
+                                    // SQL server exported below fields as NVARCHAR, not DATETIME                                                                       
+
+                                    //DateTime.TryParse(reader["AttendanceDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    DateTime.TryParse(reader["AttendanceDate"].ToString(), out tempDateTime);
+                                    opRefferal.AttendanceDate = tempDateTime;
+
+                                    //DateTime.TryParse(reader["FutureClinicDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                                    DateTime.TryParse(reader["FutureClinicDate"].ToString(), out tempDateTime);
+                                    opRefferal.FutureClinicDate = tempDateTime;
+
+                                    opReferrals.Add(opRefferal);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return opReferrals;
+        }
+
+        public IList<OpReferral> GetOpReferralByParams(string patientForename,
+                                                        string patientSurname,
+                                                        string pathwayId,
+                                                        string nhsNumber,
+                                                        string localPatientId)
+        {
+            IList<OpReferral> opReferrals = null;
+
+            try
+            {
+                using (SqlConnection connection = GetConnection(true))
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = "SELECT * FROM OP_Referral_PTL" 
+                                                + "WHERE PatientForename = @patientFoername"
+                                                + " OR PatientSurname = @patientSurname"
+                                                + " OR PatientPathwayIdentifier = @pathwayId"
+                                                + " OR NHSNumber = @nhsNumber"
+                                                + " OR LocalPatientID = @localPatientId";
+
+                        command.Parameters.AddWithValue("@patientFoername", patientForename);
+                        command.Parameters.AddWithValue("@patientSurname", patientSurname);
+                        command.Parameters.AddWithValue("@pathwayId", pathwayId);
+                        command.Parameters.AddWithValue("@nhsNumber", nhsNumber);
+                        command.Parameters.AddWithValue("@localPatientId", localPatientId);
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -186,7 +301,7 @@ namespace Nhs.Ptl.Comments.DataAccess
             }
             catch (SqlException ex)
             {
-                throw ex;                
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -379,7 +494,7 @@ namespace Nhs.Ptl.Comments.DataAccess
             }
             catch (SqlException ex)
             {
-                throw ex;              
+                throw ex;
             }
             catch (Exception ex)
             {

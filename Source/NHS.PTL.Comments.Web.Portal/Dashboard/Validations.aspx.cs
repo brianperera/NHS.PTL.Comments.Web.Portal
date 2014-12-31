@@ -57,6 +57,21 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        public string FutureApptStatus
+        {
+            get
+            {
+                string futureApptStatus = string.Empty;
+
+                if (!string.IsNullOrEmpty(Request.QueryString["futureAppt"]))
+                {
+                    futureApptStatus = Request.QueryString["futureAppt"];
+                }
+
+                return futureApptStatus;
+            }
+        }
+
         public List<string> RttWait
         {
             get
@@ -93,40 +108,14 @@ namespace Nhs.Ptl.Comments.Web
                     PopulateFutureApptStatusDropDown();
                     InsertDropdownDefaultValue();
                     RefineDatesInOpReferrals(opReferrals);
-                    
+
+                    QueryStringBasedDropdownItemSelection();
+
                     this.gvMain.DataSource = opReferrals;
                     this.gvMain.DataBind();
                 }
 
             }
-        }
-
-        private IList<OpReferral> QueryStringBasedFiltering(IList<OpReferral> opReferrals)
-        {
-            if (!string.IsNullOrEmpty(SpecialtyType))
-            {
-                opReferrals = opReferrals.Where(x => string.Equals(x.SpecName, SpecialtyType)).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(Status))
-            {
-                if (Status == "Blank Status")
-                    opReferrals = opReferrals.Where(x => string.Equals(x.Status, "")).ToList();
-                else
-                    opReferrals = opReferrals.Where(x => string.Equals(x.Status, Status)).ToList();
-            }
-
-            if (RttWait.Count > 0)
-            {
-                opReferrals = opReferrals.Where(x => RttWait.Contains(x.WeekswaitGrouped)).ToList();
-            }
-
-            if (IsFiltered)
-            {
-                isQueryStringFiltering.Value = "true";
-            }
-
-            return opReferrals;
         }
 
         private DateTime? ConvertDefaultDateTimeToNullConverter(DateTime? currentDateTime)
@@ -503,8 +492,6 @@ namespace Nhs.Ptl.Comments.Web
 
         #region Private Methods
 
-
-
         /// <summary>
         /// Populate Status dropdown
         /// </summary>
@@ -563,7 +550,7 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                ListItem defaultItem = new ListItem(ConfigurationManager.AppSettings["DropDownAllText"]);
+
 
                 // This is just to avoid checking one by one :)
                 List<DropDownList> dropDownLists = new List<DropDownList>() 
@@ -578,6 +565,10 @@ namespace Nhs.Ptl.Comments.Web
 
                 foreach (DropDownList ddl in dropDownLists)
                 {
+                    // Create a new list item for each dropdown. 
+                    // Otherwise an error would throw - Cannot have multiple items selected in a DropDownList
+                    ListItem defaultItem = new ListItem(ConfigurationManager.AppSettings["DropDownAllText"]);
+
                     if (!ddl.Items.Contains(defaultItem))
                     {
                         ddl.Items.Insert(0, defaultItem);
@@ -758,8 +749,17 @@ namespace Nhs.Ptl.Comments.Web
         private void PopulateFutureApptStatusDropDown()
         {
             //TODO: Need to move to config file
-            FutureApptStatusDropDownList.DataSource = Utility.Utility.FutureApptStatusList;
-            FutureApptStatusDropDownList.DataBind();
+            if (!string.IsNullOrEmpty(FutureApptStatus) && 
+                !FutureApptStatus.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
+            {
+                FutureApptStatusDropDownList.Items.Add(new ListItem(FutureApptStatus));
+            }
+            else
+            {
+                FutureApptStatusDropDownList.DataSource = Utility.Utility.FutureApptStatusList;
+                FutureApptStatusDropDownList.DataBind();
+            }
+
         }
 
         private void RefineDatesInOpReferrals(IList<OpReferral> opReferrals)
@@ -788,7 +788,7 @@ namespace Nhs.Ptl.Comments.Web
                 item.RttBreachDate = this.ConvertDefaultDateTimeToNullConverter(item.RttBreachDate);
                 item.AttendanceDate = this.ConvertDefaultDateTimeToNullConverter(item.AttendanceDate);
                 // Can't do this since FutureClinicDate is a key
-                //item.FutureClinicDate = this.ConvertDefaultDateTimeToNullConverter(item.FutureClinicDate); ;
+                //item.FutureClinicDate = this.ConvertDefaultDateTimeToNullConverter(item.FutureClinicDate);
             }
         }
 
@@ -807,7 +807,7 @@ namespace Nhs.Ptl.Comments.Web
                 this.gvMain.DataSource = opReferrals;
                 this.gvMain.DataBind();
             }
-                        
+
             FileExporter.ExportToExcel(GenerateDataTableForExport(), this.Page.Response, "StatusSummary.xls");
         }
 
@@ -816,7 +816,7 @@ namespace Nhs.Ptl.Comments.Web
             gvMain.AllowPaging = false;
             gvMain.DataBind();
 
-            DataTable dataTable = new DataTable();            
+            DataTable dataTable = new DataTable();
             foreach (DataControlField item in gvMain.Columns)
             {
                 dataTable.Columns.Add(new DataColumn(item.HeaderText, typeof(string)));
@@ -825,9 +825,9 @@ namespace Nhs.Ptl.Comments.Web
             foreach (GridViewRow gridViewRow in gvMain.Rows)
             {
                 DataRow dataRow = dataTable.NewRow();
-                
+
                 for (int i = 0; i < gridViewRow.Cells.Count; i++)
-			    {
+                {
                     if (i == 0)
                     {
                         LinkButton linkButton = gridViewRow.FindControl("rowLink") as LinkButton;
@@ -837,7 +837,7 @@ namespace Nhs.Ptl.Comments.Web
                     {
                         dataRow[i] = gridViewRow.Cells[i].Text.ToString();
                     }
-			    }
+                }
 
                 dataTable.Rows.Add(dataRow);
                 gvMain.DataBind();
@@ -848,6 +848,85 @@ namespace Nhs.Ptl.Comments.Web
             return dataTable;
         }
 
+        private IList<OpReferral> QueryStringBasedFiltering(IList<OpReferral> opReferrals)
+        {
+            if (!string.IsNullOrEmpty(SpecialtyType))
+            {
+                opReferrals = opReferrals.Where(x => string.Equals(x.SpecName, SpecialtyType)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(Status))
+            {
+                if (Status == "Blank Status")
+                    opReferrals = opReferrals.Where(x => string.Equals(x.Status, "")).ToList();
+                else
+                    opReferrals = opReferrals.Where(x => string.Equals(x.Status, Status)).ToList();
+            }
+
+            if (RttWait.Count > 0)
+            {
+                opReferrals = opReferrals.Where(x => RttWait.Contains(x.WeekswaitGrouped)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(FutureApptStatus))
+            {
+                opReferrals = FilterRecordsByFutureApptStatus(opReferrals, FutureApptStatus);
+            }
+
+            if (IsFiltered)
+            {
+                isQueryStringFiltering.Value = "true";
+            }
+
+            return opReferrals;
+        }
+
+        private void QueryStringBasedDropdownItemSelection()
+        {
+            // If only a single items gets into the dropdown, there will be 2 items altogether.
+            // Filtered list item and the 'All' list item
+            if (!string.IsNullOrEmpty(SpecialtyType) && specialityDropdown.Items.Count == 2)
+            {
+                specialityDropdown.SelectedIndex = 1; // 'All' is index 0
+            }
+
+            if (!string.IsNullOrEmpty(Status) && statusDropdown.Items.Count == 2)
+            {
+                statusDropdown.SelectedIndex = 1;
+            }
+
+            if (RttWait.Count > 0 && ValidationRTTWaitDropDown.Items.Count == 2)
+            {
+                ValidationRTTWaitDropDown.SelectedIndex = 1;
+            }
+
+            if (!string.IsNullOrEmpty(FutureApptStatus) && FutureApptStatusDropDownList.Items.Count == 2)
+            {
+                FutureApptStatusDropDownList.SelectedIndex = 1;
+            }
+        }
+
+        private IList<OpReferral> FilterRecordsByFutureApptStatus(IList<OpReferral> oref, string futureAppStatus)
+        {
+            IList<OpReferral> filtered = null;
+
+            if (null != oref)
+            {
+                if (!futureAppStatus.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                {
+                    if (string.Equals(futureAppStatus, Constants.NoDate))
+                        filtered = oref.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                    else
+                        filtered = oref.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                }
+                else
+                {
+                    filtered = oref;
+                }
+            }
+
+            return filtered;
+        }
 
         #endregion
     }

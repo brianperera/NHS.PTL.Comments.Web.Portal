@@ -198,7 +198,15 @@ namespace Nhs.Ptl.Comments.Web
                 {
                     // Insert a real hyperlink into Cells[1] using HyperLinkValue.
                     HyperLink myLink = new HyperLink();
-                    myLink.NavigateUrl = "Validations.aspx?specialty=" + e.Row.Cells[0].Text + "&status=" + headerList[i] + "&rttwait=" + RTTWaitString + "&isFiltered=true";
+                    myLink.NavigateUrl = "Validations.aspx?specialty=" 
+                        + e.Row.Cells[0].Text 
+                        + "&status=" 
+                        + headerList[i] 
+                        + "&rttwait=" 
+                        + RTTWaitString 
+                        + "&isFiltered=true"
+                        + "&futureAppt="
+                        + FutureApptStatusDropDownList.SelectedItem.Text;
                     myLink.Text = e.Row.Cells[i].Text;
                     // then add the control to the cell.
                     e.Row.Cells[i].Controls.Add(myLink);
