@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using Nhs.Ptl.Comments.Contracts.Dto;
 using System.Data;
 using System.Globalization;
+using System.Configuration;
 
 /// <summary>
 /// Summary description for PtlCommentsDA
@@ -129,11 +130,9 @@ namespace Nhs.Ptl.Comments.DataAccess
             return opReferrals;
         }
 
-        public IList<OpReferral> GetOpReferralByParams(string patientForename,
-                                                        string patientSurname,
-                                                        string pathwayId,
-                                                        string nhsNumber,
-                                                        string localPatientId)
+        public IList<OpReferral> GetOpReferralByParams(string specialty,
+                                                    IList<string> rttWait,
+                                                    string futureAppStatus)
         {
             IList<OpReferral> opReferrals = null;
 
@@ -149,18 +148,45 @@ namespace Nhs.Ptl.Comments.DataAccess
                     using (SqlCommand command = connection.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
-                        command.CommandText = "SELECT * FROM OP_Referral_PTL" 
-                                                + "WHERE PatientForename = @patientFoername"
-                                                + " OR PatientSurname = @patientSurname"
-                                                + " OR PatientPathwayIdentifier = @pathwayId"
-                                                + " OR NHSNumber = @nhsNumber"
-                                                + " OR LocalPatientID = @localPatientId";
 
-                        command.Parameters.AddWithValue("@patientFoername", patientForename);
-                        command.Parameters.AddWithValue("@patientSurname", patientSurname);
-                        command.Parameters.AddWithValue("@pathwayId", pathwayId);
-                        command.Parameters.AddWithValue("@nhsNumber", nhsNumber);
-                        command.Parameters.AddWithValue("@localPatientId", localPatientId);
+                        // Speciality filter
+                        command.CommandText = "SELECT * FROM OP_Referral_PTL"
+                                                + " WHERE SpecName = '"
+                                                + specialty 
+                                                + "'";
+                        
+                        // WeekswaitGrouped filter
+                        if (rttWait.Count > 0)
+                        {
+                            command.CommandText += " AND ( WeekswaitGrouped ='" + rttWait[0] + "'";
+
+                            foreach (string wait in rttWait)
+                            {
+                                // Ignoring the 1st element since it's aready appended
+                                if (wait.Equals(rttWait[0], StringComparison.OrdinalIgnoreCase))
+                                {
+                                    continue;
+                                }
+
+                                command.CommandText += " OR WeekswaitGrouped = '" + wait + "'";
+                            }
+
+                            command.CommandText += " )";
+                        }
+                        
+
+                        if (!futureAppStatus.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (futureAppStatus.Equals(Constants.NoDate, StringComparison.OrdinalIgnoreCase))
+                            {
+                                command.CommandText += " AND FutureClinicDate IS NULL";
+                            }
+                            else
+                            {
+                                command.CommandText += " AND FutureClinicDate IS NOT NULL";
+                            }
+                            
+                        }
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {

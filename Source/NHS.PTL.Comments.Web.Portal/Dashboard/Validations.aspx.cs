@@ -93,10 +93,10 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!this.IsPostBack)
             {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+                IList<OpReferral> opReferrals = GetReferralData();
 
                 //Apply filters based on the query string paramenters
-                opReferrals = QueryStringBasedFiltering(opReferrals);
+                //opReferrals = QueryStringBasedFiltering(opReferrals);
 
                 if (null != opReferrals)
                 {
@@ -116,15 +116,7 @@ namespace Nhs.Ptl.Comments.Web
                 }
 
             }
-        }
-
-        private DateTime? ConvertDefaultDateTimeToNullConverter(DateTime? currentDateTime)
-        {
-            if (string.Equals(currentDateTime.Value, DateTime.MinValue))
-                return null;
-            else
-                return currentDateTime;
-        }
+        }        
 
         protected void searchButton_Click(object sender, EventArgs e)
         {
@@ -482,7 +474,8 @@ namespace Nhs.Ptl.Comments.Web
                 IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
 
                 //Apply filters based on the query string paramenters
-                opReferrals = QueryStringBasedFiltering(opReferrals);
+                //opReferrals = QueryStringBasedFiltering(opReferrals);
+                opReferrals = GetReferralData();
                 this.gvMain.DataSource = opReferrals;
                 this.gvMain.DataBind();
             }
@@ -730,7 +723,7 @@ namespace Nhs.Ptl.Comments.Web
         /// </summary>
         private void ResetControls()
         {
-            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+            IList<OpReferral> opReferrals = GetReferralData();
 
             if (null != opReferrals)
             {
@@ -803,7 +796,8 @@ namespace Nhs.Ptl.Comments.Web
             else
             {
                 //Apply filters based on the query string paramenters
-                opReferrals = QueryStringBasedFiltering(opReferrals);
+                //opReferrals = QueryStringBasedFiltering(opReferrals);
+                opReferrals = GetReferralData();
                 this.gvMain.DataSource = opReferrals;
                 this.gvMain.DataBind();
             }
@@ -848,12 +842,14 @@ namespace Nhs.Ptl.Comments.Web
             return dataTable;
         }
 
-        private IList<OpReferral> QueryStringBasedFiltering(IList<OpReferral> opReferrals)
+        private IList<OpReferral> QueryStringBasedFiltering()
         {
-            if (!string.IsNullOrEmpty(SpecialtyType))
-            {
-                opReferrals = opReferrals.Where(x => string.Equals(x.SpecName, SpecialtyType)).ToList();
-            }
+            IList<OpReferral> opReferrals = CommentsManager.GetOpReferralsByParams(SpecialtyType, RttWait, FutureApptStatus);
+
+            //if (!string.IsNullOrEmpty(SpecialtyType))
+            //{
+            //    opReferrals = opReferrals.Where(x => string.Equals(x.SpecName, SpecialtyType)).ToList();
+            //}
 
             if (!string.IsNullOrEmpty(Status))
             {
@@ -863,15 +859,15 @@ namespace Nhs.Ptl.Comments.Web
                     opReferrals = opReferrals.Where(x => string.Equals(x.Status, Status)).ToList();
             }
 
-            if (RttWait.Count > 0)
-            {
-                opReferrals = opReferrals.Where(x => RttWait.Contains(x.WeekswaitGrouped)).ToList();
-            }
+            //if (RttWait.Count > 0)
+            //{
+            //    opReferrals = opReferrals.Where(x => RttWait.Contains(x.WeekswaitGrouped)).ToList();
+            //}
 
-            if (!string.IsNullOrEmpty(FutureApptStatus))
-            {
-                opReferrals = FilterRecordsByFutureApptStatus(opReferrals, FutureApptStatus);
-            }
+            //if (!string.IsNullOrEmpty(FutureApptStatus))
+            //{
+            //    opReferrals = FilterRecordsByFutureApptStatus(opReferrals, FutureApptStatus);
+            //}
 
             if (IsFiltered)
             {
@@ -926,6 +922,26 @@ namespace Nhs.Ptl.Comments.Web
             }
 
             return filtered;
+        }
+
+        private IList<OpReferral> GetReferralData()
+        {
+            if (!string.IsNullOrEmpty(Request.QueryString["Specialty"]))
+            {
+                return QueryStringBasedFiltering();
+            }
+            else
+            {
+                return CommentsManager.GetAllOpReferrals();
+            }
+        }
+
+        private DateTime? ConvertDefaultDateTimeToNullConverter(DateTime? currentDateTime)
+        {
+            if (string.Equals(currentDateTime.Value, DateTime.MinValue))
+                return null;
+            else
+                return currentDateTime;
         }
 
         #endregion

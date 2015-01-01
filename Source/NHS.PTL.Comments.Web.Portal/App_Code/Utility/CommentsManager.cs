@@ -36,6 +36,12 @@ namespace Nhs.Ptl.Comments.Utility
             //return ptlCommentsData.GetAllOpReferrals(CommandType.Text);
         }
 
+        public static IList<OpReferral> GetOpReferralsByParams(string speciality, IList<string> rttWait, string futureApptStatus)
+        {
+            PtlCommentsDA ptlCommentsDate = new PtlCommentsDA();
+            return GetStatusForReferral(ptlCommentsDate.GetOpReferralByParams(speciality, rttWait, futureApptStatus), GetAllPtlComments());
+        }
+
         public static IList<PtlComment> GetAllPtlComments()
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
