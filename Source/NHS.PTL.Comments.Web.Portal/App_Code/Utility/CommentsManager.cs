@@ -42,6 +42,29 @@ namespace Nhs.Ptl.Comments.Utility
             return GetStatusForReferral(ptlCommentsDate.GetOpReferralByParams(speciality, rttWait, futureApptStatus), GetAllPtlComments());
         }
 
+        public static IList<OpReferral> GetOpReferralsByParams(string searchText,
+                                                        string specialty,
+                                                        string consultant,
+                                                        string rttWait,
+                                                        string attStatus,
+                                                        string futureApptStatus)
+        {
+            PtlCommentsDA ptlCommentsDate = new PtlCommentsDA();
+            return GetStatusForReferral(ptlCommentsDate.GetOpReferralByParams(searchText, 
+                                                                                specialty, 
+                                                                                consultant, 
+                                                                                rttWait, 
+                                                                                attStatus, 
+                                                                                futureApptStatus), 
+                                                                                GetAllPtlComments());
+        }
+        
+        public static IList<OpReferral> GetOpReferralByFieldName(string fieldName, string consultant)
+        {
+            PtlCommentsDA ptlCommentsDate = new PtlCommentsDA();
+            return GetStatusForReferral(ptlCommentsDate.GetOpReferralByFieldName( fieldName, consultant), GetAllPtlComments());
+        }      
+
         public static IList<PtlComment> GetAllPtlComments()
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();

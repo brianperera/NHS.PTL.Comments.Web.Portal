@@ -116,7 +116,7 @@ namespace Nhs.Ptl.Comments.Web
                 }
 
             }
-        }        
+        }
 
         protected void searchButton_Click(object sender, EventArgs e)
         {
@@ -160,12 +160,12 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!specialityDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.SpecialtyFieldName, specialityDropdown.SelectedItem.Text);
 
-                if (null != opReferrals)
+                if (null != filtered)
                 {
 
-                    IList<OpReferral> filtered = opReferrals.Where(x => x.SpecName == specialityDropdown.SelectedItem.Text).ToList();
+                    //IList<OpReferral> filtered = opReferrals.Where(x => x.SpecName == specialityDropdown.SelectedItem.Text).ToList();
 
                     if (null != filtered)
                     {
@@ -207,13 +207,10 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!consultantDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.ConsultantFieldName, consultantDropdown.SelectedItem.Text);
 
-                if (null != opReferrals)
-                {
-
-                    IList<OpReferral> filtered = opReferrals.Where(x => x.Consultant == consultantDropdown.SelectedItem.Text).ToList();
-
+                if (null != filtered)
+                {                    
                     if (null != filtered)
                     {
                         // Save current selected values
@@ -249,6 +246,7 @@ namespace Nhs.Ptl.Comments.Web
             }
         }
 
+        // TODO: Problem here.
         protected void statusDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!statusDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
@@ -299,12 +297,12 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!ValidationRTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.WeekswaitGroupedFieldName, 
+                                                                                    ValidationRTTWaitDropDown.SelectedItem.Text);
 
-                if (null != opReferrals)
+                if (null != filtered)
                 {
-
-                    IList<OpReferral> filtered = opReferrals.Where(x => x.WeekswaitGrouped == ValidationRTTWaitDropDown.SelectedItem.Text).ToList();
+                    //IList<OpReferral> filtered = opReferrals.Where(x => x.WeekswaitGrouped == ValidationRTTWaitDropDown.SelectedItem.Text).ToList();
 
                     if (null != filtered)
                     {
@@ -345,12 +343,12 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!AttendanceStatusDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.AttStatusFieldName, AttendanceStatusDropDown.SelectedItem.Text);
 
-                if (null != opReferrals)
+                if (null != filtered)
                 {
 
-                    IList<OpReferral> filtered = opReferrals.Where(x => x.AttStatus == AttendanceStatusDropDown.SelectedItem.Text).ToList();
+                    //IList<OpReferral> filtered = opReferrals.Where(x => x.AttStatus == AttendanceStatusDropDown.SelectedItem.Text).ToList();
 
                     if (null != filtered)
                     {
@@ -391,17 +389,18 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!FutureApptStatusDropDownList.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.FutureClinicDateFieldName, 
+                                                                    FutureApptStatusDropDownList.SelectedItem.Text);
 
-                if (null != opReferrals)
+                if (null != filtered)
                 {
                     string mainFilterCriteria = FutureApptStatusDropDownList.SelectedItem.Text;
-                    IList<OpReferral> filtered;
+                    //IList<OpReferral> filtered;
 
                     if (string.Equals(mainFilterCriteria, Constants.NoDate))
-                        filtered = opReferrals.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                        filtered = filtered.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
                     else
-                        filtered = opReferrals.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                        filtered = filtered.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
 
 
                     if (null != filtered)
@@ -471,11 +470,11 @@ namespace Nhs.Ptl.Comments.Web
             }
             else
             {
-                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+                //IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
 
                 //Apply filters based on the query string paramenters
                 //opReferrals = QueryStringBasedFiltering(opReferrals);
-                opReferrals = GetReferralData();
+                IList<OpReferral>  opReferrals = GetReferralData();
                 this.gvMain.DataSource = opReferrals;
                 this.gvMain.DataBind();
             }
@@ -576,35 +575,41 @@ namespace Nhs.Ptl.Comments.Web
         private void FilterGrid()
         {
             // Get all PTL comments
-            List<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals().ToList();
+            //List<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals().ToList();
 
+            IList<OpReferral> opReferrals = CommentsManager.GetOpReferralsByParams(patientTextbox.Text,
+                                                                                    specialityDropdown.SelectedValue,
+                                                                                    consultantDropdown.SelectedValue,
+                                                                                    ValidationRTTWaitDropDown.SelectedValue,
+                                                                                    AttendanceStatusDropDown.SelectedValue,
+                                                                                    FutureApptStatusDropDownList.SelectedValue);
             // Filter data
             if (null != opReferrals)
             {
                 // Filter by patient name
-                if (!string.IsNullOrEmpty(patientTextbox.Text))
-                {
-                    opReferrals = opReferrals.Where(comment => (comment.PatientForename.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                                                            || comment.PatientSurname.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
-                                                            || comment.PatientPathwayIdentifier.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                                                            || comment.NhsNumber.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                                                            || comment.LocalPatientID.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                }
+                //if (!string.IsNullOrEmpty(patientTextbox.Text))
+                //{
+                //    opReferrals = opReferrals.Where(comment => (comment.PatientForename.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                //                                            || comment.PatientSurname.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                //                                            || comment.PatientPathwayIdentifier.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                //                                            || comment.NhsNumber.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                //                                            || comment.LocalPatientID.IndexOf(patientTextbox.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                //}
 
                 // Filter by Speciality
                 if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["DropDownAllText"]))
                 {
                     // Filter by Speciality
-                    if (!specialityDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
-                    {
-                        opReferrals = opReferrals.Where(comment => comment.SpecName.Equals(specialityDropdown.SelectedValue)).ToList();
-                    }
+                    //if (!specialityDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    //{
+                    //    opReferrals = opReferrals.Where(comment => comment.SpecName.Equals(specialityDropdown.SelectedValue)).ToList();
+                    //}
 
                     // Filter by Consultant
-                    if (!consultantDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
-                    {
-                        opReferrals = opReferrals.Where(comment => comment.Consultant.Equals(consultantDropdown.SelectedValue)).ToList();
-                    }
+                    //if (!consultantDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    //{
+                    //    opReferrals = opReferrals.Where(comment => comment.Consultant.Equals(consultantDropdown.SelectedValue)).ToList();
+                    //}
 
                     // Filter by Status
                     if (!statusDropdown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
@@ -623,27 +628,27 @@ namespace Nhs.Ptl.Comments.Web
                     }
 
                     // Filter by RTT Wait
-                    if (!ValidationRTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
-                    {
-                        opReferrals = opReferrals.Where(comment => comment.WeekswaitGrouped.Equals(ValidationRTTWaitDropDown.SelectedValue)).ToList();
-                    }
+                    //if (!ValidationRTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    //{
+                    //    opReferrals = opReferrals.Where(comment => comment.WeekswaitGrouped.Equals(ValidationRTTWaitDropDown.SelectedValue)).ToList();
+                    //}
 
                     // Filter by AttStatus
-                    if (!AttendanceStatusDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
-                    {
-                        opReferrals = opReferrals.Where(comment => comment.AttStatus.Equals(AttendanceStatusDropDown.SelectedValue)).ToList();
-                    }
+                    //if (!AttendanceStatusDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    //{
+                    //    opReferrals = opReferrals.Where(comment => comment.AttStatus.Equals(AttendanceStatusDropDown.SelectedValue)).ToList();
+                    //}
 
                     // Filter by Future Appt Status
-                    if (!FutureApptStatusDropDownList.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
-                    {
-                        string mainFilterCriteria = FutureApptStatusDropDownList.SelectedItem.Text;
+                    //if (!FutureApptStatusDropDownList.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
+                    //{
+                    //    string mainFilterCriteria = FutureApptStatusDropDownList.SelectedItem.Text;
 
-                        if (string.Equals(mainFilterCriteria, Constants.NoDate))
-                            opReferrals = opReferrals.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
-                        else
-                            opReferrals = opReferrals.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
-                    }
+                    //    if (string.Equals(mainFilterCriteria, Constants.NoDate))
+                    //        opReferrals = opReferrals.Where(x => x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                    //    else
+                    //        opReferrals = opReferrals.Where(x => !x.FutureClinicDate.ToString().Equals("01/01/0001 00:00:00")).ToList();
+                    //}
                 }
 
 
@@ -742,7 +747,7 @@ namespace Nhs.Ptl.Comments.Web
         private void PopulateFutureApptStatusDropDown()
         {
             //TODO: Need to move to config file
-            if (!string.IsNullOrEmpty(FutureApptStatus) && 
+            if (!string.IsNullOrEmpty(FutureApptStatus) &&
                 !FutureApptStatus.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
             {
                 FutureApptStatusDropDownList.Items.Add(new ListItem(FutureApptStatus));
@@ -787,7 +792,7 @@ namespace Nhs.Ptl.Comments.Web
 
         protected void exportButton_Click(object sender, EventArgs e)
         {
-            IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
+            //IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals();
 
             if (isQueryStringFiltering.Value != "true")
             {
@@ -797,7 +802,7 @@ namespace Nhs.Ptl.Comments.Web
             {
                 //Apply filters based on the query string paramenters
                 //opReferrals = QueryStringBasedFiltering(opReferrals);
-                opReferrals = GetReferralData();
+                IList<OpReferral>  opReferrals = GetReferralData();
                 this.gvMain.DataSource = opReferrals;
                 this.gvMain.DataBind();
             }

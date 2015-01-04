@@ -53,64 +53,13 @@ namespace Nhs.Ptl.Comments.DataAccess
                             if (reader.HasRows)
                             {
                                 opReferrals = new List<OpReferral>();
-                                OpReferral opRefferal;
+                                OpReferral opReferral;
 
                                 while (reader.Read())
                                 {
-                                    opRefferal = new OpReferral();
+                                    opReferral = FillOpReferral(reader);
 
-                                    opRefferal.UniqueCdsRowIdentifier = reader["UniqueCDSRowIdentifier"].ToString();
-                                    opRefferal.LocalPatientID = reader["LocalPatientID"].ToString();
-                                    opRefferal.NhsNumber = reader["NHSNumber"].ToString();
-                                    opRefferal.PatientForename = reader["PatientForename"].ToString();
-                                    opRefferal.PatientSurname = reader["PatientSurname"].ToString();
-                                    opRefferal.SpecName = reader["SpecName"].ToString();
-                                    opRefferal.NewDivision = reader["NewDivision"].ToString();
-                                    opRefferal.Consultant = reader["Consultant"].ToString();
-                                    opRefferal.SourceOfReferralText = reader["SourceOfReferralText"].ToString();
-                                    opRefferal.PriorityType = reader["PriorityType"].ToString();
-                                    opRefferal.AttStatus = reader["AttStatus"].ToString();
-                                    opRefferal.RttText = reader["RTTText"].ToString();
-                                    opRefferal.WaitingListStatus = reader["WaitingListStatus"].ToString();
-                                    opRefferal.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
-                                    opRefferal.Spec = reader["Spec"].ToString();
-                                    opRefferal.RttStatus = reader["RTTStatus"].ToString();
-                                    opRefferal.WeekswaitGrouped = reader["WeekswaitGrouped"].ToString();
-
-                                    int tempInt = 0;
-                                    int.TryParse(reader["WaitAtFutureClinicDate"].ToString(), out tempInt);
-                                    opRefferal.WaitAtFutureClinicDate = tempInt;
-
-                                    DateTime tempDateTime = DateTime.MinValue;
-
-                                    DateTime.TryParse(reader["DateOfBirth"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["DateOfBirth"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.DateOfBirth = tempDateTime;
-
-                                    DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.ReferralRequestReceivedDate = tempDateTime;
-
-                                    DateTime.TryParse(reader["RTTBreachDate"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["RTTBreachDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.RttBreachDate = tempDateTime;
-
-                                    DateTime.TryParse(reader["RTTClockStart"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["RTTClockStart"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.RttClockStart = tempDateTime;
-
-                                    // TODO: we might want to change below code when we get the acTual schema.
-                                    // SQL server exported below fields as NVARCHAR, not DATETIME                                                                       
-
-                                    //DateTime.TryParse(reader["AttendanceDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    DateTime.TryParse(reader["AttendanceDate"].ToString(), out tempDateTime);
-                                    opRefferal.AttendanceDate = tempDateTime;
-
-                                    //DateTime.TryParse(reader["FutureClinicDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    DateTime.TryParse(reader["FutureClinicDate"].ToString(), out tempDateTime);
-                                    opRefferal.FutureClinicDate = tempDateTime;
-
-                                    opReferrals.Add(opRefferal);
+                                    opReferrals.Add(opReferral);
 
                                 }
                             }
@@ -152,9 +101,9 @@ namespace Nhs.Ptl.Comments.DataAccess
                         // Speciality filter
                         command.CommandText = "SELECT * FROM OP_Referral_PTL"
                                                 + " WHERE SpecName = '"
-                                                + specialty 
+                                                + specialty
                                                 + "'";
-                        
+
                         // WeekswaitGrouped filter
                         if (rttWait.Count > 0)
                         {
@@ -173,7 +122,7 @@ namespace Nhs.Ptl.Comments.DataAccess
 
                             command.CommandText += " )";
                         }
-                        
+
 
                         if (!futureAppStatus.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
                         {
@@ -185,7 +134,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                             {
                                 command.CommandText += " AND FutureClinicDate IS NOT NULL";
                             }
-                            
+
                         }
 
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -193,64 +142,13 @@ namespace Nhs.Ptl.Comments.DataAccess
                             if (reader.HasRows)
                             {
                                 opReferrals = new List<OpReferral>();
-                                OpReferral opRefferal;
+                                OpReferral opReferral;
 
                                 while (reader.Read())
                                 {
-                                    opRefferal = new OpReferral();
+                                    opReferral = FillOpReferral(reader);
 
-                                    opRefferal.UniqueCdsRowIdentifier = reader["UniqueCDSRowIdentifier"].ToString();
-                                    opRefferal.LocalPatientID = reader["LocalPatientID"].ToString();
-                                    opRefferal.NhsNumber = reader["NHSNumber"].ToString();
-                                    opRefferal.PatientForename = reader["PatientForename"].ToString();
-                                    opRefferal.PatientSurname = reader["PatientSurname"].ToString();
-                                    opRefferal.SpecName = reader["SpecName"].ToString();
-                                    opRefferal.NewDivision = reader["NewDivision"].ToString();
-                                    opRefferal.Consultant = reader["Consultant"].ToString();
-                                    opRefferal.SourceOfReferralText = reader["SourceOfReferralText"].ToString();
-                                    opRefferal.PriorityType = reader["PriorityType"].ToString();
-                                    opRefferal.AttStatus = reader["AttStatus"].ToString();
-                                    opRefferal.RttText = reader["RTTText"].ToString();
-                                    opRefferal.WaitingListStatus = reader["WaitingListStatus"].ToString();
-                                    opRefferal.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
-                                    opRefferal.Spec = reader["Spec"].ToString();
-                                    opRefferal.RttStatus = reader["RTTStatus"].ToString();
-                                    opRefferal.WeekswaitGrouped = reader["WeekswaitGrouped"].ToString();
-
-                                    int tempInt = 0;
-                                    int.TryParse(reader["WaitAtFutureClinicDate"].ToString(), out tempInt);
-                                    opRefferal.WaitAtFutureClinicDate = tempInt;
-
-                                    DateTime tempDateTime = DateTime.MinValue;
-
-                                    DateTime.TryParse(reader["DateOfBirth"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["DateOfBirth"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.DateOfBirth = tempDateTime;
-
-                                    DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.ReferralRequestReceivedDate = tempDateTime;
-
-                                    DateTime.TryParse(reader["RTTBreachDate"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["RTTBreachDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.RttBreachDate = tempDateTime;
-
-                                    DateTime.TryParse(reader["RTTClockStart"].ToString(), out tempDateTime);
-                                    //DateTime.TryParse(reader["RTTClockStart"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    opRefferal.RttClockStart = tempDateTime;
-
-                                    // TODO: we might want to change below code when we get the acTual schema.
-                                    // SQL server exported below fields as NVARCHAR, not DATETIME                                                                       
-
-                                    //DateTime.TryParse(reader["AttendanceDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    DateTime.TryParse(reader["AttendanceDate"].ToString(), out tempDateTime);
-                                    opRefferal.AttendanceDate = tempDateTime;
-
-                                    //DateTime.TryParse(reader["FutureClinicDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
-                                    DateTime.TryParse(reader["FutureClinicDate"].ToString(), out tempDateTime);
-                                    opRefferal.FutureClinicDate = tempDateTime;
-
-                                    opReferrals.Add(opRefferal);
+                                    opReferrals.Add(opReferral);
 
                                 }
                             }
@@ -269,6 +167,229 @@ namespace Nhs.Ptl.Comments.DataAccess
 
             return opReferrals;
         }
+
+        public IList<OpReferral> GetOpReferralByParams(string searchText,
+                                                        string specialty,
+                                                        string consultant,
+                                                        string rttWait,
+                                                        string attStatus,
+                                                        string futureApptStatus)
+        {
+            IList<OpReferral> opReferrals = null;
+
+            try
+            {
+                using (SqlConnection connection = GetConnection(true))
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandType = CommandType.Text;
+
+                        command.CommandText = "SELECT * FROM OP_Referral_PTL";
+
+                        if (!string.IsNullOrEmpty(searchText))
+                        {
+                            command.CommandText += " WHERE ( PatientForename = '"
+                                                + searchText
+                                                + "' OR PatientSurname = '"
+                                                + searchText
+                                                + "' OR PatientPathwayIdentifier = '"
+                                                + searchText
+                                                + "' OR NHSNumber = '"
+                                                + searchText
+                                                + "' OR LocalPatientID = '"
+                                                + searchText
+                                                + "' )";
+                        }
+
+                        if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["DropDownAllText"]))
+                        {
+                            if (!string.IsNullOrEmpty(specialty)
+                                && !specialty.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (command.CommandText.IndexOf("WHERE", StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    command.CommandText += " AND SpecName = '" + specialty + "'";
+                                }
+                                else
+                                {
+                                    command.CommandText += " WHERE SpecName = '" + specialty + "'";
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(consultant)
+                                && !consultant.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (command.CommandText.IndexOf("WHERE", StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    command.CommandText += " AND Consultant = '" + consultant + "'";
+                                }
+                                else
+                                {
+                                    command.CommandText += " WHERE Consultant = '" + consultant + "'";
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(rttWait)
+                                && !rttWait.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (command.CommandText.IndexOf("WHERE", StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    command.CommandText += " AND WeekswaitGrouped = '" + rttWait + "'";
+                                }
+                                else
+                                {
+                                    command.CommandText += " WHERE WeekswaitGrouped = '" + rttWait + "'";
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(attStatus)
+                                && !attStatus.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (command.CommandText.IndexOf("WHERE", StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    command.CommandText += " AND AttStatus = '" + attStatus + "'";
+                                }
+                                else
+                                {
+                                    command.CommandText += " WHERE AttStatus = '" + attStatus + "'";
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(futureApptStatus)
+                                && !futureApptStatus.Equals(ConfigurationManager.AppSettings["DropDownAllText"], StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (command.CommandText.IndexOf("WHERE", StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    if (futureApptStatus.Equals(Constants.NoDate, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        command.CommandText += " AND FutureClinicDate IS NULL";
+                                    }
+                                    else
+                                    {
+                                        command.CommandText += " AND FutureClinicDate IS NOT NULL";
+                                    }
+                                }
+                                else
+                                {
+                                    if (futureApptStatus.Equals(Constants.NoDate, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        command.CommandText += " WHERE FutureClinicDate IS NULL";
+                                    }
+                                    else
+                                    {
+                                        command.CommandText += " WHERE FutureClinicDate IS NOT NULL";
+                                    }
+                                }
+
+                            }
+                        }
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                opReferrals = new List<OpReferral>();
+                                OpReferral opReferral;
+
+                                while (reader.Read())
+                                {
+                                    opReferral = FillOpReferral(reader);
+
+                                    opReferrals.Add(opReferral);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return opReferrals;
+        }
+
+        public IList<OpReferral> GetOpReferralByFieldName(string fieldName, string value)
+        {
+            IList<OpReferral> opReferrals = null;
+
+            try
+            {
+                using (SqlConnection connection = GetConnection(true))
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    using (SqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandType = CommandType.Text;
+
+                        if (fieldName.Equals(Constants.FutureClinicDateFieldName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (value.Equals(Constants.NoDate, StringComparison.OrdinalIgnoreCase))
+                            {
+                                command.CommandText = "SELECT * FROM OP_Referral_PTL WHERE "
+                                                    + fieldName + " IS NULL";
+                            }
+                            else
+                            {
+                                command.CommandText = "SELECT * FROM OP_Referral_PTL WHERE "
+                                                    + fieldName + " IS NOT NULL";
+                            }
+                        }
+                        else
+                        {
+                            command.CommandText = "SELECT * FROM OP_Referral_PTL"
+                                                    + " WHERE " + fieldName
+                                                    + " = '"
+                                                    + value
+                                                    + "'";
+                        }
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                opReferrals = new List<OpReferral>();
+                                OpReferral opReferral;
+
+                                while (reader.Read())
+                                {
+                                    opReferral = FillOpReferral(reader);
+
+                                    opReferrals.Add(opReferral);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return opReferrals;
+        }        
 
         /// <summary>
         /// Adds new PTL comment
@@ -587,6 +708,68 @@ namespace Nhs.Ptl.Comments.DataAccess
                 throw ex;
             }
             return isUpdated;
+        }
+
+        private OpReferral FillOpReferral(SqlDataReader reader)
+        {
+            OpReferral opReferral = new OpReferral();
+
+            if (null != reader)
+            {
+                opReferral.UniqueCdsRowIdentifier = reader["UniqueCDSRowIdentifier"].ToString();
+                opReferral.LocalPatientID = reader["LocalPatientID"].ToString();
+                opReferral.NhsNumber = reader["NHSNumber"].ToString();
+                opReferral.PatientForename = reader["PatientForename"].ToString();
+                opReferral.PatientSurname = reader["PatientSurname"].ToString();
+                opReferral.SpecName = reader["SpecName"].ToString();
+                opReferral.NewDivision = reader["NewDivision"].ToString();
+                opReferral.Consultant = reader["Consultant"].ToString();
+                opReferral.SourceOfReferralText = reader["SourceOfReferralText"].ToString();
+                opReferral.PriorityType = reader["PriorityType"].ToString();
+                opReferral.AttStatus = reader["AttStatus"].ToString();
+                opReferral.RttText = reader["RTTText"].ToString();
+                opReferral.WaitingListStatus = reader["WaitingListStatus"].ToString();
+                opReferral.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
+                opReferral.Spec = reader["Spec"].ToString();
+                opReferral.RttStatus = reader["RTTStatus"].ToString();
+                opReferral.WeekswaitGrouped = reader["WeekswaitGrouped"].ToString();
+
+                int tempInt = 0;
+                int.TryParse(reader["WaitAtFutureClinicDate"].ToString(), out tempInt);
+                opReferral.WaitAtFutureClinicDate = tempInt;
+
+                DateTime tempDateTime = DateTime.MinValue;
+
+                DateTime.TryParse(reader["DateOfBirth"].ToString(), out tempDateTime);
+                //DateTime.TryParse(reader["DateOfBirth"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                opReferral.DateOfBirth = tempDateTime;
+
+                DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), out tempDateTime);
+                //DateTime.TryParse(reader["ReferralRequestReceivedDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                opReferral.ReferralRequestReceivedDate = tempDateTime;
+
+                DateTime.TryParse(reader["RTTBreachDate"].ToString(), out tempDateTime);
+                //DateTime.TryParse(reader["RTTBreachDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                opReferral.RttBreachDate = tempDateTime;
+
+                DateTime.TryParse(reader["RTTClockStart"].ToString(), out tempDateTime);
+                //DateTime.TryParse(reader["RTTClockStart"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                opReferral.RttClockStart = tempDateTime;
+
+                // TODO: we might want to change below code when we get the acTual schema.
+                // SQL server exported below fields as NVARCHAR, not DATETIME                                                                       
+
+                //DateTime.TryParse(reader["AttendanceDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                DateTime.TryParse(reader["AttendanceDate"].ToString(), out tempDateTime);
+                opReferral.AttendanceDate = tempDateTime;
+
+                //DateTime.TryParse(reader["FutureClinicDate"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDateTime);
+                DateTime.TryParse(reader["FutureClinicDate"].ToString(), out tempDateTime);
+                opReferral.FutureClinicDate = tempDateTime;
+            }
+
+
+            return opReferral;
         }
     }
 }
