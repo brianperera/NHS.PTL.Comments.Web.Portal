@@ -9,11 +9,10 @@
     <form id="form1" runat="server">
     <div>
         <asp:Literal ID="Literal1" runat="server"></asp:Literal>
-    </div>
-    <br />
-    <br />
+    </div>    
     <div>
         <asp:Literal ID="Literal2" runat="server"></asp:Literal></div>
+    <br />
     <div>
         <asp:Literal ID="Literal3" runat="server"></asp:Literal>
     </div>
