@@ -29,7 +29,7 @@ public partial class DbTest : Page
         Literal3.Text = "Requesting with parameters. Specialty = " + Specialty + " , Future Appointment Status = " + FutureAppointmentStatus;
 
         start = DateTime.Now;
-        opReferral = CommentsManager.GetOpReferralsByParams(Specialty, new List<string>(), FutureAppointmentStatus);        
+        //opReferral = CommentsManager.GetOpReferralsByParams(Specialty, new List<string>(), FutureAppointmentStatus);        
         Literal4.Text = "Operation took "
             + DateTime.Now.Subtract(start).TotalMilliseconds
             + " milliseconds. <br/ > Row count: "

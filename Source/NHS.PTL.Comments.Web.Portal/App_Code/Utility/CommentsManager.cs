@@ -31,15 +31,32 @@ namespace Nhs.Ptl.Comments.Utility
         public static IList<OpReferral> GetAllOpReferrals()
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
-            return GetStatusForReferral(ptlCommentsData.GetAllOpReferrals(CommandType.Text), GetAllPtlComments());
+            //DataSet ds = ptlCommentsData.GetDistinctFilterValues();
+            IList<OpReferral> oRef = ptlCommentsData.GetAllOpReferrals(CommandType.Text);
+            IList<string> uIds = oRef.Select(x => x.UniqueCdsRowIdentifier).ToList();
+            return GetStatusForReferral(oRef, GetPtlComments(uIds));
+
+            //return ptlCommentsData.GetAllOpReferrals(CommandType.Text);
+        }
+
+        public static IList<OpReferral> GetAllOpReferrals2(int page, int pageSize, out int rowCount)
+        {
+            PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+            //DataSet ds = ptlCommentsData.GetDistinctFilterValues();
+            IList<OpReferral> oRef = ptlCommentsData.GetAllOpReferrals2(page, pageSize, out rowCount);
+            //IList<string> uIds = oRef.Select(x => x.UniqueCdsRowIdentifier).ToList();
+            //return GetStatusForReferral(oRef, GetPtlComments(uIds));
+            return oRef;
 
             //return ptlCommentsData.GetAllOpReferrals(CommandType.Text);
         }
 
         public static IList<OpReferral> GetOpReferralsByParams(string speciality, IList<string> rttWait, string futureApptStatus)
         {
-            PtlCommentsDA ptlCommentsDate = new PtlCommentsDA();
-            return GetStatusForReferral(ptlCommentsDate.GetOpReferralByParams(speciality, rttWait, futureApptStatus), GetAllPtlComments());
+            PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+            IList<OpReferral> oRef = ptlCommentsData.GetOpReferralByParams(speciality, rttWait, futureApptStatus);
+            IList<string> uIds = oRef.Select(x => x.UniqueCdsRowIdentifier).ToList();
+            return GetStatusForReferral(oRef, GetPtlComments(uIds));
         }
 
         public static IList<OpReferral> GetOpReferralsByParams(string searchText,
@@ -50,25 +67,42 @@ namespace Nhs.Ptl.Comments.Utility
                                                         string futureApptStatus)
         {
             PtlCommentsDA ptlCommentsDate = new PtlCommentsDA();
-            return GetStatusForReferral(ptlCommentsDate.GetOpReferralByParams(searchText, 
-                                                                                specialty, 
-                                                                                consultant, 
-                                                                                rttWait, 
-                                                                                attStatus, 
-                                                                                futureApptStatus), 
-                                                                                GetAllPtlComments());
+            IList<OpReferral> oRef = ptlCommentsDate.GetOpReferralByParams(searchText,
+                                                                                specialty,
+                                                                                consultant,
+                                                                                rttWait,
+                                                                                attStatus,
+                                                                                futureApptStatus);
+            IList<string> uIds = oRef.Select(x => x.UniqueCdsRowIdentifier).ToList();
+            return GetStatusForReferral(oRef, GetPtlComments(uIds));
         }
-        
+
         public static IList<OpReferral> GetOpReferralByFieldName(string fieldName, string consultant)
         {
             PtlCommentsDA ptlCommentsDate = new PtlCommentsDA();
-            return GetStatusForReferral(ptlCommentsDate.GetOpReferralByFieldName( fieldName, consultant), GetAllPtlComments());
-        }      
+            return GetStatusForReferral(ptlCommentsDate.GetOpReferralByFieldName(fieldName, consultant), GetAllPtlComments());
+        }
 
         public static IList<PtlComment> GetAllPtlComments()
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
             return ptlCommentsData.GetAllPtlComments();
+        }
+
+        public static IList<PtlComment> GetPtlComments(IList<string> uniqueIds)
+        {
+            DataTable uniqueIdsTable = new DataTable();
+            uniqueIdsTable.Columns.Add("UniqueCDSRowIdentifier", typeof(string));
+
+            foreach (string id in uniqueIds)
+            {
+                DataRow row = uniqueIdsTable.NewRow();
+                row["UniqueCDSRowIdentifier"] = id;
+                uniqueIdsTable.Rows.Add(row);
+            }
+
+            PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+            return ptlCommentsData.GetPtlCommentsByUniqueIds(uniqueIdsTable);
         }
 
         private static IList<OpReferral> GetStatusForReferral(IList<OpReferral> opReferrals, IList<PtlComment> ptlComments)
@@ -147,6 +181,12 @@ namespace Nhs.Ptl.Comments.Utility
             }
 
             return isAdded;
+        }
+
+        public static DataSet GetDropdownValuesFromReferral()
+        {
+            PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
+            return ptlCommentsData.GetDistinctReferralFilterValues();
         }
     }
 }

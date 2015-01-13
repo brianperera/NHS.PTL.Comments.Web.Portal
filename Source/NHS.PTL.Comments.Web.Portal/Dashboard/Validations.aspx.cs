@@ -8,6 +8,7 @@ using Nhs.Ptl.Comments.Utility;
 using System.Data;
 using Nhs.Ptl.Comments;
 using Nhs.Ptl.Comments.DataAccess;
+using Nhs.Ptl.Common;
 
 // IMPORTANT!!!: Look at the constants before you change the columns!
 // Change the constants accordingly
@@ -16,6 +17,10 @@ namespace Nhs.Ptl.Comments.Web
 {
     public partial class Validations : System.Web.UI.Page
     {
+        protected int pageIndex = 1;
+        protected int pageCount = 0;
+        protected int rowCount = 0;
+
         public string SpecialtyType
         {
             get
@@ -100,21 +105,27 @@ namespace Nhs.Ptl.Comments.Web
 
                 if (null != opReferrals)
                 {
-                    PopulateStatusDropdown(opReferrals);
-                    PopulateSpecialityDropdown(opReferrals);
-                    PopulateConsultantDropdown(opReferrals);
-                    PopulateAttendanceStatusDropDown(opReferrals);
-                    PopulateRTTWaitDropDown(opReferrals);
-                    PopulateFutureApptStatusDropDown();
-                    InsertDropdownDefaultValue();
-                    RefineDatesInOpReferrals(opReferrals);
+                    //PopulateStatusDropdown(opReferrals);
+                    //PopulateSpecialityDropdown(opReferrals);
+                    //PopulateConsultantDropdown(opReferrals);
+                    //PopulateAttendanceStatusDropDown(opReferrals);
+                    //PopulateRTTWaitDropDown(opReferrals);
+                    //PopulateFutureApptStatusDropDown();
+                    //InsertDropdownDefaultValue();
+                    //RefineDatesInOpReferrals(opReferrals);
 
-                    QueryStringBasedDropdownItemSelection();
+                    //QueryStringBasedDropdownItemSelection();
 
                     this.gvMain.DataSource = opReferrals;
                     this.gvMain.DataBind();
                 }
-
+                else
+                {
+                    if (ViewState["PageIndex"] != null)
+                        pageIndex = Convert.ToInt32(ViewState["PageIndex"]);
+                    if (ViewState["PageCount"] != null)
+                        pageCount = Convert.ToInt32(ViewState["PageCount"]);
+                }
             }
         }
 
@@ -850,6 +861,13 @@ namespace Nhs.Ptl.Comments.Web
         private IList<OpReferral> QueryStringBasedFiltering()
         {
             IList<OpReferral> opReferrals = CommentsManager.GetOpReferralsByParams(SpecialtyType, RttWait, FutureApptStatus);
+            gvMain.AllowPaging = true;
+            gvMain.PagerSettings.Mode = PagerButtons.NextPreviousFirstLast;
+            pager.Visible = false;
+
+            //pageCount = CalcPageCount(rowCount);
+            //ViewState["PageCount"] = pageCount;
+            //RefreshPageButtons();
 
             //if (!string.IsNullOrEmpty(SpecialtyType))
             //{
@@ -933,11 +951,31 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!string.IsNullOrEmpty(Request.QueryString["Specialty"]))
             {
-                return QueryStringBasedFiltering();
+                IList<OpReferral> opReferrals = QueryStringBasedFiltering();
+
+                PopulateSpecialityDropdown(opReferrals);
+                PopulateConsultantDropdown(opReferrals);
+                PopulateAttendanceStatusDropDown(opReferrals);
+                PopulateRTTWaitDropDown(opReferrals);
+                PopulateStatusDropdown(opReferrals);
+                PopulateFutureApptStatusDropDown();
+
+                InsertDropdownDefaultValue();
+                RefineDatesInOpReferrals(opReferrals);
+
+                QueryStringBasedDropdownItemSelection();
+
+                return opReferrals;
             }
             else
             {
-                return CommentsManager.GetAllOpReferrals();
+                IList<OpReferral> opReferrals = CommentsManager.GetAllOpReferrals2(pageIndex, gvMain.PageSize, out rowCount);
+                pageCount = CalcPageCount(rowCount);
+                ViewState["PageCount"] = pageCount;
+                ViewState["PageIndex"] = pageIndex;
+                RefreshPageButtons();
+                PopulateDropdownValuesAllRecords(opReferrals);
+                return opReferrals;
             }
         }
 
@@ -947,6 +985,112 @@ namespace Nhs.Ptl.Comments.Web
                 return null;
             else
                 return currentDateTime;
+        }
+
+        private void PopulateDropdownValuesAllRecords(IList<OpReferral> opReferrals)
+        {
+            DataSet ds = CommentsManager.GetDropdownValuesFromReferral();
+
+            if (null != ds)
+            {
+                specialityDropdown.DataSource = ds.Tables[(int)FieldName.SpecName];
+                specialityDropdown.DataValueField = "SpecName";
+                specialityDropdown.DataTextField = "SpecName";
+                specialityDropdown.DataBind();
+
+                AttendanceStatusDropDown.DataSource = ds.Tables[(int)FieldName.AttStatus];
+                AttendanceStatusDropDown.DataValueField = "AttStatus";
+                AttendanceStatusDropDown.DataTextField = "AttStatus";
+                AttendanceStatusDropDown.DataBind();
+
+                consultantDropdown.DataSource = ds.Tables[(int)FieldName.Consultant];
+                consultantDropdown.DataValueField = "Consultant";
+                consultantDropdown.DataTextField = "Consultant";
+                consultantDropdown.DataBind();
+
+                ValidationRTTWaitDropDown.DataSource = ds.Tables[(int)FieldName.WeekswaitGrouped];
+                ValidationRTTWaitDropDown.DataValueField = "WeekswaitGrouped";
+                ValidationRTTWaitDropDown.DataTextField = "WeekswaitGrouped";
+                ValidationRTTWaitDropDown.DataBind();
+
+                //PopulateStatusDropdown(opReferrals);
+                StatusDA statusDA = new StatusDA();                 
+                statusDropdown.DataSource = statusDA.GetAllStatuses();
+                statusDropdown.DataBind();
+
+                PopulateFutureApptStatusDropDown();
+                InsertDropdownDefaultValue();
+                RefineDatesInOpReferrals(opReferrals);
+            }
+        }
+
+        protected void PageChangeEventHandler(object sender, CommandEventArgs e)
+        {
+            pageCount = (int)ViewState["PageCount"];
+            pageIndex = (int)ViewState["PageIndex"];
+
+            switch (e.CommandArgument.ToString())
+            {
+                case "First":
+                    pageIndex = 1;
+                    break;
+                case "Previous":
+                    pageIndex = pageIndex - 1;
+                    break;
+                case "Next":
+                    pageIndex = pageIndex + 1;
+                    break;
+                case "Last":
+                    pageIndex = pageCount;
+                    break;
+            }
+            //set the latest page index back to view state
+            ViewState["PageIndex"] = pageIndex;
+            //fetch the latest batch of products
+            //BindData();
+            gvMain.DataSource = CommentsManager.GetAllOpReferrals2(pageIndex, gvMain.PageSize, out rowCount);
+            gvMain.DataBind();
+            pageCount = CalcPageCount(rowCount);
+            ViewState["PageCount"] = pageCount;
+            //enable/disable page buttons based on current page index
+            RefreshPageButtons();
+        }
+
+        private void RefreshPageButtons()
+        {
+            btnFirst.Enabled = true;
+            btnPrevious.Enabled = true;
+            btnNext.Enabled = true;
+            btnLast.Enabled = true;
+            //if this is the first page, disable previous page
+            if (pageIndex == 1)
+            {
+                btnPrevious.Enabled = false;
+                btnFirst.Enabled = false;
+                //if the page count is more than 1, enable next button                
+                if (pageCount <= 0)
+                    btnNext.Enabled = false;
+            }
+            else
+            {
+                if (pageIndex == pageCount)
+                {
+                    btnNext.Enabled = false;
+                    btnLast.Enabled = false;
+                }
+            }
+        }
+
+        private int CalcPageCount(int totalRows)
+        {
+            if (totalRows % gvMain.PageSize > 0)
+            {
+                return (int)(totalRows / gvMain.PageSize) + 1;
+            }
+            else
+            {
+                return (int)(totalRows / gvMain.PageSize);
+            }
         }
 
         #endregion

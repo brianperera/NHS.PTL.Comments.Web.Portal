@@ -389,8 +389,7 @@ div.NHS_name
 
 .navigationBarItems
 {
-    float: left;
-/*    display:none;*/
+    float: left; /*    display:none;*/
 }
 
 .navigationBar a
@@ -712,7 +711,7 @@ div.accountInfoCentered
     background: -ms-linear-gradient(#4a9bea, #1F7BE5);
     background: -o-linear-gradient(#4a9bea, #1F7BE5);
     background: linear-gradient(#4a9bea, #1F7BE5);
-    vertical-align:baseline;
+    vertical-align: baseline;
 }
 
 .deleteButton
@@ -756,6 +755,19 @@ div.accountInfoCentered
     background: -ms-linear-gradient(#B7B7B7, #E6E3E3);
     background: -o-linear-gradient(#B7B7B7, #E6E3E3);
     background: linear-gradient(#B7B7B7, #E6E3E3);
+}
+
+.paginatorLink
+{
+    background-color: transparent;
+    background-image: url();
+    border: none;
+    font-size: 14px;
+}
+
+.paginatorLink:hover
+{   
+    color:inherit;
 }
 
 .login_container
@@ -878,12 +890,12 @@ input[type=text], input[type=password], textarea, select
 
 #caption
 {
-   font-weight: normal !important;
+    font-weight: normal !important;
 }
 
 #MainContent_RTTWaitDropDown_sl
 {
-     z-index: 9; 
+    z-index: 9;
 }
 
 #MainContent_RTTWaitDropDown label
@@ -894,29 +906,28 @@ input[type=text], input[type=password], textarea, select
 
 #MainContent_RTTWaitDropDown
 {
-    width:400px;    
+    width: 400px;
 }
 
 #MainContent_RTTWaitDropDown td
 {
-    padding-bottom:5px;    
+    padding-bottom: 5px;
 }
 
 
-.has-popup 
+.has-popup
 {
-   
-   z-index: 2;     
+    z-index: 2;
 }
 
 .level1
 {
-   z-index: 3;   
+    z-index: 3;
 }
 
 .level2
 {
-   z-index: 1;  
+    z-index: 1;
 }
 
 .shortTextBox input[type=text]
@@ -1005,7 +1016,7 @@ label, span
 
 .gridOuter
 {
-    overflow-x: scroll;    
+    overflow-x: scroll;
 }
 /* Alerts */
 
@@ -1308,7 +1319,6 @@ label, span
 .popup .error_msg span
 {
     font-size: 12px !important;
-    
 }
 
 .popup .error_msg
@@ -1334,34 +1344,34 @@ label, span
 
 .tableFooter
 {
-    background-color:#417696 !important;
-    font-weight:bold !important;
-    color:White !important;   
+    background-color: #417696 !important;
+    font-weight: bold !important;
+    color: White !important;
 }
 
 .tableFooter td
 {
-    font-weight:bold !important;
-    color:White !important;
-    text-align:center;
+    font-weight: bold !important;
+    color: White !important;
+    text-align: center;
 }
 
 #chart_div
 {
-position: relative;
-z-index: -9999999999999999999;
-display: block;
+    position: relative;
+    z-index: -9999999999999999999;
+    display: block;
 }
 
 .tableColumnWidthAnsWrap
 {
-    text-wrap:unrestricted !important;    
-    word-break:break-all;
-    word-rap:break-wword;
+    text-wrap: unrestricted !important;
+    word-break: break-all;
+    word-rap: break-wword;
 }
 
 .multiSelectionDropDown
 {
-    z-index:-9999;  
+    z-index: -9999;
 }
 
