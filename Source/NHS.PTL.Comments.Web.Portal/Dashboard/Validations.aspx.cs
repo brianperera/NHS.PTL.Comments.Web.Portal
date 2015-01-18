@@ -750,15 +750,23 @@ namespace Nhs.Ptl.Comments.Web
 
             if (null != opReferrals)
             {
-                PopulateSpecialityDropdown(opReferrals);
-                PopulateConsultantDropdown(opReferrals);
-                PopulateAttendanceStatusDropDown(opReferrals);
-                PopulateRTTWaitDropDown(opReferrals);
-                PopulateStatusDropdown(opReferrals);
-                PopulateFutureApptStatusDropDown();
+                //PopulateSpecialityDropdown(opReferrals);
+                //PopulateConsultantDropdown(opReferrals);
+                //PopulateAttendanceStatusDropDown(opReferrals);
+                //PopulateRTTWaitDropDown(opReferrals);
+                //PopulateStatusDropdown(opReferrals);
+                //PopulateFutureApptStatusDropDown();
+
+                // Dropdowns are already populated with data. Reset the selected index
+                specialityDropdown.SelectedIndex = 0;
+                consultantDropdown.SelectedIndex = 0;
+                AttendanceStatusDropDown.SelectedIndex = 0;
+                ValidationRTTWaitDropDown.SelectedIndex = 0;
+                statusDropdown.SelectedIndex = 0;
+                FutureApptStatusDropDownList.SelectedIndex = 0;
             }
 
-            InsertDropdownDefaultValue();
+            //InsertDropdownDefaultValue();
             patientTextbox.Text = string.Empty;
 
             return opReferrals;
