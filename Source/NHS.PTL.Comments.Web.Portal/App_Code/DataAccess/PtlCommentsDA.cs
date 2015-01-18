@@ -158,6 +158,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                                 while (reader.Read())
                                 {
                                     opReferral = FillOpReferral(reader);
+                                    opReferral.Status = reader["Status"].ToString();
 
                                     opReferrals.Add(opReferral);
 
@@ -682,7 +683,7 @@ namespace Nhs.Ptl.Comments.DataAccess
         /// </summary>
         /// <param name="uniqueRowIdentifier"></param>
         /// <returns></returns>        
-        public IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, string pathwayId, string spec, DateTime referralDate)
+        public IList<PtlComment> GetPtlComments(string uniqueRowIdentifier)
         {
             IList<PtlComment> ptlComments = null;
 
@@ -701,16 +702,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                         command.CommandType = CommandType.StoredProcedure;
 
                         SqlParameter rowIdentifierParam = GetParameter("@UniqueCDSRowIdentifier", SqlDbType.NVarChar, uniqueRowIdentifier);
-                        command.Parameters.Add(rowIdentifierParam);
-
-                        SqlParameter pathwayIdParam = GetParameter("@PatientPathwayIdentifier", SqlDbType.NVarChar, pathwayId);
-                        command.Parameters.Add(pathwayIdParam);
-
-                        SqlParameter specParam = GetParameter("@Spec", SqlDbType.Float, spec);
-                        command.Parameters.Add(specParam);
-
-                        SqlParameter referralDateParam = GetParameter("@ReferralRequestReceivedDate", SqlDbType.DateTime, referralDate);
-                        command.Parameters.Add(referralDateParam);
+                        command.Parameters.Add(rowIdentifierParam);                        
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -929,8 +921,7 @@ namespace Nhs.Ptl.Comments.DataAccess
                 opReferral.PatientPathwayIdentifier = reader["PatientPathwayIdentifier"].ToString();
                 opReferral.Spec = reader["Spec"].ToString();
                 opReferral.RttStatus = reader["RTTStatus"].ToString();
-                opReferral.WeekswaitGrouped = reader["WeekswaitGrouped"].ToString();
-                opReferral.Status = reader["Status"].ToString();
+                opReferral.WeekswaitGrouped = reader["WeekswaitGrouped"].ToString();                
 
                 int tempInt = 0;
                 int.TryParse(reader["WaitAtFutureClinicDate"].ToString(), out tempInt);

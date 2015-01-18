@@ -16,6 +16,6 @@ namespace Nhs.Ptl.Comments.DataAccess
         IList<OpReferral> GetAllOpReferrals(CommandType commandType);
         bool AddPtlComment(PtlComment ptlComment);
         bool UpdatePtlComment(PtlComment ptlComment);
-        IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, string pathwayId, string spec, DateTime referralDate);
+        IList<PtlComment> GetPtlComments(string uniqueRowIdentifier);
      }
 }

@@ -136,9 +136,16 @@ namespace Nhs.Ptl.Comments.Web
 
         protected void resetButton_Click(object sender, EventArgs e)
         {
-            isQueryStringFiltering.Value = "false";
-            ResetControls();
-            FilterGrid();
+            //isQueryStringFiltering.Value = "false";
+            //IList<OpReferral> refs = ResetControls();
+            //if (null != refs)
+            //{
+            //    gvMain.DataSource = refs;
+            //    gvMain.DataBind();
+            //}
+
+            Response.Redirect(Request.Url.AbsolutePath, true);
+            //FilterGrid();
         }
 
         protected void refreshButton_Click(object sender, EventArgs e)
@@ -221,7 +228,7 @@ namespace Nhs.Ptl.Comments.Web
                 IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.ConsultantFieldName, consultantDropdown.SelectedItem.Text);
 
                 if (null != filtered)
-                {                    
+                {
                     if (null != filtered)
                     {
                         // Save current selected values
@@ -308,7 +315,7 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!ValidationRTTWaitDropDown.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.WeekswaitGroupedFieldName, 
+                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.WeekswaitGroupedFieldName,
                                                                                     ValidationRTTWaitDropDown.SelectedItem.Text);
 
                 if (null != filtered)
@@ -400,7 +407,7 @@ namespace Nhs.Ptl.Comments.Web
         {
             if (!FutureApptStatusDropDownList.SelectedValue.Equals(ConfigurationManager.AppSettings["DropDownAllText"]))
             {
-                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.FutureClinicDateFieldName, 
+                IList<OpReferral> filtered = CommentsManager.GetOpReferralByFieldName(Constants.FutureClinicDateFieldName,
                                                                     FutureApptStatusDropDownList.SelectedItem.Text);
 
                 if (null != filtered)
@@ -485,7 +492,7 @@ namespace Nhs.Ptl.Comments.Web
 
                 //Apply filters based on the query string paramenters
                 //opReferrals = QueryStringBasedFiltering(opReferrals);
-                IList<OpReferral>  opReferrals = GetReferralData();
+                IList<OpReferral> opReferrals = GetReferralData();
                 this.gvMain.DataSource = opReferrals;
                 this.gvMain.DataBind();
             }
@@ -737,7 +744,7 @@ namespace Nhs.Ptl.Comments.Web
         /// <summary>
         /// 
         /// </summary>
-        private void ResetControls()
+        private IList<OpReferral> ResetControls()
         {
             IList<OpReferral> opReferrals = GetReferralData();
 
@@ -753,6 +760,8 @@ namespace Nhs.Ptl.Comments.Web
 
             InsertDropdownDefaultValue();
             patientTextbox.Text = string.Empty;
+
+            return opReferrals;
         }
 
         private void PopulateFutureApptStatusDropDown()
@@ -813,7 +822,7 @@ namespace Nhs.Ptl.Comments.Web
             {
                 //Apply filters based on the query string paramenters
                 //opReferrals = QueryStringBasedFiltering(opReferrals);
-                IList<OpReferral>  opReferrals = GetReferralData();
+                IList<OpReferral> opReferrals = GetReferralData();
                 this.gvMain.DataSource = opReferrals;
                 this.gvMain.DataBind();
             }
@@ -993,28 +1002,20 @@ namespace Nhs.Ptl.Comments.Web
 
             if (null != ds)
             {
-                specialityDropdown.DataSource = ds.Tables[(int)FieldName.SpecName];
-                specialityDropdown.DataValueField = "SpecName";
-                specialityDropdown.DataTextField = "SpecName";
+                specialityDropdown.DataSource = ds.Tables[(int)FieldName.SpecName].AsEnumerable().Select(r => r.Field<string>("SpecName"));
                 specialityDropdown.DataBind();
 
-                AttendanceStatusDropDown.DataSource = ds.Tables[(int)FieldName.AttStatus];
-                AttendanceStatusDropDown.DataValueField = "AttStatus";
-                AttendanceStatusDropDown.DataTextField = "AttStatus";
+                AttendanceStatusDropDown.DataSource = ds.Tables[(int)FieldName.AttStatus].AsEnumerable().Select(r => r.Field<string>("AttStatus"));
                 AttendanceStatusDropDown.DataBind();
 
-                consultantDropdown.DataSource = ds.Tables[(int)FieldName.Consultant];
-                consultantDropdown.DataValueField = "Consultant";
-                consultantDropdown.DataTextField = "Consultant";
+                consultantDropdown.DataSource = ds.Tables[(int)FieldName.Consultant].AsEnumerable().Select(r => r.Field<string>("Consultant"));
                 consultantDropdown.DataBind();
 
-                ValidationRTTWaitDropDown.DataSource = ds.Tables[(int)FieldName.WeekswaitGrouped];
-                ValidationRTTWaitDropDown.DataValueField = "WeekswaitGrouped";
-                ValidationRTTWaitDropDown.DataTextField = "WeekswaitGrouped";
+                ValidationRTTWaitDropDown.DataSource = ds.Tables[(int)FieldName.WeekswaitGrouped].AsEnumerable().Select(r => r.Field<string>("WeekswaitGrouped"));
                 ValidationRTTWaitDropDown.DataBind();
 
                 //PopulateStatusDropdown(opReferrals);
-                StatusDA statusDA = new StatusDA();                 
+                StatusDA statusDA = new StatusDA();
                 statusDropdown.DataSource = statusDA.GetAllStatuses();
                 statusDropdown.DataBind();
 

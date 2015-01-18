@@ -46,7 +46,7 @@ public partial class UserControls_DataEntryControl : System.Web.UI.UserControl
             return null;
         }
 
-        return CommentsManager.GetPtlComments(UniqueRowId, PatientPathwayId, Spec, ReferralRecievedDate);
+        return CommentsManager.GetPtlComments(UniqueRowId);
     }
 
     public void PopulateDefaultValues(IList<PtlComment> comments)

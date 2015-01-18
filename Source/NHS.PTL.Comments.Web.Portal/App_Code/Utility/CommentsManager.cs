@@ -55,8 +55,17 @@ namespace Nhs.Ptl.Comments.Utility
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
             IList<OpReferral> oRef = ptlCommentsData.GetOpReferralByParams(speciality, rttWait, futureApptStatus);
-            IList<string> uIds = oRef.Select(x => x.UniqueCdsRowIdentifier).ToList();
-            return GetStatusForReferral(oRef, GetPtlComments(uIds));
+
+            if (null != oRef)
+            {
+                IList<string> uIds = oRef.Select(x => x.UniqueCdsRowIdentifier).ToList();
+                return GetStatusForReferral(oRef, GetPtlComments(uIds));
+            }
+            else
+            {
+                return new List<OpReferral>();
+            }
+
         }
 
         public static IList<OpReferral> GetOpReferralsByParams(string searchText,
@@ -163,10 +172,10 @@ namespace Nhs.Ptl.Comments.Utility
             return refferalsWithStatus;
         }
 
-        public static IList<PtlComment> GetPtlComments(string uniqueRowIdentifier, string pathwayId, string spec, DateTime referralDate)
+        public static IList<PtlComment> GetPtlComments(string uniqueRowIdentifier)
         {
             PtlCommentsDA ptlCommentsData = new PtlCommentsDA();
-            return ptlCommentsData.GetPtlComments(uniqueRowIdentifier, pathwayId, spec, referralDate);
+            return ptlCommentsData.GetPtlComments(uniqueRowIdentifier);
         }
 
         public static bool AddUpdatePtlComment(PtlComment ptlComment)
